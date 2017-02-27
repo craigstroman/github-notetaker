@@ -1,0 +1,27 @@
+{
+  "env": {
+      "browser": true,
+      "es6": true,
+      "jquery": true
+  },
+  "plugins": [
+    "react"
+  ],
+  "ecmaFeatures": {"jsx": true},
+  "extends": "airbnb",
+  "rules": {
+    "max-len": [1, 120, 2, {ignoreComments: true}],
+    "no-unused-vars": [1, {"vars": "local", "args": "none"}],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error"
+  },
+  "globals": {
+    "React": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  }
+}
