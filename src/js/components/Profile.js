@@ -1,19 +1,22 @@
-import path from 'path';
-import assert from 'assert';
 import React from 'react';
-import Notes from './Notes/Notes';
-import Repos from './Github/Repos';
 import getGithubInfo from '../utils/helpers';
-import UserProfile from './Github/UserProfile';
+import UserProfile from './github/UserProfile';
+import UserRepos from './github/UserRepos';
+import UserNotes from './notes/UserNotes';
 
 class Profile extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      notes: [],
       bio: {},
+      currentUser: '',
+      notes: [],
       repos: [],
     };
+
+    this.handleAddNote = this.handleAddNote.bind(this);
+    this.init = this.init.bind(this);
   }
   componentDidMount() {
     const username = this.props.params.username;
@@ -23,60 +26,61 @@ class Profile extends React.Component {
     const username = nextProps.params.username;
     this.init(username);
   }
-  componentWillUnmount() {
+  componentWillUnMount() {
     this.setState({
-      notes: [],
       bio: {},
+      currentUser: '',
+      notes: [],
       repos: [],
     });
   }
   init(username) {
-    const notes = JSON.parse(localStorage.getItem(username)) || [];
-
-    this.setState({
-      notes: notes,
-    });
-
     getGithubInfo(username)
-      .then(function (data) {
+      .then((data) => {
         this.setState({
           bio: data.bio,
           repos: data.repos,
+          notes: JSON.parse(localStorage.getItem(username)) || [],
         });
-      }.bind(this));
+      });
   }
   handleAddNote(newNote) {
-    const username = this.props.params.username;
-    const notes = JSON.parse(localStorage.getItem(username)) || [];
+    const username = this.state.currentUser;
+    const key = Date.now();
+    const notes = this.state.notes;
+    const note = {
+      id: key,
+      text: newNote,
+    };
 
     this.setState({
-      notes: this.state.notes.concat([newNote]),
+      notes: this.state.notes.concat([note]),
     });
 
-    notes.push(newNote);
+    notes.push(note);
 
     localStorage.setItem(username, JSON.stringify(notes));
   }
   render() {
-    const username = this.props.params.username;
-
     return (
       <div className="row">
         <div className="col-md-4">
-          <UserProfile username={username} bio={this.state.bio} />
+          <UserProfile bio={this.state.bio} />
         </div>
         <div className="col-md-4">
-          <Repos username={username} repos={this.state.repos} />
+          <UserRepos repos={this.state.repos} />
         </div>
         <div className="col-md-4">
-          <Notes
-            username={username}
-            notes={this.state.notes}
-            addNote={this.handleAddNote.bind(this)} />
+          <UserNotes fullName={this.state.bio.name} addNote={this.handleAddNote} notes={this.state.notes} />
         </div>
       </div>
     );
   }
 }
 
+Profile.propTypes = {
+  params: React.PropTypes.object.isRequired,
+};
+
 export default Profile;
+

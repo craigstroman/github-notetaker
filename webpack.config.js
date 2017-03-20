@@ -1,46 +1,66 @@
 const path = require('path');
 const webpack = require('webpack');
-const NODE_ENV = process.env.NODE_ENV;
-const debug = (NODE_ENV === 'production') ? false : true;
-const filePath = (NODE_ENV === 'production') ? path.join(__dirname, './dist/js/') : path.join(__dirname, './src/js/');
-const fileName = (NODE_ENV === 'production') ? 'main.min.js'  : 'bundle.js';
 
-const config = {
-  debug: debug,
-  entry: './src/js/app.js',
-  target: 'web',
-  output: {
-    path: filePath,
-    filename: fileName
-  },
-  devtool: 'source-map',
-  module: {
+module.exports = env => {
+  const nodeEnv = process.env.NODE_ENV;
+  const isProd = (nodeEnv === 'production') ? true : false;
+  const filePath = (isProd) ? path.join(__dirname, './dist/js/') : path.join(__dirname, './src/js/');
+  const fileName = (isProd) ? 'main.min.js'  : 'bundle.js';
+
+  const plugins = [
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: nodeEnv,
+    })
+  ];
+
+  if (isProd) {
+    plugins.push(
+      new webpack.optimize.UglifyJsPlugin()
+    )
+  }
+
+  return {
+    entry: {
+       app: path.join(__dirname, 'src/js/app.js')
+    },
+
+    output: {
+      path: filePath,
+      filename: fileName,
+    },
+
+    module: {
       loaders: [
+         {
+           enforce: 'pre',
+           test: /\.(js|jsx)$/,
+           exclude: [/node_modules/, path.resolve(__dirname, 'src/js/bundle.js')],
+           loader: 'eslint-loader',
+          options: {
+            emitError: true,
+            emitWarning: true,
+            failOnError: false
+          }
+         },
         {
-          test: /\.jsx?$/,
-          exclude: /(node_modules)/,
-          loader: 'babel',
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader',
           query: {
-            presets: ['react', 'es2015']
+            presets: ['es2015']
           }
         }
       ]
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify(NODE_ENV || 'development')
-      }
-    })
-  ]
-};
+    },
 
-if (NODE_ENV === 'production') {
-  config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      warnings: false
+    plugins: plugins,
+
+    devServer: {
+      contentBase: [path.join(__dirname, 'src'), path.join(__dirname, 'src/js'), path.join(__dirname, 'src/css')],
+      hot: false,
+      watchContentBase: true,
+      port: 9000,
+      historyApiFallback: true
     }
-  }));
-}
-
-module.exports = config;
+  }
+};

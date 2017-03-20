@@ -1,13 +1,11 @@
 import React from 'react';
 
-class  Home extends React.Component {
-  render() {
-    return (
-      <h2 className="text-center">
-        Search By Github Username Above
-      </h2>
-    );
-  }
-}
+const Home = () => (
+  <div className="row">
+    <div className="col-md-12">
+      <h1 className="text-center">Search Github above by username</h1>
+    </div>
+  </div>
+);
 
 export default Home;

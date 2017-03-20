@@ -1,32 +1,58 @@
+import { browserHistory } from 'react-router';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { withRouter } from 'react-router';
 
 class SearchGithub extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      input: '',
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
   handleSubmit(e) {
     e.preventDefault();
-    const username = ReactDOM.findDOMNode(this.refs.username).value;
-    ReactDOM.findDOMNode(this.refs.username).value = '';
-    this.props.router.push(`/profile/${username}`);
+    const username = this.state.input;
+
+    browserHistory.push(`/profile/${username}`);
+  }
+  handleChange(e) {
+    this.setState({ input: e.target.value });
   }
   render() {
+    const inputStyles = {
+      marginRight: 10,
+      width: 350,
+    };
     return (
-      <div className="col-sm-12">
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <div className="form-group col-sm-7">
-            <input type="text" className="form-control" placeholder="Enter a username" ref="username" />
-          </div>
-          <div className="form-group col-sm-5">
-            <button type="submit" className="btn btn-block btn-primary">Search Github</button>
-          </div>
-        </form>
+      <div className="row" style={{ marginBottom: 10 }}>
+        <div className="col-sm-12 text-center">
+          <form className="form-inline" onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <input
+                type="text"
+                placeholder="Enter a username"
+                style={inputStyles}
+                className="form-control"
+                tabIndex="0"
+                value={this.state.input}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="form-group">
+              <button
+                type="submit"
+                tabIndex="0"
+                className="btn btn-block btn-primary"
+              >Search Github</button>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }
 }
 
-SearchGithub.PropTypes = {
-  router: React.PropTypes.object.isRequired,
-};
-
-export default withRouter(SearchGithub);
+export default SearchGithub;
