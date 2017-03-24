@@ -3,6 +3,7 @@ import getGithubInfo from '../utils/helpers';
 import UserProfile from './github/UserProfile';
 import UserRepos from './github/UserRepos';
 import UserNotes from './notes/UserNotes';
+import { loadState, saveState } from '../utils/localStorage';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -10,7 +11,6 @@ class Profile extends React.Component {
 
     this.state = {
       bio: {},
-      currentUser: '',
       notes: [],
       repos: [],
     };
@@ -29,23 +29,24 @@ class Profile extends React.Component {
   componentWillUnMount() {
     this.setState({
       bio: {},
-      currentUser: '',
       notes: [],
       repos: [],
     });
   }
   init(username) {
+    const repoNotes = loadState(username) || [];
+
     getGithubInfo(username)
       .then((data) => {
         this.setState({
           bio: data.bio,
           repos: data.repos,
-          notes: JSON.parse(localStorage.getItem(username)) || [],
+          notes: repoNotes,
         });
       });
   }
   handleAddNote(newNote) {
-    const username = this.state.currentUser;
+    const username = this.props.params.username;
     const key = Date.now();
     const notes = this.state.notes;
     const note = {
@@ -59,7 +60,7 @@ class Profile extends React.Component {
 
     notes.push(note);
 
-    localStorage.setItem(username, JSON.stringify(notes));
+    saveState(notes, username);
   }
   render() {
     return (

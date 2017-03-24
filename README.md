@@ -22,6 +22,10 @@ A basic React app that allows you to look up Github profiles and add Notes to th
 
 ## Version History
 
+###### Version 1.2.1
+- Moved local storage functions to own module located in the utils folder.
+- Fixed a issue with new notes not being saved to the correct repo.
+
 ###### Version 1.1.0
 - Switched to using Webpack for build process in both development and production.
 - Fixed issues following Eslint and made various improvements.
