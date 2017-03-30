@@ -1,6 +1,6 @@
 {
   "name": "github-note-taker",
-  "version": "1.2.1",
+  "version": "1.3.1",
   "description": "A React app that you can browse Github repositories with.",
   "repository": {
     "type": "git",

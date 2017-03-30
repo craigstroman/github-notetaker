@@ -5,7 +5,9 @@ const NotesList = props => (
   <ul className="list-group">
     {props.notes.map((note) => {
       return (
-        <li className="list-group-item" key={note.id}>{note.text}</li>
+        <li className="list-group-item" key={note.id}>
+          {note.text}
+        </li>
       );
     })}
   </ul>

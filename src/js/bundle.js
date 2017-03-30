@@ -14137,7 +14137,10 @@ var Profile = function (_React$Component) {
     _this.state = {
       bio: {},
       notes: [],
-      repos: []
+      repos: [],
+      loaded: false,
+      status: undefined,
+      statusText: undefined
     };
 
     _this.handleAddNote = _this.handleAddNote.bind(_this);
@@ -14163,7 +14166,10 @@ var Profile = function (_React$Component) {
       this.setState({
         bio: {},
         notes: [],
-        repos: []
+        repos: [],
+        loaded: false,
+        status: undefined,
+        statusText: undefined
       });
     }
   }, {
@@ -14174,11 +14180,23 @@ var Profile = function (_React$Component) {
       var repoNotes = (0, _localStorage.loadState)(username) || [];
 
       (0, _helpers2.default)(username).then(function (data) {
-        _this2.setState({
-          bio: data.bio,
-          repos: data.repos,
-          notes: repoNotes
-        });
+        if (typeof data.bio === 'undefined' && typeof data.repos === 'undefined') {
+          _this2.setState({
+            bio: undefined,
+            repos: undefined,
+            notes: undefined,
+            loaded: true,
+            status: data.message.response.status,
+            statusText: data.message.response.statusText
+          });
+        } else {
+          _this2.setState({
+            bio: data.bio,
+            repos: data.repos,
+            notes: repoNotes,
+            loaded: true
+          });
+        }
       });
     }
   }, {
@@ -14203,23 +14221,50 @@ var Profile = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var isFound = this.state.bio && this.state.repos && this.state.loaded;
+      var isLoaded = this.state.loaded;
+
       return _react2.default.createElement(
         'div',
-        { className: 'row' },
-        _react2.default.createElement(
+        null,
+        isFound ? _react2.default.createElement(
           'div',
-          { className: 'col-md-4' },
-          _react2.default.createElement(_UserProfile2.default, { bio: this.state.bio })
-        ),
-        _react2.default.createElement(
+          { className: 'row' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-4' },
+            _react2.default.createElement(_UserProfile2.default, { bio: this.state.bio })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-4' },
+            _react2.default.createElement(_UserRepos2.default, { repos: this.state.repos })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-4' },
+            _react2.default.createElement(_UserNotes2.default, { fullName: this.state.bio.name, addNote: this.handleAddNote, notes: this.state.notes })
+          )
+        ) : _react2.default.createElement(
           'div',
-          { className: 'col-md-4' },
-          _react2.default.createElement(_UserRepos2.default, { repos: this.state.repos })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'col-md-4' },
-          _react2.default.createElement(_UserNotes2.default, { fullName: this.state.bio.name, addNote: this.handleAddNote, notes: this.state.notes })
+          null,
+          isLoaded ? _react2.default.createElement(
+            'div',
+            { className: 'row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-md-12 text-danger' },
+              'Profile not found, please try another.'
+            )
+          ) : _react2.default.createElement(
+            'div',
+            { className: 'row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-md-12' },
+              'Loading...'
+            )
+          )
         )
       );
     }
@@ -14726,17 +14771,11 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function getRepos(username) {
-  return _axios2.default.get('https://api.github.com/users/' + username + '/repos');
-}
-
-function getUserInfo(username) {
-  return _axios2.default.get('https://api.github.com/users/' + username);
-}
-
 function getGithubInfo(username) {
-  return _axios2.default.all([getRepos(username), getUserInfo(username)]).then(function (arr) {
+  return _axios2.default.all([_axios2.default.get('https://api.github.com/users/' + username + '/repos'), _axios2.default.get('https://api.github.com/users/' + username)]).then(function (arr) {
     return { repos: arr[0].data, bio: arr[1].data };
+  }).catch(function (error) {
+    return { message: error };
   });
 }
 
