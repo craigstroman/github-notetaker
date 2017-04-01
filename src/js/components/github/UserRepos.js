@@ -5,7 +5,7 @@ const UserRepos = props => (
   <div>
     <h3 className="text-center">User Repos</h3>
     <ul className="list-group">
-      {props.repos.map((repo) => {
+      {props.reposList.map((repo) => {
         return (
           <li className="list-group-item" key={repo.name}>
             {repo.html_url && <h4><a href={repo.html_url} rel="noopener noreferrer">{repo.name}</a></h4>}
@@ -18,11 +18,11 @@ const UserRepos = props => (
 );
 
 UserRepos.defaultProps = {
-  repos: [],
+  reposList: [],
 };
 
 UserRepos.propTypes = {
-  repos: React.PropTypes.array.isRequired,
+  reposList: React.PropTypes.array.isRequired,
 };
 
 export default UserRepos;

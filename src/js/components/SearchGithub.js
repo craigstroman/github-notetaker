@@ -16,7 +16,9 @@ class SearchGithub extends React.Component {
     e.preventDefault();
     const username = this.state.input;
 
-    browserHistory.push(`/profile/${username}`);
+    if (username.length >= 1) {
+      browserHistory.push(`/profile/${username}`);
+    }
   }
   handleChange(e) {
     this.setState({ input: e.target.value });
@@ -29,13 +31,14 @@ class SearchGithub extends React.Component {
     return (
       <div className="row" style={{ marginBottom: 10 }}>
         <div className="col-sm-12 text-center">
-          <form className="form-inline" onSubmit={this.handleSubmit}>
+          <form className="form-inline" role="form" onSubmit={this.handleSubmit}>
             <div className="form-group">
               <input
                 type="text"
                 placeholder="Enter a username"
                 style={inputStyles}
                 className="form-control"
+                aria-label="Username search field"
                 tabIndex="0"
                 value={this.state.input}
                 onChange={this.handleChange}

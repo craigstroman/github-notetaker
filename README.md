@@ -22,6 +22,12 @@ A basic React app that allows you to look up Github profiles and add Notes to th
 
 ## Version History
 
+###### Version 1.4.1
+- Added a paginantion component for the user repos.
+- Set up validation for the search input field.
+- Refactored some of the methods.
+- Added more documentation for some of the methods.
+
 ###### Version 1.3.1
 - Added error message if a user is not found.
 
