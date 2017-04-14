@@ -46,16 +46,6 @@ class Pagination extends React.Component {
     this.setPage(this.props.initialPage);
   }
   /**
-   * Re-renders pagination if new user profile is being shown.
-   *
-   * @param  {Object} nextProps The nextProps object.
-   */
-  componentWillReceiveProps(nextProps) {
-    if (this.props.user !== nextProps.user) {
-      this.setPage(nextProps.initialPage, nextProps.items, nextProps.totalItems);
-    }
-  }
-  /**
    * Sets the page visible based on the page number clicked.
    *
    * @param {Number} page       A page number.
@@ -125,7 +115,6 @@ Pagination.defaultProps = {
   items: [],
   totalItems: 0,
   onChangePage: () => {},
-  user: '',
 };
 
 Pagination.propTypes = {
@@ -133,7 +122,6 @@ Pagination.propTypes = {
   items: React.PropTypes.array.isRequired,
   onChangePage: React.PropTypes.func.isRequired,
   totalItems: React.PropTypes.number,
-  user: React.PropTypes.string,
 };
 
 export default Pagination;

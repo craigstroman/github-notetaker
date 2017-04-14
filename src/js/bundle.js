@@ -14272,7 +14272,7 @@ var Profile = function (_React$Component) {
         null,
         isFound ? _react2.default.createElement(
           'div',
-          { className: 'row' },
+          { className: 'row', key: this.state.bio.login },
           _react2.default.createElement(
             'div',
             { className: 'col-md-4' },
@@ -14293,8 +14293,7 @@ var Profile = function (_React$Component) {
               items: this.state.repos,
               totalItems: this.state.bio.public_repos,
               onClick: this.handlePageClick,
-              onChangePage: this.handlePageChanged,
-              user: this.state.bio.login
+              onChangePage: this.handlePageChanged
             }) : null
           ),
           _react2.default.createElement(
@@ -14971,19 +14970,6 @@ var Pagination = function (_React$Component) {
       this.setPage(this.props.initialPage);
     }
     /**
-     * Re-renders pagination if new user profile is being shown.
-     *
-     * @param  {Object} nextProps The nextProps object.
-     */
-
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (this.props.user !== nextProps.user) {
-        this.setPage(nextProps.initialPage, nextProps.items, nextProps.totalItems);
-      }
-    }
-    /**
      * Sets the page visible based on the page number clicked.
      *
      * @param {Number} page       A page number.
@@ -15093,16 +15079,14 @@ Pagination.defaultProps = {
   initialPage: 1,
   items: [],
   totalItems: 0,
-  onChangePage: function onChangePage() {},
-  user: ''
+  onChangePage: function onChangePage() {}
 };
 
 Pagination.propTypes = {
   initialPage: _react2.default.PropTypes.number,
   items: _react2.default.PropTypes.array.isRequired,
   onChangePage: _react2.default.PropTypes.func.isRequired,
-  totalItems: _react2.default.PropTypes.number,
-  user: _react2.default.PropTypes.string
+  totalItems: _react2.default.PropTypes.number
 };
 
 exports.default = Pagination;

@@ -139,7 +139,7 @@ class Profile extends React.Component {
     return (
       <div>
         {isFound ? (
-          <div className="row">
+          <div className="row" key={this.state.bio.login}>
             <div className="col-md-4">
               <UserProfile bio={this.state.bio} />
             </div>
@@ -158,7 +158,6 @@ class Profile extends React.Component {
                   totalItems={this.state.bio.public_repos}
                   onClick={this.handlePageClick}
                   onChangePage={this.handlePageChanged}
-                  user={this.state.bio.login}
                 />
               ) : null}
             </div>
