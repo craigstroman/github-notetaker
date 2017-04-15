@@ -14128,6 +14128,7 @@ var Profile = function (_React$Component) {
 
     _this.getUserRepos = _this.getUserRepos.bind(_this);
     _this.handleAddNote = _this.handleAddNote.bind(_this);
+    _this.handleDeleteNote = _this.handleDeleteNote.bind(_this);
     _this.handlePageChanged = _this.handlePageChanged.bind(_this);
     _this.handleSetNewPage = _this.handleSetNewPage.bind(_this);
     _this.init = _this.init.bind(_this);
@@ -14261,6 +14262,24 @@ var Profile = function (_React$Component) {
 
       (0, _localStorage.saveState)(notes, username);
     }
+    /**
+     * Deletes a note from the state of notes.
+     *
+     * @param  {Object} note The note object containing the note id and note text to be deleted.
+     */
+
+  }, {
+    key: 'handleDeleteNote',
+    value: function handleDeleteNote(note) {
+      var username = this.props.params.username;
+      var notes = this.state.notes.filter(function (item) {
+        return item.id !== note.id;
+      });
+
+      this.setState({ notes: notes });
+
+      (0, _localStorage.saveState)(notes, username);
+    }
   }, {
     key: 'render',
     value: function render() {
@@ -14299,7 +14318,12 @@ var Profile = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'col-md-4' },
-            _react2.default.createElement(_UserNotes2.default, { fullName: this.state.bio.name, addNote: this.handleAddNote, notes: this.state.notes })
+            _react2.default.createElement(_UserNotes2.default, {
+              fullName: this.state.bio.name,
+              addNote: this.handleAddNote,
+              deleteNote: this.handleDeleteNote,
+              notes: this.state.notes
+            })
           )
         ) : _react2.default.createElement(
           'div',
@@ -14731,28 +14755,96 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* eslint arrow-body-style: 0 */
-var NotesList = function NotesList(props) {
-  return _react2.default.createElement(
-    "ul",
-    { className: "list-group" },
-    props.notes.map(function (note) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NotesList = function (_React$Component) {
+  _inherits(NotesList, _React$Component);
+
+  function NotesList(props) {
+    _classCallCheck(this, NotesList);
+
+    var _this = _possibleConstructorReturn(this, (NotesList.__proto__ || Object.getPrototypeOf(NotesList)).call(this, props));
+
+    _this.handleDelete = _this.handleDelete.bind(_this);
+    return _this;
+  }
+  /**
+   * Passes note to delete to parent component delete note method.
+   *
+   * @param  {Object} note The note text and note id to be deleted.
+   */
+
+
+  _createClass(NotesList, [{
+    key: "handleDelete",
+    value: function handleDelete(note) {
+      this.props.deleteNote(note);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var buttonStyles = {
+        paddingTop: 0,
+        paddingBottom: 0
+      };
       return _react2.default.createElement(
-        "li",
-        { className: "list-group-item", key: note.id },
-        note.text
+        "ul",
+        { className: "list-group clearfix" },
+        this.props.notes.map(function (note) {
+          return _react2.default.createElement(
+            "li",
+            { className: "list-group-item", key: note.id },
+            note.text,
+            _react2.default.createElement(
+              "div",
+              { className: "pull-right" },
+              _react2.default.createElement(
+                "button",
+                {
+                  type: "button",
+                  className: "btn btn-default",
+                  style: buttonStyles,
+                  "aria-label": "Delete note",
+                  onClick: function onClick() {
+                    _this2.handleDelete(note);
+                  }
+                },
+                _react2.default.createElement("span", {
+                  className: "glyphicon glyphicon-remove",
+                  "aria-hidden": "true"
+                })
+              )
+            )
+          );
+        })
       );
-    })
-  );
+    }
+  }]);
+
+  return NotesList;
+}(_react2.default.Component);
+
+NotesList.defaultProps = {
+  deleteNote: function deleteNote() {},
+  notes: []
 };
 
 NotesList.propTypes = {
+  deleteNote: _react2.default.PropTypes.func.isRequired,
   notes: _react2.default.PropTypes.array.isRequired
 };
 
@@ -14794,20 +14886,22 @@ var UserNotes = function UserNotes(props) {
       props.fullName
     ),
     _react2.default.createElement(_AddNote2.default, { addNote: props.addNote }),
-    _react2.default.createElement(_NotesList2.default, { notes: props.notes })
+    _react2.default.createElement(_NotesList2.default, { notes: props.notes, deleteNote: props.deleteNote })
   );
 };
 
 UserNotes.defaultProps = {
   fullName: '',
   notes: [],
-  addNote: function addNote() {}
+  addNote: function addNote() {},
+  deleteNote: function deleteNote() {}
 };
 
 UserNotes.propTypes = {
   fullName: _react2.default.PropTypes.string.isRequired,
   notes: _react2.default.PropTypes.array.isRequired,
-  addNote: _react2.default.PropTypes.func.isRequired
+  addNote: _react2.default.PropTypes.func.isRequired,
+  deleteNote: _react2.default.PropTypes.func.isRequired
 };
 
 exports.default = UserNotes;

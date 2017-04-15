@@ -23,6 +23,7 @@ class Profile extends React.Component {
 
     this.getUserRepos = this.getUserRepos.bind(this);
     this.handleAddNote = this.handleAddNote.bind(this);
+    this.handleDeleteNote = this.handleDeleteNote.bind(this);
     this.handlePageChanged = this.handlePageChanged.bind(this);
     this.handleSetNewPage = this.handleSetNewPage.bind(this);
     this.init = this.init.bind(this);
@@ -132,6 +133,19 @@ class Profile extends React.Component {
 
     saveState(notes, username);
   }
+  /**
+   * Deletes a note from the state of notes.
+   *
+   * @param  {Object} note The note object containing the note id and note text to be deleted.
+   */
+  handleDeleteNote(note) {
+    const username = this.props.params.username;
+    const notes = this.state.notes.filter(item => item.id !== note.id);
+
+    this.setState({ notes });
+
+    saveState(notes, username);
+  }
   render() {
     const isFound = this.state.bio && this.state.repos && this.state.loaded;
     const isLoaded = this.state.loaded;
@@ -162,7 +176,12 @@ class Profile extends React.Component {
               ) : null}
             </div>
             <div className="col-md-4">
-              <UserNotes fullName={this.state.bio.name} addNote={this.handleAddNote} notes={this.state.notes} />
+              <UserNotes
+                fullName={this.state.bio.name}
+                addNote={this.handleAddNote}
+                deleteNote={this.handleDeleteNote}
+                notes={this.state.notes}
+              />
             </div>
           </div>
         ) : (
