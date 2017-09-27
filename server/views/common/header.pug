@@ -1,0 +1,22 @@
+header
+  .header
+    .title
+      h1
+        a(href='/') GitHub Note Taker
+    if(user!==undefined)
+      div #{user.profile}
+      nav
+        .navigation
+          .dropdown
+            a(href='#' class='navbar-dropdown' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false')
+              span(class='glyphicon glyphicon-cog' aria-hidden='true')
+              span(class='glyphicon glyphicon-triangle-bottom' aria-hidden='true')
+            ul(class='dropdown-menu')
+              li
+                a(href='/dashboard') Settings
+              li
+                a(href='/logout') Logout
+    else
+      nav
+        .navigation
+          a(href="/login") Log In

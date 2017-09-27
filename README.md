@@ -1,26 +1,32 @@
 # Github Note Taker
 
-A basic React app that allows you to look up Github profiles and add Notes to those profiles.  Local storage is used for saving the notes.
+A basic React app that allows you to look up Github profiles and add Notes to those profiles.  A Mongo DB is used for storing a users notes.  Based on https://egghead.io/lessons/react-building-a-react-js-app-notetaker-introduction.
+
+
+## Live Demo
+https://frozen-waters-57350.herokuapp.com/
 
 ## Instructions for running locally:
 - git clone https://github.com/craigstroman/github-notetaker.git.
 - cd github-notetaker.
 - Run npm install.
-- Start server by typing npm run prod for production server.
-- Open browser to http://localhost:8080.
+- To run multiple commands like the server and dev environment open multiple terminal windows.
+- Once the server is started, then go to http://localhost:3000.
 
-## Instructions for development:
-- Shut down production server if running and type command npm run start to watch changes.
-- Open another terminal window and type npm run dev to start development server.
-- Then open browser to http://localhost:9000 to see changes.
-- Leave both processes running well making changes.
-
-## Instructions for making production build:
-- To make a production build type the command npm run build.  Files will be located in dist directory.
-- Start server by typing npm run prod.
-- Open browser to http://localhost:8080.
+## Available commands:
+1. `npm run live:client` - Starts the development environment for the client.
+1. `npm run live:server` - Starts the development environment for the server.
+1. `npm run scss` - Builds the CSS for the server views and watches for changes.
+1. `npm run prod:build` - Builds the production client.
+1. `npm run prod:server` - Starts the server in production.
 
 ## Version History
+
+###### Version 2.0.0
+- Converted to a MERN (Mongo, Express, React, Node) stack rather then use localstorage.
+- User can log in with a OAUTH account using Google, or Facebook to compose notes.
+- Switched to using Redux with React.
+- Reorganized the client app.
 
 ###### Version 1.5.2
 - Added the ability to delete individual notes from a profile of a repo.

@@ -10,6 +10,7 @@
   "ecmaFeatures": {"jsx": true},
   "extends": "airbnb",
   "rules": {
+    "no-underscore-dangle": 0,
     "max-len": [1, 130, 2, {ignoreComments: true}],
     "no-console": 0,
     "no-unused-vars": [1, {"vars": "local", "args": "none"}],

@@ -1,0 +1,23 @@
+.notes {
+  list-style-type: none;
+  margin: 0 auto;
+  -webkit-padding-start: 0;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  .notes__item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    display: block;
+    height: 100%;
+    padding: 10px 15px;
+    .notes__item--text {
+      display: inline-block;
+      text-align: left;
+      width: 90%;
+    }
+    .notes__item--btn {
+      display: inline-block;
+      width: 10%;
+    }
+  }
+}

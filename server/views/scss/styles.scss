@@ -1,0 +1,78 @@
+@import 'vendor/bootstrap/bootstrap';
+@import 'vendor/font-awesome/scss/font-awesome.scss';
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+body {
+  margin: 0;
+}
+
+.wrapper {
+  header {
+    .header {
+      border-bottom: 1px solid #ccc;
+      display: block;
+      height: 70px;
+      margin-bottom: 10px;
+      width: 100%;
+      .title,
+      .navigation {
+        float: left;
+        line-height: 70px;
+        vertical-align: middle;
+        width: 50%;
+      }
+      .title {
+        padding-left: 10px;
+        text-align: left;
+        h1 {
+          a {
+            color: #000;
+            &:hover,
+            &:active,
+            &:visited {
+              color: #000;
+            }
+          }
+        }
+      }
+      .navigation {
+        padding-right: 10px;
+        text-align: right;
+      }
+      .dropdown-trigger {
+        color: #000;
+        text-decoration: none;
+        outline: none;
+      }
+      .dropdown-menu {
+        left: auto;
+        top: 45px;
+        right: 0;
+      }
+    }
+  }
+  .btn-container {
+    margin-bottom: 10px;
+    .btn {
+      color: #fff;
+      font-size: 1em;
+      width: 200px;
+      .icon {
+        float: left;
+        &.fa-github {
+          color: #000;
+        }
+      }
+    }
+    .btn-github {
+      background-color: #666;
+      &:hover {
+        background-color: darken(#666, 10%);
+      }
+    }
+  }
+}
