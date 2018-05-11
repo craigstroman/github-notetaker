@@ -54,9 +54,6 @@ router.route('/api/sessionStatus').get(loggedIn, sessionStatus);
 // Notes for a particular repo
 router.route('/api/notes/:repo').get(loggedIn, getNotes);
 
-// Get all repos a user has posted notes for
-// router.route('/api/notes/findByUser/:user').get(loggedIn, findReposWithNotes);
-
 // New note
 router.route('/api/notes/:repo/:note').post(loggedIn, saveNote);
 
