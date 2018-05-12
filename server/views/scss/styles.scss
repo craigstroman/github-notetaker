@@ -10,6 +10,7 @@ body {
   margin: 0;
 }
 
+
 .wrapper {
   header {
     .header {
@@ -61,17 +62,9 @@ body {
       color: #fff;
       font-size: 1em;
       width: 200px;
-      .icon {
+      .social-icon {
         float: left;
-        &.fa-github {
-          color: #000;
-        }
-      }
-    }
-    .btn-github {
-      background-color: #666;
-      &:hover {
-        background-color: darken(#666, 10%);
+        font-size: 1.5em;
       }
     }
   }

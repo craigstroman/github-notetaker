@@ -9,7 +9,7 @@
   "main": "src/js/app.js",
   "scripts": {
     "start": "NODE_ENV=production babel-node ./server/index.js",
-    "scss": "node-sass client/css/scss/styles.scss client/css/styles.css -w -o",
+    "scss": "node-sass server/views/scss/styles.scss public/css/styles.css -w -o",
     "js": "NODE_ENV=development webpack --config webpack.config.dev.js --progress --watch",
     "copy-files": "copyfiles -f ./client/css/styles.css ./public/css & copyfiles -f ./client/js/libs/*.js ./public/js/libs & copyfiles -f ./client/fonts/bootstrap/*.* ./public/fonts/bootstrap",
     "live:client": "NODE_ENV=development webpack --config webpack.config.dev.js --progress --watch",
