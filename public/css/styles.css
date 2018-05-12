@@ -7244,6 +7244,10 @@ body {
   .wrapper header .header .navigation {
     padding-right: 10px;
     text-align: right; }
+    .wrapper header .header .navigation .dropdown .navbar-dropdown .icon {
+      color: #000; }
+      .wrapper header .header .navigation .dropdown .navbar-dropdown .icon:first-child {
+        margin-right: 5px; }
   .wrapper header .header .dropdown-trigger {
     color: #000;
     text-decoration: none;

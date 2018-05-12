@@ -43,6 +43,16 @@ body {
       .navigation {
         padding-right: 10px;
         text-align: right;
+        .dropdown {
+          .navbar-dropdown {
+            .icon {
+              color: #000;
+              &:first-child {
+                margin-right: 5px;
+              }
+            }
+          }
+        }
       }
       .dropdown-trigger {
         color: #000;
