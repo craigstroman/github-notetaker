@@ -3,7 +3,6 @@
   var toggleIcon = document.getElementsByClassName('icon')[0];
   var dropDownMenu = document.getElementsByClassName('dropdown-menu')[0];
 
-
   if (toggleMenu !== undefined) {
     toggleMenu.addEventListener('click', function(e) {
       if (dropDownMenu.style.display === 'block') {
