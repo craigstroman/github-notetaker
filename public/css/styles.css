@@ -7266,3 +7266,11 @@ body {
     .wrapper .btn-container .btn .social-icon {
       float: left;
       font-size: 1.5em; }
+  .wrapper .btn-container .btn-google {
+    background-color: #d34836; }
+    .wrapper .btn-container .btn-google:hover {
+      background-color: #b03626; }
+  .wrapper .btn-container .btn-facebook {
+    background-color: #3B5998; }
+    .wrapper .btn-container .btn-facebook:hover {
+      background-color: #2d4373; }

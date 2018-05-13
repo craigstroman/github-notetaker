@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { facebookLogin, googleLogin, login, logout, main, sessionStatus } from '../controllers/main/index';
+import { facebookLogin, googleLogin, twitterLogin, login, logout, main, sessionStatus } from '../controllers/main/index';
 import { dashboard, settings } from '../controllers/dashboard/index';
 import { deleteNote, findReposWithNotes, getNotes, saveNote, updateNote } from '../controllers/notes/index';
 import { getProfile, getRepos } from '../controllers/github/index';
