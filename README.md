@@ -22,6 +22,9 @@ https://frozen-waters-57350.herokuapp.com/
 
 ## Version History
 
+###### Version 2.1.0
+- Refactored router for the React client.
+
 ###### Version 2.0.0
 - Converted to a MERN (Mongo, Express, React, Node) stack rather then use localstorage.
 - User can log in with a OAUTH account using Google, or Facebook to compose notes.
