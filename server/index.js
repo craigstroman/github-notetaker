@@ -6,7 +6,7 @@ import http from 'http';
 /**
  * Get PORT from environment and store in Express.
  */
-const port = normalizePort(process.env.PORT || config.get('PORT'));
+const port = normalizePort(config.get('PORT'));
 app.set('port', port);
 
 const server = http.createServer(app);

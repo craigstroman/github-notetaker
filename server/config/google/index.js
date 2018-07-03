@@ -1,3 +1,4 @@
+import config from 'config';
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 export default function(User, passport) {
@@ -9,6 +10,7 @@ export default function(User, passport) {
       passReqToCallback : true
   },
   function(req, token, refreshToken, profile, done) {
+    console.log('Google login: ');
       process.nextTick(function() {
         User.findOrCreate({
           id: profile.id,

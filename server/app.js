@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import express from 'express';
+import config from 'config';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 import path from 'path';
@@ -18,17 +19,10 @@ const filePath = (nodeEnv === 'development') ? '../client' : '../public';
 
 const javascript = (nodeEnv === 'development') ?  '/static/js/bundle.js' : '/static/js/main.min.js';
 
-const uriString = process.env.MONGODB_URI ||
-                            'mongodb://localhost/gitHubNoteTaker';
+const uriString = process.env.GITHUB_MONGODB_URI || 'mongodb://localhost/gitHubNoteTaker';
 
 mongoose.Promise = global.Promise;
-mongoose.connect(uriString, (err, res) => {
-    if ( err ) {
-        console.log('ERROR connecting to:' + uriString + '.' + err);
-    } else {
-        console.log('Succeeded connected to: ' + uriString);
-    }
-});
+mongoose.connect(uriString, { useMongoClient: true });
 
 auth(passport); // pass passport for configuration
 

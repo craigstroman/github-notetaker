@@ -22,6 +22,10 @@ https://github-notetaker.stromannet.com/
 
 ## Version History
 
+###### Version 2.2.0
+- Fixes to header view on server.
+- CSS fixes on client side.
+
 ###### Version 2.1.0
 - Refactored router for the React client.
 

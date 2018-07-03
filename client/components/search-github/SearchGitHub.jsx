@@ -34,7 +34,7 @@ class SearchGithub extends React.Component {
               <input
                 type="text"
                 placeholder="Enter a username"
-                className="form-control input-search"
+                className="form-control"
                 aria-label="Username search field"
                 tabIndex="0"
                 value={this.state.input}

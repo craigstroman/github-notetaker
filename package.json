@@ -1,6 +1,6 @@
 {
   "name": "github-note-taker",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A React app that you can browse Github repositories with.",
   "repository": {
     "type": "git",
@@ -64,6 +64,7 @@
     "cross-fetch": "^2.1.0",
     "express": "^4.15.5",
     "express-session": "^1.15.6",
+    "express-session-mongo": "^0.1.0",
     "html-to-text": "^3.3.0",
     "lodash": "^4.17.5",
     "mongoose": "^4.11.13",

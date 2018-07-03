@@ -7225,37 +7225,112 @@ body {
 .wrapper header .header {
   border-bottom: 1px solid #ccc;
   display: block;
-  height: 70px;
+  height: 130px;
   margin-bottom: 10px;
-  width: 100%; }
-  .wrapper header .header .title,
-  .wrapper header .header .navigation {
-    float: left;
-    line-height: 70px;
-    vertical-align: middle;
-    width: 50%; }
+  vertical-align: middle;
+  width: 100%;
+  /* Small devices (tablets, >= 768px and <= 991px) */
+  /* Medium devices (desktops, >= 992px and <= 1100px) */
+  /* Large devices (large desktops, 1200px and up) */ }
+  @media (min-width: 768px) and (max-width: 991px) {
+    .wrapper header .header {
+      height: 130px; } }
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .wrapper header .header {
+      height: 70px; } }
+  @media (min-width: 1200px) {
+    .wrapper header .header {
+      height: 70px; } }
   .wrapper header .header .title {
+    display: inline-block;
+    height: 80%;
     padding-left: 10px;
-    text-align: left; }
-    .wrapper header .header .title h1 a {
-      color: #000; }
-      .wrapper header .header .title h1 a:hover, .wrapper header .header .title h1 a:active, .wrapper header .header .title h1 a:visited {
+    text-align: center;
+    width: 100%;
+    /* Small devices (tablets, >= 768px and <= 991px) */
+    /* Medium devices (desktops, >= 992px and <= 1100px) */
+    /* Large devices (large desktops, 1200px and up) */ }
+    @media (min-width: 768px) and (max-width: 991px) {
+      .wrapper header .header .title {
+        display: block;
+        height: 80%;
+        text-align: center;
+        width: 100%; } }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .wrapper header .header .title {
+        display: inline-block;
+        height: 100%;
+        text-align: left;
+        width: 75%; } }
+    @media (min-width: 1200px) {
+      .wrapper header .header .title {
+        display: inline-block;
+        height: 100%;
+        text-align: left;
+        width: 75%; } }
+    .wrapper header .header .title h1 {
+      width: 100%; }
+      .wrapper header .header .title h1 a {
         color: #000; }
-  .wrapper header .header .navigation {
-    padding-right: 10px;
-    text-align: right; }
-    .wrapper header .header .navigation .dropdown .navbar-dropdown .icon {
-      color: #000; }
-      .wrapper header .header .navigation .dropdown .navbar-dropdown .icon:first-child {
-        margin-right: 5px; }
-  .wrapper header .header .dropdown-trigger {
-    color: #000;
-    text-decoration: none;
-    outline: none; }
-  .wrapper header .header .dropdown-menu {
-    left: auto;
-    top: 45px;
-    right: 0; }
+        .wrapper header .header .title h1 a:hover, .wrapper header .header .title h1 a:active, .wrapper header .header .title h1 a:visited {
+          color: #000; }
+  .wrapper header .header nav {
+    display: block;
+    height: 100%;
+    text-align: left;
+    width: 100%;
+    /* Small devices (tablets, >= 768px and <= 991px) */
+    /* Medium devices (desktops, >= 992px and <= 1100px) */
+    /* Large devices (large desktops, 1200px and up) */ }
+    @media (min-width: 768px) and (max-width: 991px) {
+      .wrapper header .header nav {
+        display: inline-block;
+        text-align: right;
+        width: 25%; } }
+    @media (min-width: 992px) and (max-width: 1199px) {
+      .wrapper header .header nav {
+        display: inline-block;
+        text-align: right;
+        width: 25%; } }
+    @media (min-width: 1200px) {
+      .wrapper header .header nav {
+        display: inline-block;
+        text-align: right;
+        width: 25%; } }
+    .wrapper header .header nav .navigation {
+      height: 100%;
+      padding-right: 10px;
+      width: auto; }
+      .wrapper header .header nav .navigation .dropdown .navbar-dropdown .icon {
+        color: #000; }
+        .wrapper header .header nav .navigation .dropdown .navbar-dropdown .icon:first-child {
+          margin-right: 5px; }
+    .wrapper header .header nav .dropdown-trigger {
+      color: #000;
+      text-decoration: none;
+      outline: none; }
+    .wrapper header .header nav .dropdown-menu {
+      left: 5px;
+      top: 25px;
+      right: auto;
+      /* Small devices (tablets, >= 768px and <= 991px) */
+      /* Medium devices (desktops, >= 992px and <= 1100px) */
+      /* Large devices (large desktops, 1200px and up) */ }
+      @media (min-width: 768px) and (max-width: 991px) {
+        .wrapper header .header nav .dropdown-menu {
+          left: 5px;
+          top: 25px;
+          right: auto; } }
+      @media (min-width: 992px) and (max-width: 1199px) {
+        .wrapper header .header nav .dropdown-menu {
+          left: auto;
+          top: 45px;
+          right: 0; } }
+      @media (min-width: 1200px) {
+        .wrapper header .header nav .dropdown-menu {
+          left: auto;
+          top: 45px;
+          right: 0; } }
 
 .wrapper .btn-container {
   margin-bottom: 10px; }

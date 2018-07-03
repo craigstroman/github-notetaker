@@ -1,5 +1,6 @@
 @import 'vendor/bootstrap/bootstrap';
 @import 'vendor/font-awesome/scss/font-awesome.scss';
+@import 'mixins';
 
 .row {
   margin-left: 0;
@@ -16,20 +17,45 @@ body {
     .header {
       border-bottom: 1px solid #ccc;
       display: block;
-      height: 70px;
+      height: 130px;
       margin-bottom: 10px;
+      vertical-align: middle;
       width: 100%;
-      .title,
-      .navigation {
-        float: left;
-        line-height: 70px;
-        vertical-align: middle;
-        width: 50%;
+      @include media(tablet) {
+        height: 130px;
+      }
+      @include media(mediumDesktop) {
+        height: 70px;
+      }
+      @include media(largeDesktop) {
+        height: 70px;
       }
       .title {
+        display: inline-block;
+        height: 80%;
         padding-left: 10px;
-        text-align: left;
+        text-align: center;
+        width: 100%;
+        @include media(tablet) {
+          display: block;
+          height: 80%;
+          text-align: center;
+          width: 100%;
+        }
+        @include media(mediumDesktop) {
+          display: inline-block;
+          height: 100%;
+          text-align: left;
+          width: 75%;
+        }
+        @include media(largeDesktop) {
+          display: inline-block;
+          height: 100%;
+          text-align: left;
+          width: 75%;
+        }
         h1 {
+          width: 100%;
           a {
             color: #000;
             &:hover,
@@ -40,29 +66,66 @@ body {
           }
         }
       }
-      .navigation {
-        padding-right: 10px;
-        text-align: right;
-        .dropdown {
-          .navbar-dropdown {
-            .icon {
-              color: #000;
-              &:first-child {
-                margin-right: 5px;
+      nav {
+        display: block;
+        height: 100%;
+        text-align: left;
+        width: 100%;
+        @include media(tablet) {
+          display: inline-block;
+          text-align: right;
+          width: 25%;
+        }
+        @include media(mediumDesktop) {
+          display: inline-block;
+          text-align: right;
+          width: 25%;
+        }
+        @include media(largeDesktop) {
+          display: inline-block;
+          text-align: right;
+          width: 25%;
+        }
+        .navigation {
+          height: 100%;
+          padding-right: 10px;
+          width: auto;
+          .dropdown {
+            .navbar-dropdown {
+              .icon {
+                color: #000;
+                &:first-child {
+                  margin-right: 5px;
+                }
               }
             }
           }
         }
-      }
-      .dropdown-trigger {
-        color: #000;
-        text-decoration: none;
-        outline: none;
-      }
-      .dropdown-menu {
-        left: auto;
-        top: 45px;
-        right: 0;
+        .dropdown-trigger {
+          color: #000;
+          text-decoration: none;
+          outline: none;
+        }
+        .dropdown-menu {
+          left: 5px;
+          top: 25px;
+          right: auto;
+          @include media(tablet) {
+            left: 5px;
+            top: 25px;
+            right: auto;
+          }
+          @include media(mediumDesktop) {
+            left: auto;
+            top: 45px;
+            right: 0;
+          }
+          @include media(largeDesktop) {
+            left: auto;
+            top: 45px;
+            right: 0;
+          }
+        }
       }
     }
   }
