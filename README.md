@@ -22,6 +22,9 @@ https://github-notetaker.stromannet.com/
 
 ## Version History
 
+###### Version 2.3.0
+- Upgraded version of React and React-Dom being used.
+
 ###### Version 2.2.0
 - Fixes to header view on server.
 - CSS fixes on client side.
