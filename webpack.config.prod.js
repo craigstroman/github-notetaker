@@ -1,71 +1,86 @@
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-module.exports = env => {
-  const nodeEnv = process.env.NODE_ENV;
-  const filePath = path.join(__dirname, './public/js/');
-  const fileName = 'main.min.js';
+const nodeEnv = process.env.NODE_ENV;
+const filePath = path.join(__dirname, './public/js/');
+const fileName = 'main.min.js';
 
-  const plugins = [
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: nodeEnv,
-    })
-  ];
+const PATHS = {
+  src: path.join(__dirname, './client'),
+  dist: path.join(__dirname, './public'),
+};
 
-  return {
-    entry: {
-       app: path.join(__dirname, 'client/containers/App.jsx')
-    },
+module.exports = {
+  mode: 'development',
 
-    output: {
-      path: filePath,
-      filename: fileName,
-    },
+  entry: {
+    app: path.join(__dirname, 'client/containers/App.jsx'),
+  },
 
-    resolve: {
-      extensions: [
-        '.js','.jsx'
-      ]
-    },
+  output: {
+    publicPath: '/static/js/',
+    path: filePath,
+    filename: fileName,
+  },
 
-    module: {
-      loaders: [
-         {
-           enforce: 'pre',
-           test: /\.(js|jsx)$/,
-           exclude: [/node_modules/, path.resolve(__dirname, 'public/js/main.min.js')],
-           loader: 'eslint-loader',
-          options: {
-            emitError: true,
-            emitWarning: true,
-            failOnError: false
-          }
-         },
-        {
-          test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
+  watch: false,
+  watchOptions: {
+    ignored: '/node_modules/',
+  },
+
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
           loader: 'babel-loader',
-          query: {
-            presets: ['es2015']
-          }
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+            plugins: [['@babel/plugin-proposal-object-rest-spread']],
+          },
         },
-        {
-            test: /\.scss$/,
-            loaders: ['style-loader', 'css-loader', 'sass-loader']
-        }
-      ]
-    },
-
-    plugins: [
-      new UglifyJsPlugin({
-        cache: true
-      }),
-      new webpack.DefinePlugin({
-        'process.env': {
-          'NODE_ENV': JSON.stringify('production')
-        }
-      })
-    ]
-  }
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: [/node_modules/, path.resolve(__dirname, 'public/js/main.min.js')],
+        use: {
+          loader: 'eslint-loader',
+          options: './client/.eslintrc.js',
+        },
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'style-loader', // creates style nodes from JS strings
+          },
+          {
+            loader: 'css-loader', // translates CSS into CommonJS
+          },
+          {
+            loader: 'sass-loader', // compiles Sass to CSS
+          },
+        ],
+      },
+      {
+        test: /\.(svg|woff|woff2|ttf|eot|otf)([\?]?.*)$/,
+        loader: 'file-loader?name=node_modules/@fortawesome/fontawesome-free/webfonts[name].[ext]',
+      },
+    ],
+  },
+  plugins: [
+    new UglifyJsPlugin({
+      cache: true,
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
+  ],
 };

@@ -1,21 +1,20 @@
-import mongoose from 'mongoose';
-import findOrCreate from 'mongoose-find-or-create';
-
-const Schema = mongoose.Schema;
-
-const userSchema = new Schema({
-  id: String,
-  token: String,
-  email: String,
-  name: String,
-  picture: String,
-  provider: String,
-},{
-  timestamps: true,
-});
-
-userSchema.plugin(findOrCreate);
-
-const User = mongoose.model('User', userSchema);
-
-export default User;
+export default (sequelize, DataTypes) => {
+  const user = sequelize.define(
+    'user',
+    {
+      user_id: DataTypes.STRING,
+      token: DataTypes.STRING,
+      email: DataTypes.STRING,
+      name: DataTypes.STRING,
+      picture: DataTypes.STRING,
+      provider: DataTypes.STRING,
+    },
+    {
+      underscored: true,
+    },
+  );
+  user.associate = function (models) {
+    // associations can be defined here
+  };
+  return user;
+};

@@ -6,7 +6,14 @@ import http from 'http';
 /**
  * Get PORT from environment and store in Express.
  */
-const port = normalizePort(config.get('PORT'));
+let port = 0;
+
+if (process.env.NODE_ENV === 'development') {
+  port = 3000;
+} else if (process.env.NODE_ENV === 'production') {
+  port = 49153;
+}
+
 app.set('port', port);
 
 const server = http.createServer(app);
@@ -45,9 +52,7 @@ function onError(error) {
     throw error;
   }
 
-  const bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -70,9 +75,6 @@ function onError(error) {
 
 function onListening() {
   const addr = server.address();
-  const bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+  const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   debug('MERNjs:app')('Listening on ' + bind + ' in ' + app.get('env') + ' env');
 }
-

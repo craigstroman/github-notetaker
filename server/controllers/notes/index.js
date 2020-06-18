@@ -1,8 +1,21 @@
 import cuid from 'cuid';
 import striptags from 'striptags';
-import Notes from '../../models/notes';
+
+const models = require('../../models/index');
+//console.log('models: ', models);
+//import Notes from '../../models/notes';
 
 export function getNotes(req, res) {
+  console.log('getNotes: ');
+
+  const Notes = models.default.Notes;
+
+  // console.log('Notes: ');
+  // console.log(Notes);
+
+  // TODO: Continue working on converting to new sequelize functions from documentation for find.
+  // Find the user_id first for look up of notes based of the profile_id from req.user
+
   if (!req.user) {
     return res.status(403).end();
   } else if (!req.params.repo) {
@@ -12,16 +25,16 @@ export function getNotes(req, res) {
   const repoName = req.params.repo;
   const user = req.user;
 
-  Notes.find({
-    repo: repoName,
-    user,
-  }).exec((err, notes) => {
-    if (err) {
-      res.status(500).send(err).end();
-    } else {
-      res.send({notes});
-    }
-  });
+  // Notes.find({
+  //   repo: repoName,
+  //   user,
+  // }).exec((err, notes) => {
+  //   if (err) {
+  //     res.status(500).send(err).end();
+  //   } else {
+  //     res.send({ notes });
+  //   }
+  // });
 }
 
 export function saveNote(req, res) {
@@ -42,14 +55,18 @@ export function saveNote(req, res) {
     user,
   });
 
-  newNote.save()
+  newNote
+    .save()
     .then((resp) => {
       res.send(resp);
     })
     .catch((err) => {
-      res.status(500).send({
-        error: err
-      }).end();
+      res
+        .status(500)
+        .send({
+          error: err,
+        })
+        .end();
     });
 }
 
@@ -64,14 +81,13 @@ export function updateNote(req, res) {
   const note_id = req.params.note_id;
   const note_text = striptags(req.params.note);
 
-  Notes.update({ '_id': note_id }, {$set: { 'text': note_text }}, function(err, result){
-      if (err) {
-          console.log('Error updating object: ' + err);
-          res.send({'error':'An error has occurred'});
-      } else {
-
-          res.send({ success: true });
-      }
+  Notes.update({ _id: note_id }, { $set: { text: note_text } }, function (err, result) {
+    if (err) {
+      console.log('Error updating object: ' + err);
+      res.send({ error: 'An error has occurred' });
+    } else {
+      res.send({ success: true });
+    }
   });
 }
 
@@ -97,5 +113,3 @@ export function deleteNote(req, res) {
     });
   });
 }
-
-

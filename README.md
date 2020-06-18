@@ -22,6 +22,12 @@ https://github-notetaker.stromannet.com/
 
 ## Version History
 
+###### Version 3.0.0
+- Switched to using PostgreSQL and Sequelize.
+- Upgraded Node-SASS.
+- Upgraded NPM passport-google-oauth.
+- Swiched from  Node Env File to DotENV.
+
 ###### Version 2.3.0
 - Upgraded version of React and React-Dom being used.
 

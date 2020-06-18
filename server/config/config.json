@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "githubnotetaker",
+    "password": null,
+    "database": "github_notetaker",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "githubnotetaker",
+    "password": null,
+    "database": "github_notetaker",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": false
+  },
+  "production": {
+    "username": "githubnotetaker",
+    "password": null,
+    "database": "github_notetaker",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "operatorsAliases": false
+  }
+}

@@ -9,7 +9,9 @@ import AddNote from './add/AddNote';
 
 class Notes extends React.Component {
   componentDidMount() {
-    const { match: { params } } = this.props;
+    const {
+      match: { params },
+    } = this.props;
     const username = params.username;
 
     this.props.dispatch(fetchNotes(username));
@@ -24,7 +26,9 @@ class Notes extends React.Component {
 
     if (error) {
       return (
-        <div><Login /></div>
+        <div>
+          <Login />
+        </div>
       );
     }
 
@@ -42,7 +46,7 @@ class Notes extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   notes: state.notesReducer.notes,
   loading: state.notesReducer.loading,
   error: state.notesReducer.error,
