@@ -15,12 +15,14 @@ export default function (User, passport) {
       function (req, token, refreshToken, profile, done) {
         process.nextTick(async function () {
           try {
+            const name = `${profile.name.givenName} ${profile.name.familyName}`;
+
             const user = await User.findOrCreate({
               where: { user_id: profile.id },
               defaults: {
                 user_id: profile.id,
                 token,
-                name: profile.displayName,
+                name,
                 email: (profile.emails[0].value || '').toLowerCase(),
                 picture: profile.photos[0].value,
                 provider: 'facebook',

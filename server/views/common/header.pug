@@ -8,8 +8,10 @@ header
         .navigation
           .dropdown
             a(href='#' class='navbar-dropdown' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false')
-              i.fa.fa-cog.icon(aria-hidden='true')
-              i.fa.fa-arrow-circle-down.icon(aria-hidden='true')
+              if(user.picture != '')
+                img(src=user.picture class='profile-picture')
+              else
+                i.fa.fa-arrow-circle-down.icon(aria-hidden='true')
             ul(class='dropdown-menu')
               li
                 a(href='/dashboard') Settings
