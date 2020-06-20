@@ -28,11 +28,6 @@ export function getProfile(req, res) {
         error,
       });
     });
-
-  // Test to see if user logged in, if logged in get notes.
-  if (req.user) {
-    getNotes(req, res);
-  }
 }
 
 export function getRepos(req, res) {

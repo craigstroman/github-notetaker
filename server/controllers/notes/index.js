@@ -1,21 +1,12 @@
 import cuid from 'cuid';
 import striptags from 'striptags';
 
+// TODO: Continue working on fixing remove function.
+
 const models = require('../../models/index');
-//console.log('models: ', models);
-//import Notes from '../../models/notes';
+const Notes = models.default.Notes;
 
 export function getNotes(req, res) {
-  console.log('getNotes: ');
-
-  const Notes = models.default.Notes;
-
-  // console.log('Notes: ');
-  // console.log(Notes);
-
-  // TODO: Continue working on converting to new sequelize functions from documentation for find.
-  // Find the user_id first for look up of notes based of the profile_id from req.user
-
   if (!req.user) {
     return res.status(403).end();
   } else if (!req.params.repo) {
@@ -24,17 +15,25 @@ export function getNotes(req, res) {
 
   const repoName = req.params.repo;
   const user = req.user;
+  const userId = user.id;
 
-  // Notes.find({
-  //   repo: repoName,
-  //   user,
-  // }).exec((err, notes) => {
-  //   if (err) {
-  //     res.status(500).send(err).end();
-  //   } else {
-  //     res.send({ notes });
-  //   }
-  // });
+  Notes.findAll({
+    where: {
+      user_id: userId,
+    },
+    raw: true,
+  })
+    .then((notes) => {
+      res.status(200).send({ notes });
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({
+          error: err,
+        })
+        .end();
+    });
 }
 
 export function saveNote(req, res) {
@@ -46,13 +45,12 @@ export function saveNote(req, res) {
 
   const note = striptags(req.params.note);
   const repo = req.params.repo;
-  const user = req.user;
+  const userId = req.user.id;
 
   const newNote = new Notes({
-    _id: cuid(),
     text: note,
     repo,
-    user,
+    user_id: userId,
   });
 
   newNote
@@ -101,15 +99,22 @@ export function deleteNote(req, res) {
   const repo = req.params.repo;
   const note_id = req.params.note_id;
 
-  Notes.findOne({
-    _id: note_id,
-    repo,
-  }).exec((err, note) => {
-    Notes.remove(note, (err, obj) => {
-      if (err) {
-        res.status(500).send(err);
+  Notes.destroy({
+    where: {
+      id: note_id,
+    },
+  })
+    .then((result) => {
+      if (result) {
+        res.status(200).send({ id: parseInt(note_id) });
       }
-      res.send(note);
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({
+          error: err,
+        })
+        .end();
     });
-  });
 }

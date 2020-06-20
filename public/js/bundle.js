@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "373965c7f995a98b5431";
+/******/ 	var hotCurrentHash = "a73092b042f1f346b96c";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -905,10 +905,10 @@ var addNotesError = function addNotesError(error) {
 var nodeEnv = "development";
 var apiUrl = nodeEnv === 'production' ? '/api' : 'http://localhost:3000/api';
 function addNote(repo, note) {
+  var url = "".concat(apiUrl, "/notes/").concat(repo, "/").concat(note);
   return function (dispatch) {
-    console.log('addNotesBegin: ');
     dispatch(addNotesBegin());
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("".concat(apiUrl, "/notes/").concat(repo, "/").concat(note)).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url).then(function (res) {
       dispatch(addNotesSuccess(res.data));
       return res.data;
     })["catch"](function (err) {
@@ -965,9 +965,10 @@ var fetchNotesFailure = function fetchNotesFailure(error) {
 var nodeEnv = "development";
 var apiUrl = nodeEnv === 'production' ? '/api' : 'http://localhost:3000/api';
 function fetchNotes(repo) {
+  var url = "".concat(apiUrl, "/notes/").concat(repo);
   return function (dispatch) {
     dispatch(fetchNotesBegin());
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(apiUrl, "/notes/").concat(repo)).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url).then(function (res) {
       console.log('notes: ', res);
       dispatch(fetchNotesSuccess(res.data));
       return res.data;
@@ -1025,9 +1026,10 @@ var removeNotesError = function removeNotesError(error) {
 var nodeEnv = "development";
 var apiUrl = nodeEnv === 'production' ? '/api' : 'http://localhost:3000/api';
 function removeNote(repo, noteId) {
+  var url = "".concat(apiUrl, "/notes/").concat(repo, "/").concat(noteId);
   return function (dispatch) {
     dispatch(removeNotesBegin());
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("".concat(apiUrl, "/notes/").concat(repo, "/").concat(noteId)).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](url).then(function (res) {
       dispatch(removeNotesSuccess(res.data));
       return res.data;
     })["catch"](function (err) {
@@ -1581,6 +1583,7 @@ var Notes = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var params = this.props.match.params;
       var username = params.username;
+      console.log('username: ', username);
       this.props.dispatch(Object(_actions_notes_actions_fetch__WEBPACK_IMPORTED_MODULE_4__["fetchNotes"])(username));
     }
   }, {
@@ -1913,7 +1916,8 @@ var NotesList = /*#__PURE__*/function (_React$Component) {
     key: "handleDelete",
     value: function handleDelete(note) {
       var username = this.props.match.params.username;
-      this.props.dispatch(Object(_actions_notes_actions_remove__WEBPACK_IMPORTED_MODULE_6__["removeNote"])(username, note._id));
+      var noteId = note.id;
+      this.props.dispatch(Object(_actions_notes_actions_remove__WEBPACK_IMPORTED_MODULE_6__["removeNote"])(username, noteId));
     }
   }, {
     key: "render",
@@ -2440,7 +2444,7 @@ function notesReducer() {
         loading: false,
         error: null,
         notes: _toConsumableArray(state.notes.filter(function (item) {
-          return item._id !== action.payload.data._id;
+          return item.id !== action.payload.data.id;
         }))
       });
 

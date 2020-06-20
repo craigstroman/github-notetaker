@@ -14,6 +14,8 @@ class Notes extends React.Component {
     } = this.props;
     const username = params.username;
 
+    console.log('username: ', username);
+
     this.props.dispatch(fetchNotes(username));
   }
   componentWillReceiveProps(nextProps) {

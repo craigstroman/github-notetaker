@@ -10,28 +10,31 @@ export const fetchNotesBegin = () => ({
   type: FETCH_NOTES_BEGIN,
 });
 
-export const fetchNotesSuccess = data => ({
+export const fetchNotesSuccess = (data) => ({
   type: FETCH_NOTES_SUCCESS,
   payload: { data },
 });
 
-export const fetchNotesFailure = error => ({
+export const fetchNotesFailure = (error) => ({
   type: FETCH_NOTES_FAILURE,
   payload: { error },
 });
 
 const nodeEnv = process.env.NODE_ENV;
-const apiUrl = (nodeEnv === 'production') ? '/api' : 'http://localhost:3000/api';
+const apiUrl = nodeEnv === 'production' ? '/api' : 'http://localhost:3000/api';
 
 export function fetchNotes(repo) {
+  const url = `${apiUrl}/notes/${repo}`;
+
   return (dispatch) => {
     dispatch(fetchNotesBegin());
-    axios.get(`${apiUrl}/notes/${repo}`)
+    axios
+      .get(url)
       .then((res) => {
         console.log('notes: ', res);
         dispatch(fetchNotesSuccess(res.data));
         return res.data;
       })
-      .catch(err => dispatch(fetchNotesFailure(err)));
+      .catch((err) => dispatch(fetchNotesFailure(err)));
   };
 }
