@@ -159,5 +159,11 @@ body {
         background-color: darken(#3B5998, 10%);
       }
     }
+    .btn-github {
+      background-color: #444444;
+      &:hover {
+        background-color: darken(#444444, 10%);
+      }
+    }
   }
 }

@@ -31,6 +31,7 @@ https://github-notetaker.stromannet.com/
 - Upgraded NPM passport-google-oauth.
 - Added profile picture in top right corner.
 - Swiched from Node Env File to DotENV.
+- Added GitHub OAuth login.
 
 ###### Version 2.3.0
 

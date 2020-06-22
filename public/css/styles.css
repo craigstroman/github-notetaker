@@ -7356,3 +7356,7 @@ body {
     background-color: #3B5998; }
     .wrapper .btn-container .btn-facebook:hover {
       background-color: #2d4373; }
+  .wrapper .btn-container .btn-github {
+    background-color: #444444; }
+    .wrapper .btn-container .btn-github:hover {
+      background-color: #2b2b2b; }

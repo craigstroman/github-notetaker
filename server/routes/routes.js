@@ -1,6 +1,14 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { facebookLogin, googleLogin, twitterLogin, login, logout, main, sessionStatus } from '../controllers/main/index';
+import {
+  facebookLogin,
+  googleLogin,
+  githubLogin,
+  login,
+  logout,
+  main,
+  sessionStatus,
+} from '../controllers/main/index';
 import { dashboard, settings } from '../controllers/dashboard/index';
 import { deleteNote, findReposWithNotes, getNotes, saveNote, updateNote } from '../controllers/notes/index';
 import { getProfile, getRepos } from '../controllers/github/index';
@@ -20,11 +28,10 @@ router.route('/dashboard').get(dashboard);
 
 router.route('/profile/:username').get(main);
 
-
 /**
  * Google auth routes.
  */
-router.route('/auth/google').get(passport.authenticate('google', { scope : ['profile', 'email'] }));
+router.route('/auth/google').get(passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.route('/auth/google/callback').get(passport.authenticate('google'), googleLogin);
 
@@ -36,6 +43,12 @@ router.route('/auth/facebook').get(passport.authenticate('facebook', { scope: 'e
 
 router.route('/auth/facebook/callback').get(passport.authenticate('facebook'), facebookLogin);
 
+/**
+ * GitHub auth routes.
+ */
+router.route('/auth/github').get(passport.authenticate('github', { scope: 'user:email' }));
+
+router.route('/auth/github/callback').get(passport.authenticate('github'), githubLogin);
 
 /**
  * GitHub user profile API
@@ -62,6 +75,5 @@ router.route('/api/notes/:repo/:note_id/:note').put(loggedIn, updateNote);
 
 // Delete a note
 router.route('/api/notes/:repo/:note_id').delete(loggedIn, deleteNote);
-
 
 export default router;
