@@ -12,7 +12,7 @@ export default function (User, passport) {
         callbackURL: process.env.GITHUB_CALLBACK_URL,
         passReqToCallback: true, // req object on auth is passed as first arg
       },
-      async function (req, token, refreshToken, profile, done) {
+      function (req, token, refreshToken, profile, done) {
         process.nextTick(async function () {
           try {
             let profileAvatar = null;
