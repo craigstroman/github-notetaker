@@ -43,13 +43,13 @@ export default function (User, passport) {
             }
 
             const user = await User.findOrCreate({
-              where: { user_id: profile.id },
+              where: { profile_id: profile.id },
               defaults: {
-                user_id: profile.id,
+                profile_id: profile.id,
                 token,
                 name: profile.displayName,
                 email,
-                picture: profileAvatar,
+                profile_picture: profileAvatar,
                 provider: 'github',
               },
             }).spread(function (user, created) {

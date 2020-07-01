@@ -15,13 +15,13 @@ export default function (User, passport) {
         process.nextTick(async function () {
           try {
             const user = await User.findOrCreate({
-              where: { user_id: profile.id },
+              where: { profile_id: profile.id },
               defaults: {
-                user_id: profile.id,
+                profile_id: profile.id,
                 token,
                 email: (profile.emails[0].value || '').toLowerCase(),
                 name: profile.displayName,
-                picture: profile.photos[0].value,
+                profile_picture: profile.photos[0].value,
                 provider: 'google',
               },
             }).spread(function (user, created) {

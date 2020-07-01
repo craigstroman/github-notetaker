@@ -18,13 +18,13 @@ export default function (User, passport) {
             const name = `${profile.name.givenName} ${profile.name.familyName}`;
 
             const user = await User.findOrCreate({
-              where: { user_id: profile.id },
+              where: { profile_id: profile.id },
               defaults: {
-                user_id: profile.id,
+                profile_id: profile.id,
                 token,
                 name,
                 email: (profile.emails[0].value || '').toLowerCase(),
-                picture: profile.photos[0].value,
+                profile_picture: profile.photos[0].value,
                 provider: 'facebook',
               },
             }).spread(function (user, created) {

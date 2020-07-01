@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV;
 const filePath = path.join(__dirname, './public/js/');
@@ -28,6 +29,15 @@ module.exports = {
     ignored: '/node_modules/',
   },
 
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        sourceMap: false,
+      }),
+    ],
+  },
+
   resolve: {
     extensions: ['.js', '.jsx'],
   },
@@ -47,7 +57,11 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
-        exclude: [/node_modules/, path.resolve(__dirname, 'public/js/main.min.js')],
+        exclude: [
+          /node_modules/,
+          path.resolve(__dirname, 'public/js/main.min.js'),
+          path.resolve(__dirname, 'public/js/bundle.js'),
+        ],
         use: {
           loader: 'eslint-loader',
           options: './client/.eslintrc.js',
@@ -74,9 +88,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new UglifyJsPlugin({
-      cache: true,
-    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),

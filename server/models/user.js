@@ -2,19 +2,19 @@ export default (sequelize, DataTypes) => {
   const user = sequelize.define(
     'user',
     {
-      user_id: DataTypes.STRING,
+      profile_id: DataTypes.STRING,
       token: DataTypes.STRING,
       email: DataTypes.STRING,
       name: DataTypes.STRING,
-      picture: DataTypes.STRING,
+      profile_picture: DataTypes.STRING,
       provider: DataTypes.STRING,
     },
     {
       underscored: true,
     },
   );
-  user.associate = function (models) {
-    // associations can be defined here
+  user.associate = (models) => {
+    models.User.belongsToMany(models.Notes, { through: models.User, foreignKey: 'user_id' });
   };
   return user;
 };

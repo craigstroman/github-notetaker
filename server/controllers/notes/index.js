@@ -1,8 +1,6 @@
 import cuid from 'cuid';
 import striptags from 'striptags';
 
-// TODO: Continue working on fixing remove function.
-
 const models = require('../../models/index');
 const Notes = models.default.Notes;
 
@@ -13,13 +11,14 @@ export function getNotes(req, res) {
     return res.status(400).end();
   }
 
-  const repoName = req.params.repo;
+  const repo = req.params.repo;
   const user = req.user;
   const userId = user.id;
 
   Notes.findAll({
     where: {
       user_id: userId,
+      repo,
     },
     raw: true,
   })

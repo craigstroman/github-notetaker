@@ -6,22 +6,24 @@ block header
 block content
 
   if(user)
-    div(class='row')
-      div(class='col-md-12') <b>Name</b>: #{user.name}
-    div(class='row')
-      div(class='col-md-12') <b>Email</b>: #{user.email}
-    div(class='row')
-      div(class='col-md-12') <b>Provider</b>: #{user.provider}
+    form
+      div(class="form-group row")
+        label(for="name" class="col-sm-1 col-form-label")
+          | Name
+        div(class="col-sm-4")
+          input(type="text" class="form-control" name="name" id="name" value=user.name)
+      div(class="form-group row")
+        label(for="email" class="col-sm-1 col-form-label")
+          | Email
+        div(class="col-sm-4")
+          | #{user.email}
+      div(class="form-group row")
+        label(for="provider" class="col-sm-1 col-form-label")
+          | Provider
+        div(class="col-sm-4")
+          - user.provider = user.provider.charAt(0).toUpperCase() + user.provider.slice(1);
+          | #{user.provider}
 
-    if(repos.length)
-      hr
-      div(class='row')
-        div(class='col-md-12 text-center') <h1>Repos With Notes</h1>
-
-      ul(style='list-style-type: none;')
-        each val in repos
-          li
-            a(href='/profile/' + val) #{val}
 
   else
 
