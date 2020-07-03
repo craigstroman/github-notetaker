@@ -24,8 +24,21 @@ block content
           - user.provider = user.provider.charAt(0).toUpperCase() + user.provider.slice(1);
           | #{user.provider}
 
+    div(class="row")
+      div(class="col-md-12 text-center")
+        h1 Repos With Notes
+        hr
+
+    div(class="row")
+      div(class="col-md-12")
+        ul(class="repos-with-notes")
+          each val in notes
+            li
+              - repoName = val.repo.charAt(0).toUpperCase() + val.repo.slice(1);
+              a(href=`profile/${val.repo}`) #{repoName}
+
+
 
   else
-
     include common/login-box.pug
 

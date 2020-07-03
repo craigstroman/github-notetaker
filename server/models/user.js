@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  const user = sequelize.define(
+  const User = sequelize.define(
     'user',
     {
       profile_id: DataTypes.STRING,
@@ -13,8 +13,7 @@ export default (sequelize, DataTypes) => {
       underscored: true,
     },
   );
-  user.associate = (models) => {
-    models.User.belongsToMany(models.Notes, { through: models.User, foreignKey: 'user_id' });
-  };
-  return user;
+  User.associate = (models) => {};
+
+  return User;
 };

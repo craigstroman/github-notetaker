@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  const notes = sequelize.define(
+  const Notes = sequelize.define(
     'notes',
     {
       text: DataTypes.STRING,
@@ -10,8 +10,7 @@ export default (sequelize, DataTypes) => {
       underscored: true,
     },
   );
-  notes.associate = (models) => {
-    models.Notes.belongsTo(models.User, { through: models.Notes, foreignKey: 'user_id' });
-  };
-  return notes;
+  Notes.associate = (models) => {};
+
+  return Notes;
 };
