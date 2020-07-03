@@ -1,8 +1,8 @@
 import cuid from 'cuid';
 import striptags from 'striptags';
+import models from '../../models/index';
 
-const models = require('../../models/index');
-const Notes = models.default.Notes;
+const Notes = models.Notes;
 
 export function getNotes(req, res) {
   if (!req.user) {
