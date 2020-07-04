@@ -6,7 +6,7 @@ block header
 block content
 
   if(user)
-    form
+    form(class="user-form" method="post" action="/update-user-info")
       div(class="form-group row")
         label(for="name" class="col-sm-1 col-form-label")
           | Name
@@ -23,19 +23,21 @@ block content
         div(class="col-sm-4")
           - user.provider = user.provider.charAt(0).toUpperCase() + user.provider.slice(1);
           | #{user.provider}
+      button(type="submit" class="btn btn-primary") Submit
 
-    div(class="row")
-      div(class="col-md-12 text-center")
-        h1 Repos With Notes
-        hr
+    if(notes)
+      div(class="row")
+        div(class="col-md-12 text-center")
+          h1 Repos With Notes
+          hr
 
-    div(class="row")
-      div(class="col-md-12")
-        ul(class="repos-with-notes")
-          each val in notes
-            li
-              - repoName = val.repo.charAt(0).toUpperCase() + val.repo.slice(1);
-              a(href=`profile/${val.repo}`) #{repoName}
+      div(class="row")
+        div(class="col-md-12")
+          ul(class="repos-with-notes")
+            each val in notes
+              li
+                - repoName = val.repo.charAt(0).toUpperCase() + val.repo.slice(1);
+                a(href=`profile/${val.repo}`) #{repoName}
 
 
 

@@ -9,7 +9,7 @@ import {
   main,
   sessionStatus,
 } from '../controllers/main/index';
-import { dashboard, settings } from '../controllers/dashboard/index';
+import { dashboard, settings, updateUserInfo } from '../controllers/dashboard/index';
 import { deleteNote, findReposWithNotes, getNotes, saveNote, updateNote } from '../controllers/notes/index';
 import { getProfile, getRepos } from '../controllers/github/index';
 import { loggedIn } from '../util/index';
@@ -21,6 +21,8 @@ router.route('/').get(main);
 router.route('/login').get(login);
 
 router.route('/settings').get(settings);
+
+router.route('/update-user-info').post(updateUserInfo);
 
 router.route('/logout').get(logout);
 
