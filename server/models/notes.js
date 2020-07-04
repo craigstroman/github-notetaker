@@ -1,14 +1,16 @@
-import mongoose from 'mongoose';
+export default (sequelize, DataTypes) => {
+  const Notes = sequelize.define(
+    'notes',
+    {
+      text: DataTypes.STRING,
+      repo: DataTypes.STRING,
+      user_id: DataTypes.INTEGER,
+    },
+    {
+      underscored: true,
+    },
+  );
+  Notes.associate = (models) => {};
 
-const Schema = mongoose.Schema;
-
-const notesSchema = new Schema({
-  _id: String,
-  text: String,
-  repo: String,
-  user: String
-},{
-  timestamps: true,
-});
-
-export default mongoose.model('Notes', notesSchema);
+  return Notes;
+};

@@ -1,22 +1,20 @@
-import env from 'node-env-file';
-import User from '../models/user';
 import google from './google/index';
 import facebook from './facebook/index';
-
-if ( process.env.NODE_ENV === 'development' ) {
-  env(__dirname + '/../../.env');
-}
+import github from './github/index';
+import models from '../models/index';
 
 export default function auth(passport) {
-  passport.serializeUser(function(user, done) {
+  passport.serializeUser(function (user, done) {
     done(null, user);
   });
 
-  passport.deserializeUser(function(user, done) {
+  passport.deserializeUser(function (user, done) {
     done(null, user);
   });
 
-  google(User, passport);
+  google(models.User, passport);
 
-  facebook(User, passport);
+  facebook(models.User, passport);
+
+  github(models.User, passport);
 }

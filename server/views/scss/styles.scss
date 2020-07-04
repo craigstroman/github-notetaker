@@ -17,28 +17,28 @@ body {
     .header {
       border-bottom: 1px solid #ccc;
       display: block;
-      height: 130px;
+      height: 140px;
       margin-bottom: 10px;
       vertical-align: middle;
       width: 100%;
       @include media(tablet) {
-        height: 130px;
+        height: 140px;
       }
       @include media(mediumDesktop) {
-        height: 70px;
+        height: 80px;
       }
       @include media(largeDesktop) {
-        height: 70px;
+        height: 80px;
       }
       .title {
         display: inline-block;
-        height: 80%;
+        height: 60%;
         padding-left: 10px;
         text-align: center;
         width: 100%;
         @include media(tablet) {
           display: block;
-          height: 80%;
+          height: 60%;
           text-align: center;
           width: 100%;
         }
@@ -90,7 +90,14 @@ body {
           height: 100%;
           padding-right: 10px;
           width: auto;
+          .profile-picture {
+            border-radius: 50%;
+            display: inline-block;
+            height: 50px;
+            width: 50px;
+          }
           .dropdown {
+            height: 50px;
             .navbar-dropdown {
               .icon {
                 color: #000;
@@ -152,5 +159,21 @@ body {
         background-color: darken(#3B5998, 10%);
       }
     }
+    .btn-github {
+      background-color: #444444;
+      &:hover {
+        background-color: darken(#444444, 10%);
+      }
+    }
+  }
+
+  .user-form {
+    button {
+      margin-left: 10px;
+    }
+  }
+
+  .repos-with-notes {
+    list-style-type: none;
   }
 }

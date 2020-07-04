@@ -10,29 +10,30 @@ export const addNotesBegin = () => ({
   type: ADD_NOTES_BEGIN,
 });
 
-export const addNotesSuccess = data => ({
+export const addNotesSuccess = (data) => ({
   type: ADD_NOTES_SUCCESS,
   payload: { data },
 });
 
-export const addNotesError = error => ({
+export const addNotesError = (error) => ({
   type: ADD_NOTES_FAILURE,
   payload: { error },
 });
 
 const nodeEnv = process.env.NODE_ENV;
-const apiUrl = (nodeEnv === 'production') ? '/api' : 'http://localhost:3000/api';
+const apiUrl = nodeEnv === 'production' ? '/api' : 'http://localhost:3000/api';
 
 export function addNote(repo, note) {
+  const url = `${apiUrl}/notes/${repo}/${note}`;
+
   return (dispatch) => {
-    console.log('addNotesBegin: ');
     dispatch(addNotesBegin());
-    axios.post(`${apiUrl}/notes/${repo}/${note}`)
+    axios
+      .post(url)
       .then((res) => {
         dispatch(addNotesSuccess(res.data));
         return res.data;
       })
-      .catch(err => dispatch(addNotesError(err)));
+      .catch((err) => dispatch(addNotesError(err)));
   };
 }
-

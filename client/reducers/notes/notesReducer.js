@@ -4,11 +4,7 @@ import {
   FETCH_NOTES_FAILURE,
 } from '../../actions/notes-actions/fetch';
 
-import {
-  ADD_NOTES_BEGIN,
-  ADD_NOTES_SUCCESS,
-  ADD_NOTES_FAILURE,
-} from '../../actions/notes-actions/add';
+import { ADD_NOTES_BEGIN, ADD_NOTES_SUCCESS, ADD_NOTES_FAILURE } from '../../actions/notes-actions/add';
 
 import {
   REMOVE_NOTES_BEGIN,
@@ -73,9 +69,7 @@ export default function notesReducer(state = notesInitialState, action) {
         ...state,
         loading: false,
         error: null,
-        notes: [
-          ...(state.notes.filter(item => (item._id !== action.payload.data._id))),
-        ],
+        notes: [...state.notes.filter((item) => item.id !== action.payload.data.id)],
       };
     case REMOVE_NOTES_FAILURE:
       return {

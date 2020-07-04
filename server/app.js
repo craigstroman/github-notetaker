@@ -3,7 +3,6 @@ import cookieParser from 'cookie-parser';
 import express from 'express';
 import config from 'config';
 import logger from 'morgan';
-import mongoose from 'mongoose';
 import path from 'path';
 import passport from 'passport';
 import session from 'express-session';
@@ -11,20 +10,33 @@ import { addPath } from 'app-module-path';
 import routes from './routes/routes';
 import auth from './config/auth';
 
-
 const app = express();
-const db = require('./models/notes');
 const nodeEnv = process.env.NODE_ENV;
-const filePath = (nodeEnv === 'development') ? '../client' : '../public';
+const filePath = nodeEnv === 'development' ? '../client' : '../public';
 
-const javascript = (nodeEnv === 'development') ?  '/static/js/bundle.js' : '/static/js/main.min.js';
-
-const uriString = process.env.GITHUB_MONGODB_URI || 'mongodb://localhost/gitHubNoteTaker';
-
-mongoose.Promise = global.Promise;
-mongoose.connect(uriString, { useMongoClient: true });
+const javascript = nodeEnv === 'development' ? '/static/js/bundle.js' : '/static/js/main.min.js';
 
 auth(passport); // pass passport for configuration
+
+if (nodeEnv === 'development') {
+  const webpack = require('webpack');
+  const webpackConfig = require('../webpack.config.dev.js');
+  const webpackCompiler = webpack(webpackConfig);
+
+  app.use(
+    require('webpack-dev-middleware')(webpackCompiler, {
+      noInfo: true,
+      publicPath: webpackConfig.output.publicPath,
+    }),
+  );
+
+  app.use(
+    require('webpack-hot-middleware')(webpackCompiler, {
+      log: false,
+      path: '/__webpack_hmr',
+    }),
+  );
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, './views'));
@@ -39,7 +51,7 @@ app.use(logger('dev'));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/static', express.static('public'))
+app.use('/static', express.static('public'));
 addPath(__dirname);
 
 app.use(session({ secret: 'anything1213321123' }));

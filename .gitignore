@@ -1,5 +1,14 @@
 /node_modules/
 /fixtures/
+/build
+/public
+
+todo.todo
 package-lock.json
+
+
 .env
+.env.dev
+.env.prod
 .DS_Store
+

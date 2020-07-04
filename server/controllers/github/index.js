@@ -1,30 +1,36 @@
 import axios from 'axios';
-import env from 'node-env-file';
 import util from 'util';
+import { getNotes } from '../notes/index';
 
-if ( process.env.NODE_ENV === 'development' ) {
-  env(__dirname + '/../../../.env');
-}
+require('dotenv').config();
 
+const apiURL = 'https://api.github.com';
+const headers = {
+  client_id: process.env.GITHUB_CLIENT_ID,
+  client_secret: process.env.GITHUB_CLIENT_SECRET,
+};
 let repoCount = 0;
 
 export function getProfile(req, res) {
   const username = req.params.username;
 
-  axios.get(`https://api.github.com/users/${username}?client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}`)
-    .then(resp => {
+  axios
+    .get(`${apiURL}/users/${username}`, {
+      headers,
+    })
+    .then((resp) => {
       repoCount = resp.data['public_repos'];
       res.send(resp.data);
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.message === 'Request failed with status code 404') {
         res.status(404).send({
           message: 'Not found',
-          status: 404
+          status: 404,
         });
       }
       res.status(500).send({
-        error
+        error,
       });
     });
 }
@@ -39,12 +45,17 @@ export function getRepos(req, res) {
     let urls = [];
 
     for (let i = 1; i <= pages; i++) {
-      let url = `https://api.github.com/users/${username}/repos?page=${i}&per_page=100&client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}`;
-
+      let url = `${apiURL}/users/${username}/repos?page=${i}&per_page=100`;
       urls.push(url);
     }
 
-    axios.all(urls.map(l => axios.get(l)))
+    axios
+      .all(
+        urls.map((l) => axios.get(l)),
+        {
+          headers,
+        },
+      )
       .then((resp) => {
         let result = [];
 
@@ -54,35 +65,36 @@ export function getRepos(req, res) {
 
         res.send(result);
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.message === 'Request failed with status code 404') {
           res.status(404).send({
             message: 'Not found',
-            status: 404
+            status: 404,
           });
         }
         res.status(500).send({
-          error
+          error,
         });
       });
-
-
   } else {
-    let url = `https://api.github.com/users/${username}/repos?page=1&per_page=100&client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}`;
+    let url = `https://api.github.com/users/${username}/repos?page=1&per_page=100`;
 
-    axios.get(url)
-      .then(resp => {
+    axios
+      .get(url, {
+        headers,
+      })
+      .then((resp) => {
         res.send(resp.data);
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.message === 'Request failed with status code 404') {
           res.status(404).send({
             message: 'Not found',
-            status: 404
+            status: 404,
           });
         }
         res.status(500).send({
-          error
+          error,
         });
       });
   }

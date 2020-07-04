@@ -6,24 +6,41 @@ block header
 block content
 
   if(user)
-    div(class='row')
-      div(class='col-md-12') <b>Name</b>: #{user.name}
-    div(class='row')
-      div(class='col-md-12') <b>Email</b>: #{user.email}
-    div(class='row')
-      div(class='col-md-12') <b>Provider</b>: #{user.provider}
+    form(class="user-form" method="post" action="/update-user-info")
+      div(class="form-group row")
+        label(for="name" class="col-sm-1 col-form-label")
+          | Name
+        div(class="col-sm-4")
+          input(type="text" class="form-control" name="name" id="name" value=user.name)
+      div(class="form-group row")
+        label(for="email" class="col-sm-1 col-form-label")
+          | Email
+        div(class="col-sm-4")
+          | #{user.email}
+      div(class="form-group row")
+        label(for="provider" class="col-sm-1 col-form-label")
+          | Provider
+        div(class="col-sm-4")
+          - user.provider = user.provider.charAt(0).toUpperCase() + user.provider.slice(1);
+          | #{user.provider}
+      button(type="submit" class="btn btn-primary") Submit
 
-    if(repos.length)
-      hr
-      div(class='row')
-        div(class='col-md-12 text-center') <h1>Repos With Notes</h1>
+    if(notes)
+      div(class="row")
+        div(class="col-md-12 text-center")
+          h1 Repos With Notes
+          hr
 
-      ul(style='list-style-type: none;')
-        each val in repos
-          li
-            a(href='/profile/' + val) #{val}
+      div(class="row")
+        div(class="col-md-12")
+          ul(class="repos-with-notes")
+            each val in notes
+              li
+                - repoName = val.repo.charAt(0).toUpperCase() + val.repo.slice(1);
+                a(href=`profile/${val.repo}`) #{repoName}
+
+
 
   else
-
     include common/login-box.pug
 

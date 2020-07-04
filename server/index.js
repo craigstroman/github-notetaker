@@ -1,24 +1,34 @@
 import app from './app';
 import config from 'config';
 import debug from 'debug';
-import http from 'http';
+import { createServer } from 'http';
+import models from './models/index';
+
+require('dotenv').config();
 
 /**
  * Get PORT from environment and store in Express.
  */
-const port = normalizePort(config.get('PORT'));
+let port = 0;
+
+if (process.env.NODE_ENV === 'development') {
+  port = 3000;
+} else if (process.env.NODE_ENV === 'production') {
+  port = 49153;
+}
+
 app.set('port', port);
 
-const server = http.createServer(app);
+const ws = createServer(app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+models.sequelize.sync().then(() => {
+  ws.listen(port, () => {
+    console.log(`Server started at http://localhost:${port}`);
+  });
 
-console.log(`Server started at http://localhost:${port}`);
+  ws.on('error', onError);
+  ws.on('listening', onListening);
+});
 
 function normalizePort(val) {
   const port = parseInt(val, 10);
@@ -45,9 +55,7 @@ function onError(error) {
     throw error;
   }
 
-  const bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -69,10 +77,7 @@ function onError(error) {
  */
 
 function onListening() {
-  const addr = server.address();
-  const bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+  const addr = ws.address();
+  const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   debug('MERNjs:app')('Listening on ' + bind + ' in ' + app.get('env') + ' env');
 }
-

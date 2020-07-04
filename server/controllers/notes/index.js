@@ -1,6 +1,8 @@
 import cuid from 'cuid';
 import striptags from 'striptags';
-import Notes from '../../models/notes';
+import models from '../../models/index';
+
+const Notes = models.Notes;
 
 export function getNotes(req, res) {
   if (!req.user) {
@@ -9,19 +11,28 @@ export function getNotes(req, res) {
     return res.status(400).end();
   }
 
-  const repoName = req.params.repo;
+  const repo = req.params.repo;
   const user = req.user;
+  const userId = user.id;
 
-  Notes.find({
-    repo: repoName,
-    user,
-  }).exec((err, notes) => {
-    if (err) {
-      res.status(500).send(err).end();
-    } else {
-      res.send({notes});
-    }
-  });
+  Notes.findAll({
+    where: {
+      user_id: userId,
+      repo,
+    },
+    raw: true,
+  })
+    .then((notes) => {
+      res.status(200).send({ notes });
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({
+          error: err,
+        })
+        .end();
+    });
 }
 
 export function saveNote(req, res) {
@@ -33,23 +44,26 @@ export function saveNote(req, res) {
 
   const note = striptags(req.params.note);
   const repo = req.params.repo;
-  const user = req.user;
+  const userId = req.user.id;
 
   const newNote = new Notes({
-    _id: cuid(),
     text: note,
     repo,
-    user,
+    user_id: userId,
   });
 
-  newNote.save()
+  newNote
+    .save()
     .then((resp) => {
       res.send(resp);
     })
     .catch((err) => {
-      res.status(500).send({
-        error: err
-      }).end();
+      res
+        .status(500)
+        .send({
+          error: err,
+        })
+        .end();
     });
 }
 
@@ -64,14 +78,13 @@ export function updateNote(req, res) {
   const note_id = req.params.note_id;
   const note_text = striptags(req.params.note);
 
-  Notes.update({ '_id': note_id }, {$set: { 'text': note_text }}, function(err, result){
-      if (err) {
-          console.log('Error updating object: ' + err);
-          res.send({'error':'An error has occurred'});
-      } else {
-
-          res.send({ success: true });
-      }
+  Notes.update({ _id: note_id }, { $set: { text: note_text } }, function (err, result) {
+    if (err) {
+      console.log('Error updating object: ' + err);
+      res.send({ error: 'An error has occurred' });
+    } else {
+      res.send({ success: true });
+    }
   });
 }
 
@@ -85,17 +98,22 @@ export function deleteNote(req, res) {
   const repo = req.params.repo;
   const note_id = req.params.note_id;
 
-  Notes.findOne({
-    _id: note_id,
-    repo,
-  }).exec((err, note) => {
-    Notes.remove(note, (err, obj) => {
-      if (err) {
-        res.status(500).send(err);
+  Notes.destroy({
+    where: {
+      id: note_id,
+    },
+  })
+    .then((result) => {
+      if (result) {
+        res.status(200).send({ id: parseInt(note_id) });
       }
-      res.send(note);
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({
+          error: err,
+        })
+        .end();
     });
-  });
 }
-
-

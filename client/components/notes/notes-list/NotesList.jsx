@@ -15,23 +15,24 @@ class NotesList extends React.Component {
   }
   handleDelete(note) {
     const username = this.props.match.params.username;
+    const noteId = note.id;
 
-    this.props.dispatch(removeNote(username, note._id));
+    this.props.dispatch(removeNote(username, noteId));
   }
   render() {
     return (
       <ul className="notes">
-        {this.props.notes.map(note => (
+        {this.props.notes.map((note) => (
           <li className="notes__item" key={note._id}>
-            <div className="notes__item--text">
-              {note.text}
-            </div>
+            <div className="notes__item--text">{note.text}</div>
             <div className="notes__item--btn">
               <button
                 type="button"
                 className="btn btn-default"
                 aria-label="Delete item"
-                onClick={() => { this.handleDelete(note); }}
+                onClick={() => {
+                  this.handleDelete(note);
+                }}
               >
                 <FontAwesomeIcon icon={faTimes} />
               </button>

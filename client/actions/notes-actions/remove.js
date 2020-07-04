@@ -10,27 +10,30 @@ export const removeNotesBegin = () => ({
   type: REMOVE_NOTES_BEGIN,
 });
 
-export const removeNotesSuccess = data => ({
+export const removeNotesSuccess = (data) => ({
   type: REMOVE_NOTES_SUCCESS,
   payload: { data },
 });
 
-export const removeNotesError = error => ({
+export const removeNotesError = (error) => ({
   type: REMOVE_NOTES_FAILURE,
   payload: { error },
 });
 
 const nodeEnv = process.env.NODE_ENV;
-const apiUrl = (nodeEnv === 'production') ? '/api' : 'http://localhost:3000/api';
+const apiUrl = nodeEnv === 'production' ? '/api' : 'http://localhost:3000/api';
 
 export function removeNote(repo, noteId) {
+  const url = `${apiUrl}/notes/${repo}/${noteId}`;
+
   return (dispatch) => {
     dispatch(removeNotesBegin());
-    axios.delete(`${apiUrl}/notes/${repo}/${noteId}`)
+    axios
+      .delete(url)
       .then((res) => {
         dispatch(removeNotesSuccess(res.data));
         return res.data;
       })
-      .catch(err => dispatch(removeNotesError(err)));
+      .catch((err) => dispatch(removeNotesError(err)));
   };
 }
