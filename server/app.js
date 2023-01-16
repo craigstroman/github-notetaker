@@ -23,19 +23,19 @@ if (nodeEnv === 'development') {
   const webpackConfig = require('../webpack.config.dev.js');
   const webpackCompiler = webpack(webpackConfig);
 
-  app.use(
-    require('webpack-dev-middleware')(webpackCompiler, {
-      noInfo: true,
-      publicPath: webpackConfig.output.publicPath,
-    }),
-  );
+  // app.use(
+  //   require('webpack-dev-middleware')(webpackCompiler, {
+  //     // noInfo: true,
+  //     publicPath: webpackConfig.output.publicPath,
+  //   }),
+  // );
 
-  app.use(
-    require('webpack-hot-middleware')(webpackCompiler, {
-      log: false,
-      path: '/__webpack_hmr',
-    }),
-  );
+  // app.use(
+  //   require('webpack-hot-middleware')(webpackCompiler, {
+  //     log: false,
+  //     path: '/__webpack_hmr',
+  //   }),
+  // );
 }
 
 // view engine setup
