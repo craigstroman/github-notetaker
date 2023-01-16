@@ -1,7 +1,6 @@
 const path = require('path');
-const webpack = require('webpack');
+// const webpack = require('webpack');
 
-const nodeEnv = process.env.NODE_ENV;
 const filePath = path.join(__dirname, './public/js/');
 const fileName = 'bundle.js';
 
@@ -17,7 +16,7 @@ module.exports = {
 
   entry: {
     app: [
-      path.join(__dirname, 'client/containers/App.jsx'),
+      path.join(__dirname, 'client/containers/App.tsx'),
       'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
     ],
   },
@@ -36,24 +35,29 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.ts', '.tsx'],
   },
 
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
             plugins: [['@babel/plugin-proposal-object-rest-spread']],
           },
         },
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: ['ts-loader'],
+      },
+      {
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'eslint-loader',
@@ -74,21 +78,21 @@ module.exports = {
           },
         ],
       },
-      {
-        test: /\.(svg|woff|woff2|ttf|eot|otf)([\?]?.*)$/,
-        loader: 'file-loader?name=node_modules/@fortawesome/fontawesome-free/webfonts[name].[ext]',
-      },
+      // {
+      //   test: /\.(svg|woff|woff2|ttf|eot|otf)([\?]?.*)$/,
+      //   loader: 'file-loader?name=node_modules/@fortawesome/fontawesome-free/webfonts[name].[ext]',
+      // },
     ],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.LoaderOptionsPlugin({
-      debug: true,
-      sourceMap: true,
-      devTool: 'source-map',
-    }),
-    new webpack.SourceMapDevToolPlugin({
-      filename: '[file].map',
-    }),
+    // new webpack.HotModuleReplacementPlugin(),
+    // new webpack.LoaderOptionsPlugin({
+    //   debug: true,
+    //   sourceMap: true,
+    //   devTool: 'source-map',
+    // }),
+    // new webpack.SourceMapDevToolPlugin({
+    //   filename: '[file].map',
+    // }),
   ],
 };
