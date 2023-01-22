@@ -7,7 +7,7 @@ interface INote {
   id: number;
 }
 
-interface ILocationState {
+interface INotesState {
   notes: INote[];
   status: 'idle' | 'loading' | 'error' | 'loaded';
 }
@@ -40,7 +40,7 @@ export const removeNotesAsync = createAsyncThunk('notes/remove', async (notes: I
   return response;
 });
 
-const notesInitialState: IlocationState = {
+const notesInitialState: INotesState = {
   notes: [],
   status: 'idle',
 };
@@ -110,6 +110,6 @@ export const notesSlice = createSlice({
 
 export const { resetState } = notesSlice.actions;
 
-export const selectNotesState = (state: RootState): ILocationState => state.notes.notes;
+export const selectNotesState = (state: RootState): INotesState => state.notes.notes;
 
 export default notesSlice.reducer;
