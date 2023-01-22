@@ -1,13 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
-import configureStore from '../../store/configurestore';
+import store from '../../store/store';
 import Home from './home/Home';
 import Profile from '../profile/Profile';
 import SearchGithub from '../../components/search-github/SearchGitHub';
 import './Main.scss';
-
-const store = configureStore();
 
 const Main = () => (
   <Provider store={store}>
