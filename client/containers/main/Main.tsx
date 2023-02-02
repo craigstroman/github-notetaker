@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
-import store from '../../store/store';
+import { store } from '../../store/store';
 import Home from './home/Home';
 import Profile from '../profile/Profile';
 import { SearchGitHub } from '../../components/search-github/SearchGitHub';
@@ -20,8 +20,8 @@ const Main = () => (
         </nav>
         <div className="row">
           <div className="col-md-12">
-            <Route exact path="/" component={Home} />
-            <Route exact path="/profile/:username" component={Profile} />
+            <Route path="/" element={<Home />} />
+            <Route path="/profile/:username" element={<Profile />} />
           </div>
         </div>
       </div>
