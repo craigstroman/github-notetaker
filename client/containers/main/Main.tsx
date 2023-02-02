@@ -4,7 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import store from '../../store/store';
 import Home from './home/Home';
 import Profile from '../profile/Profile';
-import SearchGithub from '../../components/search-github/SearchGitHub';
+import { SearchGitHub } from '../../components/search-github/SearchGitHub';
 import './Main.scss';
 
 const Main = () => (
@@ -14,7 +14,7 @@ const Main = () => (
         <nav className="navbar navbar-default" role="navigation">
           <div className="row">
             <div className="col-md-12 search-bar">
-              <SearchGithub />
+              <SearchGitHub />
             </div>
           </div>
         </nav>

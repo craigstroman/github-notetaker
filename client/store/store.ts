@@ -1,13 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit';
-import notesReducer from '../reducers/notes/notesReducer';
-import profileReducer from '../reducers/profile/profileReducer';
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import notesReducer from '../components/notes/notesSlice';
+import profileReducer from '../containers/profile/profileSlice';
 
 export const reducer = {
   notes: notesReducer,
   profile: profileReducer,
 };
-
-export default store;
 
 export const store = configureStore({
   reducer,

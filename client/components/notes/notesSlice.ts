@@ -110,6 +110,6 @@ export const notesSlice = createSlice({
 
 export const { resetState } = notesSlice.actions;
 
-export const selectNotesState = (state: RootState): INotesState => state.notes.notes;
+export const selectNotesState = (state: RootState): INotesState => state.notes;
 
 export default notesSlice.reducer;

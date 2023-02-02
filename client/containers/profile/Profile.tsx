@@ -1,7 +1,10 @@
-import React from 'react';
-import UserProfile from '../../components/github/UserProfile';
-import UserRepos from '../../components/github/user-repos/UserRepos';
-import Notes from '../../components/notes/Notes';
+import { UserProfile } from '../../components/github/UserProfile';
+import { UserRepos } from '../../components/github/user-repos/UserRepos';
+import { Notes } from '../../components/notes/Notes';
+
+// TODO: Continue working on converting class components to functions and just getting the app to load
+// TODO: Then work on implementing app using React hooks and TypeScript
+// TODO: Find new pagination script. Maybe use react-paginate
 
 const Profile = () => (
   <div className="container">
@@ -10,7 +13,7 @@ const Profile = () => (
         <UserProfile />
       </div>
       <div className="col-md-4 text-center">
-        <UserRepos />
+        <UserRepos username="test" />
       </div>
       <div className="col-md-4 text-center">
         <Notes />
@@ -20,4 +23,3 @@ const Profile = () => (
 );
 
 export default Profile;
-

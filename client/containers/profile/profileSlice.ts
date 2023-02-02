@@ -51,6 +51,6 @@ export const profileSlice = createSlice({
 
 export const { resetState } = profileSlice.actions;
 
-export const selectProfileState = (state: RootState): IProfileState => state.profile.profile;
+export const selectProfileState = (state: RootState): IProfileState => state.profile;
 
 export default profileSlice.reducer;
