@@ -1,13 +1,7 @@
 const path = require('path');
-// const webpack = require('webpack');
 
 const filePath = path.join(__dirname, './public/js/');
 const fileName = 'bundle.js';
-
-const PATHS = {
-  src: path.join(__dirname, './client'),
-  dist: path.join(__dirname, './public'),
-};
 
 module.exports = {
   mode: 'development',
@@ -15,18 +9,13 @@ module.exports = {
   devtool: 'source-map',
 
   entry: {
-    app: [
-      path.join(__dirname, 'client/containers/App.tsx'),
-      'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
-    ],
+    app: [path.join(__dirname, 'client/containers/App.tsx')],
   },
 
   output: {
     publicPath: '/static/js/',
     path: filePath,
     filename: fileName,
-    hotUpdateChunkFilename: '.hot/hot-update.js',
-    hotUpdateMainFilename: '.hot/hot-update.json',
   },
 
   watch: false,
@@ -35,7 +24,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.ts', '.tsx'],
+    extensions: ['.ts', '.tsx', '.js'],
   },
 
   module: {
@@ -84,15 +73,5 @@ module.exports = {
       // },
     ],
   },
-  plugins: [
-    // new webpack.HotModuleReplacementPlugin(),
-    // new webpack.LoaderOptionsPlugin({
-    //   debug: true,
-    //   sourceMap: true,
-    //   devTool: 'source-map',
-    // }),
-    // new webpack.SourceMapDevToolPlugin({
-    //   filename: '[file].map',
-    // }),
-  ],
+  plugins: [],
 };
