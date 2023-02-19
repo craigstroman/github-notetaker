@@ -1,5 +1,4 @@
 import app from './app';
-import config from 'config';
 import debug from 'debug';
 import { createServer } from 'http';
 import models from './models/index';
