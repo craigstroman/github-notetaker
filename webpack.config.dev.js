@@ -1,7 +1,15 @@
 const path = require('path');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const filePath = path.join(__dirname, './public/js/');
 const fileName = 'bundle.js';
+
+const ESLintOptions = {
+  extensions: ['js', 'jsx', 'ts', 'tsx'],
+  exclude: ['/node_modules/'],
+  emitError: true,
+  emitWarning: true,
+};
 
 module.exports = {
   mode: 'development',
@@ -24,7 +32,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
+    extensions: ['.ts', '.tsx', '.js', 'jsx'],
   },
 
   module: {
@@ -46,14 +54,6 @@ module.exports = {
         use: ['ts-loader'],
       },
       {
-        test: /\.(ts|tsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'eslint-loader',
-          options: './client/.eslintrc.js',
-        },
-      },
-      {
         test: /\.scss$/,
         use: [
           {
@@ -73,5 +73,5 @@ module.exports = {
       // },
     ],
   },
-  plugins: [],
+  plugins: [new ESLintPlugin(ESLintOptions)],
 };

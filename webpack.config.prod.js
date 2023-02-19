@@ -1,14 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
-const nodeEnv = process.env.NODE_ENV;
 const filePath = path.join(__dirname, './public/js/');
 const fileName = 'main.min.js';
 
-const PATHS = {
-  src: path.join(__dirname, './client'),
-  dist: path.join(__dirname, './public'),
+const ESLintOptions = {
+  extensions: ['js', 'jsx', 'ts', 'tsx'],
+  exclude: ['/node_modules/'],
 };
 
 module.exports = {
@@ -56,18 +56,6 @@ module.exports = {
         },
       },
       {
-        test: /\.(js|jsx)$/,
-        exclude: [
-          /node_modules/,
-          path.resolve(__dirname, 'public/js/main.min.js'),
-          path.resolve(__dirname, 'public/js/bundle.js'),
-        ],
-        use: {
-          loader: 'eslint-loader',
-          options: './client/.eslintrc.js',
-        },
-      },
-      {
         test: /\.scss$/,
         use: [
           {
@@ -93,5 +81,6 @@ module.exports = {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
+    new ESLintPlugin(ESLintOptions),
   ],
 };
