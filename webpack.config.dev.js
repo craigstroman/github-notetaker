@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 const filePath = path.join(__dirname, './public/js/');
@@ -19,13 +20,18 @@ module.exports = {
   devtool: 'source-map',
 
   entry: {
-    app: [path.join(__dirname, 'client/containers/App.tsx')],
+    app: [
+      path.join(__dirname, 'client/containers/App.tsx'),
+      'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
+    ],
   },
 
   output: {
     publicPath: '/static/js/',
     path: filePath,
     filename: fileName,
+    hotUpdateChunkFilename: '.hot/hot-update.js',
+    hotUpdateMainFilename: '.hot/hot-update.json',
   },
 
   watch: false,
@@ -74,5 +80,16 @@ module.exports = {
       // },
     ],
   },
-  plugins: [new ESLintPlugin(ESLintOptions)],
+  plugins: [
+    new ESLintPlugin(ESLintOptions),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      debug: true,
+      sourceMap: true,
+      devTool: 'source-map',
+    }),
+    new webpack.SourceMapDevToolPlugin({
+      filename: '[file].map',
+    }),
+  ],
 };
