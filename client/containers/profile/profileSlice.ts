@@ -1,11 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import { getProfile } from './profile.API';
-
-interface IProfileState {
-  profile: {};
-  status: 'idle' | 'loading' | 'error' | 'loaded';
-}
+import { IProfile, ProfileState, initialState } from './profileTypes';
 
 export const getProfileAsync = createAsyncThunk('profile/get', async (username: string) => {
   const response = await getProfile(username);
@@ -13,17 +9,12 @@ export const getProfileAsync = createAsyncThunk('profile/get', async (username: 
   return response;
 });
 
-const profileInitialState: IProfileState = {
-  profile: {},
-  status: 'idle',
-};
-
 export const profileSlice = createSlice({
   name: 'notes',
-  initialState: profileInitialState,
+  initialState,
   reducers: {
     resetState: () => {
-      const newState = profileInitialState;
+      const newState = initialState;
 
       return newState;
     },
@@ -37,13 +28,13 @@ export const profileSlice = createSlice({
       })
       .addCase(getProfileAsync.fulfilled, (state, action) => {
         const newState = state;
-        newState.status = 'loaded';
-        newState.profile = action.payload;
+        newState.status = 'loading';
+        newState.value = action.payload;
         return newState;
       })
       .addCase(getProfileAsync.rejected, (state) => {
         const newState = state;
-        newState.status = 'error';
+        newState.status = 'not-found';
         return newState;
       });
   },
@@ -51,6 +42,6 @@ export const profileSlice = createSlice({
 
 export const { resetState } = profileSlice.actions;
 
-export const selectProfileState = (state: RootState): IProfileState => state.profile;
+export const selectProfileState = (state: RootState): ProfileState => state.profile;
 
 export default profileSlice.reducer;
