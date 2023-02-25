@@ -6,7 +6,7 @@ import { useAppSelector } from '../../store/store';
 import { UserProfile } from '../../components/github/UserProfile';
 import { UserRepos } from '../../components/github/user-repos/UserRepos';
 import { Notes } from '../../components/notes/Notes';
-import { getProfileAsync } from './profileSlice';
+import { getProfileAsync, getReposAsync } from './profileSlice';
 
 // TODO: Find new pagination script. Maybe use react-paginate
 
@@ -17,6 +17,7 @@ const Profile: React.FC = () => {
   useEffect(() => {
     if (username) {
       dispatch(getProfileAsync(username));
+      dispatch(getReposAsync(username));
     }
   }, [username]);
 
@@ -27,7 +28,7 @@ const Profile: React.FC = () => {
           <UserProfile />
         </div>
         <div className="col-md-4 text-center">
-          <UserRepos username="test" />
+          <UserRepos />
         </div>
         <div className="col-md-4 text-center">
           <Notes />

@@ -33,45 +33,61 @@ export interface IProfile {
   updated_at: string;
 }
 
+export interface IRepo {
+  name: string;
+  html_url: string;
+}
+
 export interface ProfileState {
-  value: IProfile;
+  value: {
+    profile: IProfile;
+    repos: IRepo[];
+  };
   status: 'idle' | 'loading' | 'failed' | 'success' | 'not-found';
 }
 
 export const initialState: ProfileState = {
   value: {
-    login: '',
-    id: 0,
-    node_id: '',
-    avatar_url: '',
-    gravatar_id: '',
-    url: '',
-    html_url: '',
-    followers_url: '',
-    following_url: '',
-    gists_url: '',
-    starred_url: '',
-    subscriptions_url: '',
-    organizations_url: '',
-    repos_url: '',
-    events_url: '',
-    received_events_url: '',
-    type: '',
-    site_admin: false,
-    name: '',
-    company: null,
-    blog: null,
-    location: null,
-    email: null,
-    hireable: null,
-    bio: null,
-    twitter_username: null,
-    public_repos: 0,
-    public_gists: 0,
-    followers: 0,
-    following: 0,
-    created_at: '',
-    updated_at: '',
+    profile: {
+      login: '',
+      id: 0,
+      node_id: '',
+      avatar_url: '',
+      gravatar_id: '',
+      url: '',
+      html_url: '',
+      followers_url: '',
+      following_url: '',
+      gists_url: '',
+      starred_url: '',
+      subscriptions_url: '',
+      organizations_url: '',
+      repos_url: '',
+      events_url: '',
+      received_events_url: '',
+      type: '',
+      site_admin: false,
+      name: '',
+      company: null,
+      blog: null,
+      location: null,
+      email: null,
+      hireable: null,
+      bio: null,
+      twitter_username: null,
+      public_repos: 0,
+      public_gists: 0,
+      followers: 0,
+      following: 0,
+      created_at: '',
+      updated_at: '',
+    },
+    repos: [
+      {
+        name: '',
+        html_url: '',
+      },
+    ],
   },
   status: 'idle',
 };

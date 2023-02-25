@@ -1,12 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-import { getProfile } from './profile.API';
-import { IProfile, ProfileState, initialState } from './profileTypes';
+import { getProfile, getRepos } from './profile.API';
+import { ProfileState, initialState } from './profileTypes';
 
 export const getProfileAsync = createAsyncThunk('profile/get', async (username: string) => {
   const response = await getProfile(username);
 
-  return response;
+  return response.data;
+});
+
+export const getReposAsync = createAsyncThunk('repos/get', async (username: string) => {
+  const response = await getRepos(username);
+
+  return response.data;
 });
 
 export const profileSlice = createSlice({
@@ -29,10 +35,26 @@ export const profileSlice = createSlice({
       .addCase(getProfileAsync.fulfilled, (state, action) => {
         const newState = state;
         newState.status = 'success';
-        newState.value = action.payload;
+        newState.value.profile = action.payload;
         return newState;
       })
       .addCase(getProfileAsync.rejected, (state) => {
+        const newState = state;
+        newState.status = 'not-found';
+        return newState;
+      })
+      .addCase(getReposAsync.pending, (state) => {
+        const newState = state;
+        newState.status = 'loading';
+        return newState;
+      })
+      .addCase(getReposAsync.fulfilled, (state, action) => {
+        const newState = state;
+        newState.status = 'success';
+        newState.value.repos = action.payload;
+        return newState;
+      })
+      .addCase(getReposAsync.rejected, (state) => {
         const newState = state;
         newState.status = 'not-found';
         return newState;
