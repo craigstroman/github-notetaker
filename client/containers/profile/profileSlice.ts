@@ -28,7 +28,7 @@ export const profileSlice = createSlice({
       })
       .addCase(getProfileAsync.fulfilled, (state, action) => {
         const newState = state;
-        newState.status = 'loading';
+        newState.status = 'success';
         newState.value = action.payload;
         return newState;
       })

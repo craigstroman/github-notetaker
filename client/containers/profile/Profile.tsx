@@ -1,17 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '../../store/store';
 import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../../store/store';
 import { UserProfile } from '../../components/github/UserProfile';
 import { UserRepos } from '../../components/github/user-repos/UserRepos';
 import { Notes } from '../../components/notes/Notes';
+import { getProfileAsync } from './profileSlice';
 
-// TODO: Continue working on converting class components to functions and just getting the app to load
-// TODO: Then work on implementing app using React hooks and TypeScript
 // TODO: Find new pagination script. Maybe use react-paginate
 
 const Profile: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { username } = useParams<{ username: string }>();
 
-  console.log('username: ', username);
+  useEffect(() => {
+    if (username) {
+      dispatch(getProfileAsync(username));
+    }
+  }, [username]);
+
   return (
     <div className="container">
       <div className="row">
