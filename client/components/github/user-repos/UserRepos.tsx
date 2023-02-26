@@ -11,21 +11,15 @@ export const UserRepos: React.FC = () => {
   const profileState = useAppSelector(selectProfileState);
   const { repos } = profileState.value;
   const slicedData = repos.slice(offset, offset + itemsPerPage);
-
-  console.log('slicedData: ', slicedData);
+  const pageCount = Math.ceil(repos.length / itemsPerPage);
 
   const handlePageClick = (e: any) => {
-    console.log('handlePageClick:');
-
     const selectedPage = e.selected;
     const offset = selectedPage * itemsPerPage;
     setOffset(offset);
     setCurrentPage(selectedPage);
   };
 
-  const pageCount = repos.length;
-
-  console.log('repos', repos);
   return (
     <React.Fragment>
       <ul className="list-group">
