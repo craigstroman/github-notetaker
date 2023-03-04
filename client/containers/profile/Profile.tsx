@@ -8,8 +8,6 @@ import { UserRepos } from '../../components/github/user-repos/UserRepos';
 import { Notes } from '../../components/notes/Notes';
 import { getProfileAsync, getReposAsync } from './profileSlice';
 
-// TODO: Find new pagination script. Maybe use react-paginate
-
 const Profile: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { username } = useParams<{ username: string }>();
