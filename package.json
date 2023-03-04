@@ -13,7 +13,6 @@
     "js": "NODE_ENV=development webpack --config webpack.config.dev.js --progress --watch",
     "copy-files:server": "copyfiles -f ./server/views/*.pug ./build/views & copyfiles -f ./server/views/common/*.pug ./build/views/common & copyfiles ./.env ./build",
     "copy-files:client": "copyfiles -f ./client/css/styles.css ./public/css & copyfiles -f ./client/js/libs/*.js ./public/js/libs & copyfiles -f ./client/fonts/bootstrap/*.* ./public/fonts/bootstrap",
-    "live:client": "NODE_ENV=development webpack --config webpack.config.dev.js --progress --watch",
     "live:server": "NODE_ENV=development nodemon ./server/index.js --exec babel-node './server/index.js' ",
     "prod:client": "NODE_ENV=production webpack --config webpack.config.prod.js & npm run copy-files:client",
     "prod:server": "babel -d ./build ./server -s & npm run copy-files:server"
