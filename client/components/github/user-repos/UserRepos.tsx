@@ -26,7 +26,9 @@ export const UserRepos: React.FC = () => {
         {slicedData &&
           slicedData.map((item) => (
             <li key={`repo-${item.name}`} className="list-group-item">
-              <a href={item.html_url}>{item.name}</a>
+              <a href={item.html_url} target="_blank">
+                {item.name}
+              </a>
             </li>
           ))}
       </ul>
