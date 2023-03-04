@@ -74,10 +74,6 @@ module.exports = {
           },
         ],
       },
-      // {
-      //   test: /\.(svg|woff|woff2|ttf|eot|otf)([\?]?.*)$/,
-      //   loader: 'file-loader?name=node_modules/@fortawesome/fontawesome-free/webfonts[name].[ext]',
-      // },
     ],
   },
   plugins: [
