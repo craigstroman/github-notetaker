@@ -8,6 +8,7 @@ const apiURL = 'https://api.github.com';
 const headers = {
   client_id: process.env.GITHUB_CLIENT_ID,
   client_secret: process.env.GITHUB_CLIENT_SECRET,
+  'x-ratelimit-reset': '1598048562',
 };
 let repoCount = 0;
 
@@ -23,10 +24,18 @@ export function getProfile(req, res) {
       res.send(resp.data);
     })
     .catch((error) => {
+      console.log('Failed to get profile: ');
+      console.log('error: ');
+      console.log(error);
       if (error.message === 'Request failed with status code 404') {
         res.status(404).send({
           message: 'Not found',
           status: 404,
+        });
+      } else if (error.message.indexOf('API rate limit exceeded')) {
+        res.status(500).send({
+          message: 'Rate limit exceeded.',
+          status: 500,
         });
       }
       res.status(500).send({
