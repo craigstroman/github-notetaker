@@ -13,25 +13,23 @@ export const SearchGitHub: React.FC = () => {
     }
   };
 
+  // TODO: Implement notes section using TypeScript, and hooks.
+
   return (
     <div className="search-container">
       <div className="row">
         <div className="col-md-12 text-center">
-          <form className="form-inline form-search" role="form" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter a username"
-                aria-label="Username search field"
-                onChange={(e) => setUserName(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <button type="submit" className="btn btn-block btn-primary">
-                Search GitHub
-              </button>
-            </div>
+          <form className="form-search" role="form" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Enter a username"
+              aria-label="Username search field"
+              onChange={(e) => setUserName(e.target.value)}
+            />
+            <button type="submit" className="btn btn-block btn-primary">
+              Search GitHub
+            </button>
           </form>
         </div>
       </div>

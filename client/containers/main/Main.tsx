@@ -6,13 +6,11 @@ import './Main.scss';
 
 const Main = () => (
   <div className="container">
-    <nav className="navbar navbar-default" role="navigation">
-      <div className="row">
-        <div className="col-md-12 search-bar">
-          <SearchGitHub />
-        </div>
+    <div className="row">
+      <div className="col-md-12 search-bar">
+        <SearchGitHub />
       </div>
-    </nav>
+    </div>
     <div className="row">
       <div className="col-md-12">
         <Routes>

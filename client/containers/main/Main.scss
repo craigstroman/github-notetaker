@@ -1,3 +1,9 @@
-.search-bar {
-  margin-top: 15px;
+@import '~bootstrap/scss/bootstrap.scss';
+
+.container {
+  display: grid;
+  .search-bar {
+    margin-top: 15px;
+    width: 100%;
+  }
 }

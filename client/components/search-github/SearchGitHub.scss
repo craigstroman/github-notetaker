@@ -1,9 +1,14 @@
 .search-container {
   margin-bottom: 10px;
+  width: 100%;
   .form-search {
-      .form-control {
-        margin-right: 10px;
-        width: 300px;
+    .form-control {
+      display: inline-block;
+      margin-right: 10px;
+      width: 300px;
+    }
+    .form-group {
+      margin-bottom: 1rem;
     }
   }
 }
