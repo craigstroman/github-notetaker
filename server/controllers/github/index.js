@@ -8,7 +8,7 @@ const apiURL = 'https://api.github.com';
 const headers = {
   client_id: process.env.GITHUB_CLIENT_ID,
   client_secret: process.env.GITHUB_CLIENT_SECRET,
-  'x-ratelimit-reset': '1598048562',
+  Authorization: process.env.GITHUB_TOKEN,
 };
 let repoCount = 0;
 
