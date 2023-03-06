@@ -6,9 +6,12 @@ require('dotenv').config();
 
 const apiURL = 'https://api.github.com';
 const headers = {
-  client_id: process.env.GITHUB_CLIENT_ID,
-  client_secret: process.env.GITHUB_CLIENT_SECRET,
-  Authorization: process.env.GITHUB_TOKEN,
+  headers: {
+    client_id: process.env.GITHUB_CLIENT_ID,
+    client_secret: process.env.GITHUB_CLIENT_SECRET,
+    Authorization: process.env.GITHUB_TOKEN,
+    'x-ratelimit-reset': '1598048562',
+  },
 };
 let repoCount = 0;
 
@@ -24,9 +27,9 @@ export function getProfile(req, res) {
       res.send(resp.data);
     })
     .catch((error) => {
-      console.log('Failed to get profile: ');
-      console.log('error: ');
-      console.log(error);
+      // console.log('Failed to get profile: ');
+      // console.log('error: ');
+      // console.log(error);
       if (error.message === 'Request failed with status code 404') {
         res.status(404).send({
           message: 'Not found',
@@ -40,6 +43,7 @@ export function getProfile(req, res) {
       }
       res.status(500).send({
         error,
+        message: 'There was an error.',
       });
     });
 }
