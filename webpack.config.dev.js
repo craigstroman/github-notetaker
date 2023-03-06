@@ -74,6 +74,14 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'css-loader', // translates CSS into CommonJS
+          },
+        ],
+      },
     ],
   },
   plugins: [
