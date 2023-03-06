@@ -21,7 +21,8 @@ export const UserRepos: React.FC = () => {
   };
 
   return (
-    <React.Fragment>
+    <div className="repos-container">
+      <h4 className="text-center">Repos for {profileState.value.profile.name}</h4>
       <ul className="list-group">
         {slicedData &&
           slicedData.map((item) => (
@@ -42,6 +43,6 @@ export const UserRepos: React.FC = () => {
         containerClassName={'pagination'}
         activeClassName={'active'}
       />
-    </React.Fragment>
+    </div>
   );
 };

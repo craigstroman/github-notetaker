@@ -1,7 +1,13 @@
 import React from 'react';
+import { useAppSelector } from '../../store/store';
+import { selectProfileState } from '../../containers/profile/profileSlice';
 
 export const Notes: React.FC = () => {
-  console.log('Notes: ');
+  const profileState = useAppSelector(selectProfileState);
 
-  return <div>Notes</div>;
+  return (
+    <div className="notes-container">
+      <h4 className="text-center">Profile for {profileState.value.profile.name}</h4>
+    </div>
+  );
 };

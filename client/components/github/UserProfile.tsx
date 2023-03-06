@@ -1,21 +1,21 @@
 import React from 'react';
 import { useAppSelector } from '../../store/store';
 import { selectProfileState } from '../../containers/profile/profileSlice';
+import './UserProfile.scss';
 
 export const UserProfile: React.FC = () => {
   const profileState = useAppSelector(selectProfileState);
 
   return (
-    <div className="profile-container" data-totalrepos={profileState.value.profile.public_repos}>
+    <div className="profile-container">
       <h4 className="text-center">Profile for {profileState.value.profile.name}</h4>
       {profileState.value.profile.avatar_url && (
-        <div>
-          <img
-            src={profileState.value.profile.avatar_url}
-            className="img-rounded img-responsive"
-            alt="User avatar"
-          />
-        </div>
+        <img
+          src={profileState.value.profile.avatar_url}
+          className="img-rounded img-responsive"
+          alt="User avatar"
+          width="420"
+        />
       )}
       <ul className="list-group">
         {profileState.value.profile.login && (
