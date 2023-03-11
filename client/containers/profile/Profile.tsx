@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import type { AppDispatch } from '../../store/store';
 import { useParams } from 'react-router-dom';
+import type { AppDispatch } from '../../store/store';
 import { useAppSelector } from '../../store/store';
 import { UserProfile } from '../../components/github/UserProfile';
 import { UserRepos } from '../../components/github/user-repos/UserRepos';
