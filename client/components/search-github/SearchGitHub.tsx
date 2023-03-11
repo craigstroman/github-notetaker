@@ -14,7 +14,6 @@ export const SearchGitHub: React.FC = () => {
   };
 
   // TODO: Continue implementing CSS grid instead of Bootstrap
-  // TODO: Implement notes section using TypeScript, and hooks.
   // TODO: Get repos text to stretch height of container div.
 
   return (
