@@ -1,0 +1,6 @@
+.container {
+  grid-column: span 12;
+  .col {
+    grid-row: span 4;
+  }
+}

@@ -13,26 +13,24 @@ export const SearchGitHub: React.FC = () => {
     }
   };
 
+  // TODO: Continue implementing CSS grid instead of Bootstrap
   // TODO: Implement notes section using TypeScript, and hooks.
+  // TODO: Get repos text to stretch height of container div.
 
   return (
     <div className="search-container">
-      <div className="row">
-        <div className="col-md-12 text-center">
-          <form className="form-search" role="form" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Enter a username"
-              aria-label="Username search field"
-              onChange={(e) => setUserName(e.target.value)}
-            />
-            <button type="submit" className="btn btn-block btn-primary">
-              Search GitHub
-            </button>
-          </form>
-        </div>
-      </div>
+      <form className="form-search" role="form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          className="form-search-input"
+          placeholder="Enter a username"
+          aria-label="Username search field"
+          onChange={(e) => setUserName(e.target.value)}
+        />
+        <button type="submit" className="form-search-button">
+          Search GitHub
+        </button>
+      </form>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { UserProfile } from '../../components/github/UserProfile';
 import { UserRepos } from '../../components/github/user-repos/UserRepos';
 import { Notes } from '../../components/notes/Notes';
 import { getProfileAsync, getReposAsync } from './profileSlice';
+import './Profile.scss';
 
 const Profile: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,16 +22,14 @@ const Profile: React.FC = () => {
 
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-md-4 text-center">
-          <UserProfile />
-        </div>
-        <div className="col-md-4 text-center">
-          <UserRepos />
-        </div>
-        <div className="col-md-4 text-center">
-          <Notes />
-        </div>
+      <div className="col">
+        <UserProfile />
+      </div>
+      <div className="col">
+        <UserRepos />
+      </div>
+      <div className="col">
+        <Notes />
       </div>
     </div>
   );

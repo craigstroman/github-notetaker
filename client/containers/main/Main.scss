@@ -1,9 +1,11 @@
-@import '~bootstrap/scss/bootstrap.scss';
-
 .container {
   display: grid;
+  grid-template-columns: repeat(12, 1fr);
   .search-bar {
     margin-top: 15px;
-    width: 100%;
+    grid-column: span 12;
+  }
+  .main-content {
+    grid-column: span 12;
   }
 }

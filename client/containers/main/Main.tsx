@@ -6,18 +6,14 @@ import './Main.scss';
 
 const Main = () => (
   <div className="container">
-    <div className="row">
-      <div className="col-md-12 search-bar">
-        <SearchGitHub />
-      </div>
+    <div className="search-bar">
+      <SearchGitHub />
     </div>
-    <div className="row">
-      <div className="col-md-12">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/profile/:username" element={<Profile />} />
-        </Routes>
-      </div>
+    <div className="main-content">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/profile/:username" element={<Profile />} />
+      </Routes>
     </div>
   </div>
 );
