@@ -1,8 +1,31 @@
 import React from 'react';
 import './NotesList.scss';
 
-export const NotesList: React.FC = () => {
-  console.log('NotesList: ');
+interface INotes {
+  _id: number;
+  text: string;
+  repo: string;
+  createdAt: string;
+  updatedAt: string;
+  user_id: number;
+}
 
-  return <div>NotesList</div>;
+interface INotesProps {
+  notes: INotes[];
+}
+
+export const NotesList: React.FC<INotesProps> = ({ notes }) => {
+  return (
+    <React.Fragment>
+      <ul className="notes-list">
+        {Array.isArray(notes) &&
+          notes.length >= 1 &&
+          notes.map((note) => (
+            <li className="notes-item" key={`${note._id}_${Math.random()}`}>
+              {note.text}
+            </li>
+          ))}
+      </ul>
+    </React.Fragment>
+  );
 };

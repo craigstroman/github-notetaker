@@ -1,37 +1,18 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
+import { INote, INotesState, IAddNotes, IRemoveNotes } from './notesTypes';
 import { getNotes, addNotes, removeNotes } from './notes.API';
-
-interface INote {
-  note: string;
-  id: number;
-}
-
-interface INotesState {
-  notes: INote[];
-  status: 'idle' | 'loading' | 'error' | 'loaded';
-}
-
-interface IAddNotes {
-  repo: string;
-  note: string;
-}
-
-interface IRemoveNotes {
-  repo: string;
-  noteId: number;
-}
 
 export const fetchNotesAsync = createAsyncThunk('notes/get', async (repo: string) => {
   const response = await getNotes(repo);
 
-  return response;
+  return response.data;
 });
 
 export const addNotesAsync = createAsyncThunk('notes/add', async (notes: IAddNotes) => {
   const response = await addNotes(notes.repo, notes.note);
 
-  return response;
+  return response.data;
 });
 
 export const removeNotesAsync = createAsyncThunk('notes/remove', async (notes: IRemoveNotes) => {
@@ -65,7 +46,7 @@ export const notesSlice = createSlice({
       .addCase(fetchNotesAsync.fulfilled, (state, action) => {
         const newState = state;
         newState.status = 'loaded';
-        newState.notes = action.payload;
+        newState.notes = action.payload.notes;
         return newState;
       })
       .addCase(fetchNotesAsync.rejected, (state) => {
@@ -81,7 +62,9 @@ export const notesSlice = createSlice({
       .addCase(addNotesAsync.fulfilled, (state, action) => {
         const newState = state;
         newState.status = 'loaded';
-        newState.notes = action.payload;
+        newState.notes = [...state.notes, action.payload];
+        console.log('payload: ', action.payload);
+        console.log('current: ', current(newState));
         return newState;
       })
       .addCase(addNotesAsync.rejected, (state) => {

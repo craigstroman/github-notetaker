@@ -1,3 +1,13 @@
-.row {
-  margin-bottom: 10px;
+@import '../../../common/forms.scss';
+
+.notes-container {
+  grid-column: span 12;
+  .form-note {
+    .form-note-input {
+      @extend .input;
+    }
+    .form-note-button {
+      @extend .button;
+    }
+  }
 }
