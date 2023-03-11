@@ -11,9 +11,12 @@ export const AddNote: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const formInput = document.getElementsByClassName('form-note-input')[0] as HTMLInputElement;
 
     if (username) {
       await dispatch(addNotesAsync({ repo: username, note }));
+      setNote('');
+      formInput.value = '';
     }
   };
 
