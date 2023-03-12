@@ -9,8 +9,8 @@ interface ISelect {
 }
 
 export const UserRepos: React.FC = () => {
-  const [offset, setOffset] = useState<number>(0);
   const itemsPerPage = 10;
+  const [offset, setOffset] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(10);
   const profileState = useAppSelector(selectProfileState);
   const { repos } = profileState.value;
@@ -33,7 +33,7 @@ export const UserRepos: React.FC = () => {
         <ul className="repos-list">
           {slicedData &&
             slicedData.map((item) => (
-              <li key={`repo-${item.name}`} className="list-group-item">
+              <li key={`repo-${item.name}`} className="list-item">
                 <a href={item.html_url} target="_blank">
                   {item.name}
                 </a>
