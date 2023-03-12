@@ -6,7 +6,7 @@ import './UserRepos.scss';
 
 export const UserRepos: React.FC = () => {
   const [offset, setOffset] = useState<number>(0);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState<number>(10);
   const profileState = useAppSelector(selectProfileState);
   const { repos } = profileState.value;
@@ -15,9 +15,9 @@ export const UserRepos: React.FC = () => {
 
   const handlePageClick = (e: any) => {
     const selectedPage = e.selected;
-    const offset = selectedPage * itemsPerPage;
-    setOffset(offset);
     setCurrentPage(selectedPage);
+    const offset = currentPage * itemsPerPage;
+    setOffset(offset);
   };
 
   return (
