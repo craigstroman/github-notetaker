@@ -4,6 +4,10 @@ import { useAppSelector } from '../../../store/store';
 import { selectProfileState } from '../../../containers/profile/profileSlice';
 import './UserRepos.scss';
 
+interface ISelect {
+  selected: number;
+}
+
 export const UserRepos: React.FC = () => {
   const [offset, setOffset] = useState<number>(0);
   const itemsPerPage = 10;
@@ -13,8 +17,8 @@ export const UserRepos: React.FC = () => {
   const slicedData = repos.slice(offset, offset + itemsPerPage);
   const pageCount = Math.ceil(repos.length / itemsPerPage);
 
-  const handlePageClick = (e: any) => {
-    const selectedPage = e.selected;
+  const handlePageClick = (event: ISelect) => {
+    const selectedPage = event.selected;
     setCurrentPage(selectedPage);
     const offset = currentPage * itemsPerPage;
     setOffset(offset);
