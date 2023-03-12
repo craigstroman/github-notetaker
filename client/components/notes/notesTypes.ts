@@ -1,5 +1,5 @@
 export interface INote {
-  _id: number;
+  id: number;
   text: string;
   repo: string;
   createdAt: string;
@@ -25,3 +25,8 @@ export interface IRemoveNotes {
   repo: string;
   noteId: number;
 }
+
+export const notesInitialState: INotesState = {
+  notes: [],
+  status: 'idle',
+};

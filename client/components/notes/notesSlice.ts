@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-import { INote, INotesState, IAddNotes, IRemoveNotes } from './notesTypes';
+import { notesInitialState, INotesState, IAddNotes, IRemoveNotes } from './notesTypes';
 import { getNotes, addNotes, removeNotes } from './notes.API';
 
 export const fetchNotesAsync = createAsyncThunk('notes/get', async (repo: string) => {
@@ -18,13 +18,8 @@ export const addNotesAsync = createAsyncThunk('notes/add', async (notes: IAddNot
 export const removeNotesAsync = createAsyncThunk('notes/remove', async (notes: IRemoveNotes) => {
   const response = await removeNotes(notes.repo, notes.noteId);
 
-  return response;
+  return response.data;
 });
-
-const notesInitialState: INotesState = {
-  notes: [],
-  status: 'idle',
-};
 
 export const notesSlice = createSlice({
   name: 'notes',
@@ -63,8 +58,6 @@ export const notesSlice = createSlice({
         const newState = state;
         newState.status = 'loaded';
         newState.notes = [...state.notes, action.payload];
-        console.log('payload: ', action.payload);
-        console.log('current: ', current(newState));
         return newState;
       })
       .addCase(addNotesAsync.rejected, (state) => {
@@ -80,7 +73,7 @@ export const notesSlice = createSlice({
       .addCase(removeNotesAsync.fulfilled, (state, action) => {
         const newState = state;
         newState.status = 'loaded';
-        newState.notes = action.payload;
+        newState.notes = [...state.notes.filter((note) => note.id !== action.payload)];
         return newState;
       })
       .addCase(removeNotesAsync.rejected, (state) => {

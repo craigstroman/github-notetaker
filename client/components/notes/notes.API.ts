@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { stat } from 'fs';
 import { INote, Notes, INotesState, IAddNotes, IRemoveNotes } from './notesTypes';
 
 const nodeEnv = process.env.NODE_ENV;
@@ -20,10 +21,15 @@ export async function addNotes(repo: string, note: string): Promise<{ data: INot
   return { data: result.data };
 }
 
-export async function removeNotes(repo: string, noteId: number) {
+export async function removeNotes(repo: string, noteId: number): Promise<{ data: number }> {
   const url = `${apiUrl}/notes/${repo}/${noteId}`;
 
   const result = await axios.delete(url);
+  let id = 0;
 
-  return result.data;
+  if (result.status === 200) {
+    id = result.data.id;
+  }
+
+  return { data: id };
 }

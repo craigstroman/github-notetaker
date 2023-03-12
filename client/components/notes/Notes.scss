@@ -4,4 +4,31 @@
   .header {
     text-align: center;
   }
+  .notes-list {
+    list-style-type: none;
+    padding-left: 0;
+    .notes-item {
+      &:first-child {
+        margin-top: 10px;
+      }
+      background-color: #fff;
+      border: 1px solid #ddd;
+      display: block;
+      height: 100%;
+      padding: 10px 15px;
+      .notes-item-text {
+        display: inline-block;
+        text-align: left;
+        width: 90%;
+      }
+      .notes-item-btn {
+        display: inline-block;
+        width: 10%;
+        .notes-item-remove-btn {
+          all: unset;
+          cursor: pointer;
+        }
+      }
+    }
+  }
 }
