@@ -81,6 +81,6 @@ export function githubLogin(req, res, next) {
 
 export function sessionStatus(req, res, next) {
   res.send({
-    username: req.user,
+    user: req.user,
   });
 }
