@@ -1,28 +1,31 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { selectProfileState } from '../profile/profileSlice';
 import { UserProfile } from '../../components/github/UserProfile';
 import { UserRepos } from '../../components/github/user-repos/UserRepos';
 import { Notes } from '../../components/notes/Notes';
+import { showLoadingScreen, hideLoadingScreen } from '../../common/LoadingScreen/loadingScreenSlice';
 import { Login } from './login/Login';
-
 import { getProfileAsync, getReposAsync, getUserSessionStatusAsync } from './profileSlice';
 import './Profile.scss';
-import { profile } from 'console';
 
 const Profile: React.FC = () => {
   const dispatch = useAppDispatch();
   const { username } = useParams<{ username: string }>();
+  const getData = async (username: string) => {
+    showLoadingScreen();
+    await dispatch(getProfileAsync(username));
+    await dispatch(getReposAsync(username));
+    await dispatch(getUserSessionStatusAsync());
+    hideLoadingScreen();
+  };
   const profileState = useAppSelector(selectProfileState);
   const userInfo = profileState.value.userInfo;
 
   useEffect(() => {
     if (username) {
-      dispatch(getProfileAsync(username));
-      dispatch(getReposAsync(username));
-      dispatch(getUserSessionStatusAsync());
+      getData(username);
     }
   }, [username]);
 

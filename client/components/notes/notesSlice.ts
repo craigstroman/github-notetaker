@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 import { notesInitialState, INotesState, IAddNotes, IRemoveNotes } from './notesTypes';
 import { getNotes, addNotes, removeNotes } from './notes.API';
