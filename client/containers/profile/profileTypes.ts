@@ -33,6 +33,18 @@ export interface IProfile {
   updated_at: string;
 }
 
+export interface IUser {
+  createdAt: string;
+  email: string;
+  id: number;
+  name: string;
+  profile_id: string;
+  profile_picture: string;
+  provider: string;
+  token: string;
+  updatedAt: string;
+}
+
 export interface IRepo {
   name: string;
   html_url: string;
@@ -42,6 +54,7 @@ export interface ProfileState {
   value: {
     profile: IProfile;
     repos: IRepo[];
+    userInfo: IUser | null;
   };
   status: 'idle' | 'loading' | 'failed' | 'success' | 'not-found';
 }
@@ -88,6 +101,17 @@ export const initialState: ProfileState = {
         html_url: '',
       },
     ],
+    userInfo: {
+      createdAt: '',
+      email: '',
+      id: 0,
+      name: '',
+      profile_id: '',
+      profile_picture: '',
+      provider: '',
+      token: '',
+      updatedAt: '',
+    },
   },
   status: 'idle',
 };

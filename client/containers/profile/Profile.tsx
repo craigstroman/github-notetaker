@@ -1,22 +1,28 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import type { AppDispatch } from '../../store/store';
-import { useAppSelector } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { selectProfileState } from '../profile/profileSlice';
 import { UserProfile } from '../../components/github/UserProfile';
 import { UserRepos } from '../../components/github/user-repos/UserRepos';
 import { Notes } from '../../components/notes/Notes';
-import { getProfileAsync, getReposAsync } from './profileSlice';
+import { Login } from './login/Login';
+
+import { getProfileAsync, getReposAsync, getUserSessionStatusAsync } from './profileSlice';
 import './Profile.scss';
+import { profile } from 'console';
 
 const Profile: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const { username } = useParams<{ username: string }>();
+  const profileState = useAppSelector(selectProfileState);
+  const userInfo = profileState.value.userInfo;
 
   useEffect(() => {
     if (username) {
       dispatch(getProfileAsync(username));
       dispatch(getReposAsync(username));
+      dispatch(getUserSessionStatusAsync());
     }
   }, [username]);
 
@@ -28,9 +34,7 @@ const Profile: React.FC = () => {
       <div className="col">
         <UserRepos />
       </div>
-      <div className="col">
-        <Notes />
-      </div>
+      <div className="col">{userInfo && userInfo?.id >= 1 ? <Notes /> : <Login />}</div>
     </div>
   );
 };
