@@ -5,7 +5,8 @@
   border-radius: 0.25rem;
   cursor: pointer;
   li {
-    a {
+    a,
+    a[role='button'] {
       position: relative;
       display: block;
       padding: 0.5rem 0.75rem;
