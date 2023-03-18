@@ -13,9 +13,6 @@ export const SearchGitHub: React.FC = () => {
     }
   };
 
-  // TODO: Continue implementing CSS grid instead of Bootstrap
-  // TODO: Get repos text to stretch height of container div.
-
   return (
     <div className="search-container">
       <form className="form-search" role="form" onSubmit={handleSubmit}>
