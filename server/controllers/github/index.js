@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { application } from 'express';
 import util from 'util';
 import { getNotes } from '../notes/index';
 
@@ -10,6 +11,7 @@ const headers = {
     client_id: process.env.GITHUB_CLIENT_ID,
     client_secret: process.env.GITHUB_CLIENT_SECRET,
     Authorization: process.env.GITHUB_TOKEN,
+    'content-type': 'application/json',
     'x-ratelimit-reset': '1598048562',
   },
 };
