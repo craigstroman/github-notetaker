@@ -26,7 +26,7 @@ export const Notes: React.FC = () => {
   return (
     <div className="notes-container">
       <header className="header">
-        <h4 className="text-center">Notes for {profileState.value.profile.name}</h4>
+        <h4>Notes for {profileState.value.profile.name}</h4>
       </header>
       <AddNote />
       <NotesList notes={notesList.notes} />

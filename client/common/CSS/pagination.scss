@@ -3,6 +3,7 @@
   padding-left: 0;
   list-style: none;
   border-radius: 0.25rem;
+  width: 380px;
   cursor: pointer;
   li {
     a,
@@ -26,6 +27,9 @@
   }
   li.previous,
   li.next {
-    width: 105px;
+    width: 110px;
+    a {
+      width: 110px;
+    }
   }
 }

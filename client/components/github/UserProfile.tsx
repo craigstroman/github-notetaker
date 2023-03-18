@@ -8,14 +8,11 @@ export const UserProfile: React.FC = () => {
 
   return (
     <div className="profile-container">
-      <h4 className="text-center">Profile for {profileState.value.profile.name}</h4>
+      <header className="header">
+        <h4>Profile for {profileState.value.profile.name}</h4>
+      </header>
       {profileState.value.profile.avatar_url && (
-        <img
-          src={profileState.value.profile.avatar_url}
-          className="img-rounded img-responsive"
-          alt="User avatar"
-          width="420"
-        />
+        <img src={profileState.value.profile.avatar_url} alt="User avatar" />
       )}
       <ul className="list-group">
         {profileState.value.profile.login && (

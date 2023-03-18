@@ -30,7 +30,7 @@ const Profile: React.FC = () => {
   }, [username]);
 
   return (
-    <div className="container">
+    <div className="main-content-container">
       <div className="col">
         <UserProfile />
       </div>

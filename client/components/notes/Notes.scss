@@ -1,8 +1,8 @@
 .notes-container {
-  grid-column: span 12;
-  width: 430px;
   .header {
-    text-align: center;
+    h4 {
+      text-align: center;
+    }
   }
   .notes-list {
     list-style-type: none;

@@ -1,3 +1,11 @@
 .profile-container {
-  width: 430px;
+  .header {
+    h4 {
+      text-align: center;
+    }
+  }
+  img {
+    width: 400px;
+    border-radius: 3px;
+  }
 }

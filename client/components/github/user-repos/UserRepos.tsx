@@ -27,7 +27,7 @@ export const UserRepos: React.FC = () => {
   return (
     <div className="repos-container">
       <header className="header">
-        <h4 className="text-center">Repos for {profileState.value.profile.name}</h4>
+        <h4>Repos for {profileState.value.profile.name}</h4>
       </header>
       <div className="content">
         <ul className="repos-list">

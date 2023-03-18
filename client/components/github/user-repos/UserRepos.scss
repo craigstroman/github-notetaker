@@ -1,10 +1,10 @@
 @import '../../../common/CSS/pagination.scss';
 
 .repos-container {
-  grid-column: span 12;
-  width: 430px;
   .header {
-    text-align: center;
+    h4 {
+      text-align: center;
+    }
   }
   .repos-list {
     padding-top: 1rem;
