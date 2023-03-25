@@ -11,7 +11,6 @@ https://github-notetaker.craigstroman.com/
 - git clone https://github.com/craigstroman/github-notetaker.git.
 - cd github-notetaker.
 - Run npm install.
-- To run multiple commands like the server and dev environment open multiple terminal windows.
 - Once the server is started, then go to http://localhost:3000.
 
 ## Available commands:
