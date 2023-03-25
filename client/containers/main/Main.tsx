@@ -5,7 +5,7 @@ import { SearchGitHub } from '../../components/search-github/SearchGitHub';
 import './Main.scss';
 
 const Main = () => (
-  <div className="container">
+  <div className="content">
     <div className="search-bar">
       <SearchGitHub />
     </div>

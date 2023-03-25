@@ -1,11 +1,12 @@
 @import '../../../common/css/forms.scss';
 .notes-container {
-  grid-column: span 12;
+  width: 100%;
   .form-note {
     .form-note-input {
       @extend .input;
     }
     .form-note-button {
+      display: inline-block;
       @extend .button;
     }
   }

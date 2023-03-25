@@ -7,7 +7,7 @@ export const UserProfile: React.FC = () => {
   const profileState = useAppSelector(selectProfileState);
 
   return (
-    <div className="profile-container">
+    <div className="user-profile-container">
       <header className="header">
         <h4>Profile for {profileState.value.profile.name}</h4>
       </header>

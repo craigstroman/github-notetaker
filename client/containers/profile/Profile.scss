@@ -1,8 +1,0 @@
-.main-content-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-  grid-gap: 1rem;
-  .col {
-    padding: 1.5rem;
-  }
-}

@@ -8,7 +8,6 @@ import { Notes } from '../../components/notes/Notes';
 import { showLoadingScreen, hideLoadingScreen } from '../../common/LoadingScreen/loadingScreenSlice';
 import { Login } from './login/Login';
 import { getProfileAsync, getReposAsync, getUserSessionStatusAsync } from './profileSlice';
-import './Profile.scss';
 
 const Profile: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -30,15 +29,15 @@ const Profile: React.FC = () => {
   }, [username]);
 
   return (
-    <div className="main-content-container">
-      <div className="col">
+    <React.Fragment>
+      <div>
         <UserProfile />
       </div>
-      <div className="col">
+      <div>
         <UserRepos />
       </div>
-      <div className="col">{userInfo && userInfo?.id >= 1 ? <Notes /> : <Login />}</div>
-    </div>
+      <div>{userInfo && userInfo?.id >= 1 ? <Notes /> : <Login />}</div>
+    </React.Fragment>
   );
 };
 
