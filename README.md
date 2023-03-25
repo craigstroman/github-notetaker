@@ -16,13 +16,19 @@ https://github-notetaker.craigstroman.com/
 
 ## Available commands:
 
-1. `npm run live:client` - Starts the development environment for the client.
-1. `npm run live:server` - Starts the development environment for the server.
+1. `npm run live:server` - Starts the development environment for the server and client.
 1. `npm run scss` - Builds the CSS for the server views and watches for changes.
 1. `npm run prod:build` - Builds the production client.
 1. `npm run prod:server` - Starts the server in production.
 
 ## Version History
+
+###### Version 4.0.0
+
+- Started using TypeScript
+- Upgraded React and switched to using React Hooks
+- Dropped Bootstrap
+- Switched to using grid for CSS layout
 
 ###### Version 3.0.0
 
@@ -30,7 +36,7 @@ https://github-notetaker.craigstroman.com/
 - Upgraded Node-SASS.
 - Upgraded NPM passport-google-oauth.
 - Added profile picture in top right corner.
-- Swiched from Node Env File to DotENV.
+- Switched from Node Env File to DotENV.
 - Added GitHub OAuth login.
 
 ###### Version 2.3.0
