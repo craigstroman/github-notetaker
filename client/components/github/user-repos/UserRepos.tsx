@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useAppSelector } from '../../../store/store';
 import { selectProfileState } from '../../../containers/profile/profileSlice';
-import '../../../common/pagination/Pagination.scss';
+import '../../../common/CSS/pagination.scss';
 import './UserRepos.scss';
 
 interface ISelect {
