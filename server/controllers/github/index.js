@@ -29,9 +29,6 @@ export function getProfile(req, res) {
       res.send(resp.data);
     })
     .catch((error) => {
-      // console.log('Failed to get profile: ');
-      // console.log('error: ');
-      // console.log(error);
       if (error.message === 'Request failed with status code 404') {
         res.status(404).send({
           message: 'Not found',
