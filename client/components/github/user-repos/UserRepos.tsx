@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useAppSelector } from '../../../store/store';
 import { selectProfileState } from '../../../containers/profile/profileSlice';
+import '../../../common/pagination/Pagination.scss';
 import './UserRepos.scss';
 
 interface ISelect {
@@ -45,7 +46,7 @@ export const UserRepos: React.FC = () => {
             breakLabel="..."
             nextLabel="next >"
             onPageChange={(e) => handlePageClick(e)}
-            pageRangeDisplayed={5}
+            pageRangeDisplayed={3}
             pageCount={pageCount}
             previousLabel="< previous"
             containerClassName={'pagination'}
