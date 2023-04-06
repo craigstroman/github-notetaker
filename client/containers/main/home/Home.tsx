@@ -1,12 +1,9 @@
 import React from 'react';
+import './Home.scss';
 
 const Home: React.FC = () => (
-  <div>
-    <div className="row">
-      <div className="col-md-12">
-        <h1 className="text-center">Search Github above by username</h1>
-      </div>
-    </div>
+  <div className="title">
+    <h1>Search Github above by username</h1>
   </div>
 );
 
