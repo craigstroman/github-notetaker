@@ -19,7 +19,12 @@ let repoCount = 0;
 
 export function getProfile(req, res) {
   const username = req.params.username;
+  const FaceBookBioFixture = require('../../../fixtures/facebook/bio.json');
+  const CraigStromanBioFixture = require('../../../fixtures/craigstroman/bio.json');
 
+  // if (process.env.NODE_ENV === 'development') {
+  //   res.send(CraigStromanBioFixture);
+  // } else {
   axios
     .get(`${apiURL}/users/${username}`, {
       headers,
@@ -45,69 +50,32 @@ export function getProfile(req, res) {
         message: 'There was an error.',
       });
     });
+  // }
 }
 
 export function getRepos(req, res) {
   const username = req.params.username;
-  const pagenumber = req.params.page_number;
-  const pagesize = req.params.page_size;
+  const FaceBookReposFixture = require('../../../fixtures/facebook/repos.json');
+  const CraigStromanRepos = require('../../../fixtures/craigstroman/repos.json');
 
-  if (repoCount > 100) {
-    const pages = Math.ceil(repoCount / 100);
-    let urls = [];
+  const url = `https://api.github.com/users/${username}/repos?page=1&per_page=100`;
 
-    for (let i = 1; i <= pages; i++) {
-      let url = `${apiURL}/users/${username}/repos?page=${i}&per_page=100`;
-      urls.push(url);
-    }
-
-    axios
-      .all(
-        urls.map((l) => axios.get(l)),
-        {
-          headers,
-        },
-      )
-      .then((resp) => {
-        let result = [];
-
-        resp.forEach((r) => {
-          result.push(...r.data);
+  axios
+    .get(url, {
+      headers,
+    })
+    .then((resp) => {
+      res.send(resp.data);
+    })
+    .catch((error) => {
+      if (error.message === 'Request failed with status code 404') {
+        res.status(404).send({
+          message: 'Not found',
+          status: 404,
         });
-
-        res.send(result);
-      })
-      .catch((error) => {
-        if (error.message === 'Request failed with status code 404') {
-          res.status(404).send({
-            message: 'Not found',
-            status: 404,
-          });
-        }
-        res.status(500).send({
-          error,
-        });
+      }
+      res.status(500).send({
+        error,
       });
-  } else {
-    let url = `https://api.github.com/users/${username}/repos?page=1&per_page=100`;
-
-    axios
-      .get(url, {
-        headers,
-      })
-      .then((resp) => {
-        res.send(resp.data);
-      })
-      .catch((error) => {
-        if (error.message === 'Request failed with status code 404') {
-          res.status(404).send({
-            message: 'Not found',
-            status: 404,
-          });
-        }
-        res.status(500).send({
-          error,
-        });
-      });
-  }
+    });
 }
