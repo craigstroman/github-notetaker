@@ -46,7 +46,7 @@ export const UserRepos: React.FC = () => {
             breakLabel="..."
             nextLabel="next >"
             onPageChange={(e) => handlePageClick(e)}
-            pageRangeDisplayed={3}
+            pageRangeDisplayed={2}
             pageCount={pageCount}
             previousLabel="< previous"
             containerClassName={'pagination'}
