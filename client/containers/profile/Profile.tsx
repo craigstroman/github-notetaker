@@ -1,26 +1,25 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { selectProfileState } from '../profile/profileSlice';
+import { getProfileAsync } from '../../components/github/userProfileSlice';
 import { UserProfile } from '../../components/github/UserProfile';
+import { getReposAsync } from '../../components/github/user-repos/userReposSlice';
 import { UserRepos } from '../../components/github/user-repos/UserRepos';
+import { getSessionStatusAsync, selectUserInfoState } from '../../components/userInfo/userInfoSlice';
 import { Notes } from '../../components/notes/Notes';
-import { showLoadingScreen, hideLoadingScreen } from '../../common/LoadingScreen/loadingScreenSlice';
 import { Login } from './login/Login';
-import { getProfileAsync, getReposAsync, getUserSessionStatusAsync } from './profileSlice';
 
 const Profile: React.FC = () => {
   const dispatch = useAppDispatch();
   const { username } = useParams<{ username: string }>();
   const getData = async (username: string) => {
-    showLoadingScreen();
+    // showLoadingScreen();
     await dispatch(getProfileAsync(username));
     await dispatch(getReposAsync(username));
-    await dispatch(getUserSessionStatusAsync());
-    hideLoadingScreen();
+    await dispatch(getSessionStatusAsync());
+    // hideLoadingScreen();
   };
-  const profileState = useAppSelector(selectProfileState);
-  const userInfo = profileState.value.userInfo;
+  const userInfoState = useAppSelector(selectUserInfoState);
 
   useEffect(() => {
     if (username) {
@@ -36,7 +35,7 @@ const Profile: React.FC = () => {
       <div>
         <UserRepos />
       </div>
-      <div>{userInfo && userInfo?.id >= 1 ? <Notes /> : <Login />}</div>
+      <div>{userInfoState && userInfoState.status === 'success' ? <Notes /> : <Login />}</div>
     </React.Fragment>
   );
 };

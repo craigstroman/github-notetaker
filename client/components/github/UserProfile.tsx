@@ -1,60 +1,58 @@
 import React from 'react';
 import { useAppSelector } from '../../store/store';
-import { selectProfileState } from '../../containers/profile/profileSlice';
+import { selectUserProfileState } from './userProfileSlice';
 import './UserProfile.scss';
 
 export const UserProfile: React.FC = () => {
-  const profileState = useAppSelector(selectProfileState);
+  const profileState = useAppSelector(selectUserProfileState);
 
   return (
     <div className="user-profile-container">
       <header className="header">
-        <h4>Profile for {profileState.value.profile.name}</h4>
+        <h4>Profile for {profileState.value.name}</h4>
       </header>
-      {profileState.value.profile.avatar_url && (
-        <img src={profileState.value.profile.avatar_url} alt="User avatar" />
-      )}
+      {profileState.value.avatar_url && <img src={profileState.value.avatar_url} alt="User avatar" />}
       <ul className="list-group">
-        {profileState.value.profile.login && (
+        {profileState.value.login && (
           <li className="list-group-item text-left">
-            <b>Username:</b> {profileState.value.profile.login}
+            <b>Username:</b> {profileState.value.login}
           </li>
         )}
-        {profileState.value.profile.company && (
+        {profileState.value.company && (
           <li className="list-group-item text-left">
-            <b>Company:</b> {profileState.value.profile.company}
+            <b>Company:</b> {profileState.value.company}
           </li>
         )}
-        {profileState.value.profile.email && (
+        {profileState.value.email && (
           <li className="list-group-item text-left">
-            <b>Email:</b> {profileState.value.profile.email}
+            <b>Email:</b> {profileState.value.email}
           </li>
         )}
-        {profileState.value.profile.location && (
+        {profileState.value.location && (
           <li className="list-group-item text-left">
-            <b>Location:</b> {profileState.value.profile.location}
+            <b>Location:</b> {profileState.value.location}
           </li>
         )}
-        {profileState.value.profile.public_repos && (
-          <li className="list-group-item text-left" data-repos={profileState.value.profile.public_repos}>
-            <b>Repos:</b> {profileState.value.profile.public_repos}
+        {profileState.value.public_repos && (
+          <li className="list-group-item text-left" data-repos={profileState.value.public_repos}>
+            <b>Repos:</b> {profileState.value.public_repos}
           </li>
         )}
-        {profileState.value.profile.followers >= 1 && (
+        {profileState.value.followers >= 1 && (
           <li className="list-group-item text-left">
-            <b>Followers:</b> {profileState.value.profile.followers}
+            <b>Followers:</b> {profileState.value.followers}
           </li>
         )}
-        {profileState.value.profile.following >= 1 && (
+        {profileState.value.following >= 1 && (
           <li className="list-group-item text-left">
-            <b>Following:</b> {profileState.value.profile.following}
+            <b>Following:</b> {profileState.value.following}
           </li>
         )}
-        {profileState.value.profile.blog && (
+        {profileState.value.blog && (
           <li className="list-group-item text-left">
             <b>Blog:</b>{' '}
-            <a href={profileState.value.profile.blog} rel="noopener noreferrer" target="_blank">
-              {profileState.value.profile.blog}
+            <a href={profileState.value.blog} rel="noopener noreferrer" target="_blank">
+              {profileState.value.blog}
             </a>
           </li>
         )}

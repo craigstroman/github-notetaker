@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { stat } from 'fs';
 import { INote, Notes, INotesState, IAddNotes, IRemoveNotes } from './notesTypes';
 
 const nodeEnv = process.env.NODE_ENV;

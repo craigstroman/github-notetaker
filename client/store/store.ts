@@ -1,12 +1,16 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { useSelector, useDispatch, TypedUseSelectorHook } from 'react-redux';
 import notesReducer from '../components/notes/notesSlice';
-import profileReducer from '../containers/profile/profileSlice';
+import userProfileReducer from '../components/github/userProfileSlice';
+import userReposReducer from '../components/github/user-repos/userReposSlice';
+import userInfoReducer from '../components/userInfo/userInfoSlice';
 import loadingScreenReducer from '../common/LoadingScreen/loadingScreenSlice';
 
 export const reducer = {
   notes: notesReducer,
-  profile: profileReducer,
+  userProfile: userProfileReducer,
+  userRepos: userReposReducer,
+  userInfo: userInfoReducer,
   loading: loadingScreenReducer,
 };
 
