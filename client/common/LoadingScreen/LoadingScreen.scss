@@ -1,17 +1,18 @@
-.lds-spinner {
-  color: official;
-  display: inline-block;
-  position: relative;
+.loader {
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid #3498db;
+  border-radius: 50%;
   width: 80px;
   height: 80px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
 }
-.lds-spinner div {
-  transform-origin: 40px 40px;
-  animation: lds-spinner 1.2s linear infinite;
-  &:after {
-    content: ' ';
-    display: block;
-    position: absolute;
-    top: 3px;
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
