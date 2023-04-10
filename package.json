@@ -9,7 +9,7 @@
   "main": "server/app.js",
   "scripts": {
     "start": "NODE_ENV=production node ./build/index.js",
-    "scss": "sass server/views/scss/styles.scss --style=compressed public/css/styles.css",
+    "scss": "sass server/views/scss/styles.scss --watch --style=compressed public/css/styles.css",
     "js": "NODE_ENV=development webpack --config webpack.config.dev.js --progress --watch",
     "copy-files:server": "copyfiles -f ./server/views/*.pug ./build/views & copyfiles -f ./server/views/common/*.pug ./build/views/common & copyfiles ./.env ./build",
     "copy-files:client": "copyfiles -f ./client/css/styles.css ./public/css & copyfiles -f ./client/js/libs/*.js ./public/js/libs & copyfiles -f ./client/fonts/bootstrap/*.* ./public/fonts/bootstrap",
@@ -90,6 +90,7 @@
     "express-session": "^1.15.6",
     "html-to-text": "^3.3.0",
     "lodash": "^4.17.5",
+    "mongoose": "^7.0.3",
     "morgan": "^1.8.2",
     "npm": "^6.14.5",
     "passport": "^0.4.0",
