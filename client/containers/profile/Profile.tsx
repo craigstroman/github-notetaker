@@ -19,9 +19,7 @@ const Profile: React.FC = () => {
     await dispatch(getReposAsync(username));
   };
   const userProfileState = useAppSelector(selectUserProfileState);
-  console.log('userProfileState: ', userProfileState);
   const userReposState = useAppSelector(selectUserReposState);
-  console.log('userReposState: ', userReposState);
   const userInfoState = useAppSelector(selectUserInfoState);
   const [showLoadingScreen, setShowLoadingScreen] = useState<boolean>(false);
   const [showNotFoundScreen, setShowNotFoundScreen] = useState<boolean>(false);
