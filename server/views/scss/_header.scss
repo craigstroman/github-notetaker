@@ -1,0 +1,96 @@
+header {
+  .header {
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    padding-right: 1.5rem;
+    height: 140px;
+    margin-bottom: 10px;
+    width: 100%;
+    .title {
+      height: 60%;
+      padding-left: 10px;
+      text-align: center;
+      width: 97%;
+      h1 {
+        width: 100%;
+        a {
+          color: #000;
+          &:hover,
+          &:active,
+          &:visited {
+            color: #000;
+          }
+        }
+      }
+    }
+    nav {
+      text-align: right;
+      height: 60%;
+      width: 3%;
+      .navigation {
+        height: 100%;
+        width: auto;
+        position: relative;
+        .navbar-dropdown {
+          .profile-picture {
+            border-radius: 50%;
+            display: inline-block;
+            height: 50px;
+            width: 50px;
+          }
+        }
+
+        .dropdown {
+          height: 50px;
+          .navbar-dropdown {
+            .icon {
+              color: #000;
+              &:first-child {
+                margin-right: 5px;
+              }
+            }
+          }
+        }
+        .dropdown-menu {
+          display: none;
+          list-style: none;
+          overflow: hidden;
+          background-color: #fff;
+          border: #eee 1px solid;
+          box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 1.5rem;
+          width: 200px;
+          margin: 0 auto;
+          padding: 0;
+          text-align: center;
+          -webkit-transition: height 0.3s ease;
+          transition: height 0.3s ease;
+          position: absolute;
+          right: 5px;
+          &.visible {
+            display: block;
+          }
+          li {
+            padding-bottom: 10px;
+            &:hover {
+              background-color: #eee;
+            }
+            a {
+              color: #000;
+              text-decoration: none;
+              width: 100%;
+            }
+          }
+        }
+      }
+      .dropdown-trigger {
+        color: #000;
+        text-decoration: none;
+        outline: none;
+      }
+    }
+  }
+}

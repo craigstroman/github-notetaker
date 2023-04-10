@@ -7,32 +7,32 @@ block content
 
   if(user)
     form(class="user-form" method="post" action="/update-user-info")
-      div(class="form-group row")
-        label(for="name" class="col-sm-1 col-form-label")
-          | Name
-        div(class="col-sm-4")
-          input(type="text" class="form-control" name="name" id="name" value=user.name)
-      div(class="form-group row")
-        label(for="email" class="col-sm-1 col-form-label")
-          | Email
-        div(class="col-sm-4")
+      div(class="form-row")
+        label(for="name")
+          | Name:
+        input(type="text" class="form-control" name="name" id="name" value=user.name)
+      div(class="form-row")
+        label(for="email")
+          | Email:
+        div(class="user-info")
           | #{user.email}
-      div(class="form-group row")
-        label(for="provider" class="col-sm-1 col-form-label")
-          | Provider
-        div(class="col-sm-4")
+      div(class="form-row")
+        label(for="provider")
+          | Provider:
+        div(class="user-info")
           - user.provider = user.provider.charAt(0).toUpperCase() + user.provider.slice(1);
           | #{user.provider}
-      button(type="submit" class="btn btn-primary") Submit
+      div(class="form-row")
+        button(type="submit" class="btn btn-primary") Submit
 
     if(notes)
-      div(class="row")
-        div(class="col-md-12 text-center")
+      div(class="dashboard-content")
+        div(class="row")
+          hr
           h1 Repos With Notes
           hr
 
       div(class="row")
-        div(class="col-md-12")
           ul(class="repos-with-notes")
             each val in notes
               li

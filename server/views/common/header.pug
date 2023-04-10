@@ -6,17 +6,16 @@ header
     if(user!==undefined)
       nav
         .navigation
-          .dropdown
-            a(href='#' class='navbar-dropdown' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false')
-              if(user.profile_picture != '')
-                img(src=user.profile_picture class='profile-picture')
-              else
-                i.fa.fa-arrow-circle-down.icon(aria-hidden='true')
-            ul(class='dropdown-menu')
-              li
-                a(href='/dashboard') Settings
-              li
-                a(href='/logout') Logout
+          a(href='#' class='navbar-dropdown' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false')
+            if(user.profile_picture)
+              img(src=user.profile_picture class='profile-picture')
+            else
+              i.fa.fa-arrow-circle-down.icon(aria-hidden='true')  
+          ul(class='dropdown-menu')
+            li
+              a(href='/dashboard') Settings
+            li
+              a(href='/logout') Logout            
     else
       nav
         .navigation
