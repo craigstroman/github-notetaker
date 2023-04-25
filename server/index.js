@@ -2,6 +2,7 @@ import app from './app';
 import debug from 'debug';
 import { createServer } from 'http';
 import models from './models/index';
+import mongoose from 'mongoose';
 
 require('dotenv').config();
 
@@ -23,6 +24,16 @@ const ws = createServer(app);
 models.sequelize.sync().then(() => {
   ws.listen(port, () => {
     console.log(`Server started at http://localhost:${port}`);
+
+    mongoose
+      .connect(`mongodb://${process.env.MONGODB_URL}${process.env.MONGODB_NAME}`)
+      .then(() => {
+        console.log('Connected to mongoose database');
+      })
+      .catch((err) => {
+        console.log('There was a database error: ');
+        console.log(err);
+      });
   });
 
   ws.on('error', onError);
