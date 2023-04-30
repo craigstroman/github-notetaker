@@ -10,9 +10,9 @@ export default function (User, passport) {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: process.env.GITHUB_CALLBACK_URL,
-        passReqToCallback: true, // req object on auth is passed as first arg
+        passReqToCallback: false,
       },
-      function (req, token, refreshToken, profile, done) {
+      function (token, profile, done) {
         process.nextTick(async function () {
           try {
             let profileAvatar = null;
@@ -42,27 +42,29 @@ export default function (User, passport) {
               email = '';
             }
 
-            const user = await User.findOrCreate({
-              where: { profile_id: profile.id },
-              defaults: {
-                profile_id: profile.id,
-                token,
-                name: profile.displayName,
-                email,
-                profile_picture: profileAvatar,
-                provider: 'github',
+            const user = await User.findOneAndUpdate(
+              { profile_id: profile.id },
+              {
+                $setOnInsert: {
+                  profile_id: profile.id,
+                  token,
+                  refreshToken,
+                  name: profile.displayName,
+                  email,
+                  profile_picture: profileAvatar,
+                  provider: 'github',
+                },
               },
-            }).spread(function (user, created) {
-              const result = user.get({
-                plain: true,
-              });
+              { upsert: true, new: true, rawResult: true, returnNewDocument: true },
+            );
 
-              return result;
-            });
+            console.log('user', user);
 
             const err = null;
 
-            return done(err, user);
+            if (user && user.value) {
+              return done(err, user.value);
+            }
           } catch (err) {
             console.log('error: ', err);
 

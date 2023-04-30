@@ -9,32 +9,31 @@ export default function (User, passport) {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: process.env.GOOGLE_CALLBACK_URL,
-        passReqToCallback: true,
+        passReqToCallback: false,
       },
-      function (req, token, refreshToken, profile, done) {
+      function (token, profile, done) {
         process.nextTick(async function () {
           try {
-            const user = await User.findOrCreate({
-              where: { profile_id: profile.id },
-              defaults: {
-                profile_id: profile.id,
-                token,
-                email: (profile.emails[0].value || '').toLowerCase(),
-                name: profile.displayName,
-                profile_picture: profile.photos[0].value,
-                provider: 'google',
+            const user = await User.findOneAndUpdate(
+              { profile_id: profile.id },
+              {
+                $setOnInsert: {
+                  profile_id: profile.id,
+                  token,
+                  email: (profile.emails[0].value || '').toLowerCase(),
+                  name: profile.displayName,
+                  profile_picture: profile.photos[0].value,
+                  provider: 'google',
+                },
               },
-            }).spread(function (user, created) {
-              const result = user.get({
-                plain: true,
-              });
-
-              return result;
-            });
+              { upsert: true, new: true, rawResult: true, returnNewDocument: true },
+            );
 
             const err = null;
 
-            return done(err, user);
+            if (user && user.value) {
+              return done(err, user.value);
+            }
           } catch (err) {
             console.log('error: ', err);
 

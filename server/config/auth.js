@@ -1,7 +1,9 @@
 import google from './google/index';
 import facebook from './facebook/index';
 import github from './github/index';
-import models from '../models/index';
+import { User } from '../schemas/user';
+
+User.init();
 
 export default function auth(passport) {
   passport.serializeUser(function (user, done) {
@@ -12,9 +14,9 @@ export default function auth(passport) {
     done(null, user);
   });
 
-  google(models.User, passport);
+  google(User, passport);
 
-  facebook(models.User, passport);
+  facebook(User, passport);
 
-  github(models.User, passport);
+  github(User, passport);
 }
