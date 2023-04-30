@@ -11,7 +11,7 @@ export default function (User, passport) {
         callbackURL: process.env.GOOGLE_CALLBACK_URL,
         passReqToCallback: false,
       },
-      function (token, profile, done) {
+      function (token, refreshToken, profile, done) {
         process.nextTick(async function () {
           try {
             const user = await User.findOneAndUpdate(
@@ -20,10 +20,11 @@ export default function (User, passport) {
                 $setOnInsert: {
                   profile_id: profile.id,
                   token,
+                  refreshToken,
                   email: (profile.emails[0].value || '').toLowerCase(),
                   name: profile.displayName,
                   profile_picture: profile.photos[0].value,
-                  provider: 'google',
+                  provider: 'Google',
                 },
               },
               { upsert: true, new: true, rawResult: true, returnNewDocument: true },

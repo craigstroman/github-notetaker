@@ -12,7 +12,7 @@ export default function (User, passport) {
         passReqToCallback: false,
         profileFields: ['id', 'emails', 'name', 'picture.type(large)'],
       },
-      function (token, profile, done) {
+      function (token, refreshToken, profile, done) {
         process.nextTick(async function () {
           try {
             const name = `${profile.name.givenName} ${profile.name.familyName}`;
@@ -27,7 +27,7 @@ export default function (User, passport) {
                   name,
                   email: (profile.emails[0].value || '').toLowerCase(),
                   profile_picture: profile.photos[0].value,
-                  provider: 'facebook',
+                  provider: 'Facebook',
                 },
               },
               { upsert: true, new: true, rawResult: true, returnNewDocument: true },

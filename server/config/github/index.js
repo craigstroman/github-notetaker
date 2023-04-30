@@ -12,7 +12,7 @@ export default function (User, passport) {
         callbackURL: process.env.GITHUB_CALLBACK_URL,
         passReqToCallback: false,
       },
-      function (token, profile, done) {
+      function (token, refreshToken, profile, done) {
         process.nextTick(async function () {
           try {
             let profileAvatar = null;
@@ -52,7 +52,7 @@ export default function (User, passport) {
                   name: profile.displayName,
                   email,
                   profile_picture: profileAvatar,
-                  provider: 'github',
+                  provider: 'Github',
                 },
               },
               { upsert: true, new: true, rawResult: true, returnNewDocument: true },
