@@ -1,10 +1,11 @@
 import cuid from 'cuid';
 import striptags from 'striptags';
-import models from '../../models/index';
+import mongoose from 'mongoose';
+import { Notes } from '../../schemas/notes';
 
-const Notes = models.Notes;
+Notes.init();
 
-export function getNotes(req, res) {
+export async function getNotes(req, res) {
   if (!req.user) {
     return res.status(403).end();
   } else if (!req.params.repo) {
@@ -13,29 +14,24 @@ export function getNotes(req, res) {
 
   const repo = req.params.repo;
   const user = req.user;
-  const userId = user.id;
+  const userId = new mongoose.Types.ObjectId(user._id);
 
-  Notes.findAll({
-    where: {
+  try {
+    const result = await Notes.find({
       user_id: userId,
       repo,
-    },
-    raw: true,
-  })
-    .then((notes) => {
-      res.status(200).send({ notes });
-    })
-    .catch((err) => {
-      res
-        .status(500)
-        .send({
-          error: err,
-        })
-        .end();
     });
+
+    res.status(200).send(result);
+  } catch (error) {
+    console.log('error: ');
+    console.log(error);
+
+    res.status(500).send(error);
+  }
 }
 
-export function saveNote(req, res) {
+export async function saveNote(req, res) {
   if (!req.user) {
     res.status(400).end();
   } else if (!req.params.repo || !req.params.note) {
@@ -44,7 +40,7 @@ export function saveNote(req, res) {
 
   const note = striptags(req.params.note);
   const repo = req.params.repo;
-  const userId = req.user.id;
+  const userId = new mongoose.Types.ObjectId(req.user._id);
 
   const newNote = new Notes({
     text: note,
@@ -52,22 +48,18 @@ export function saveNote(req, res) {
     user_id: userId,
   });
 
-  newNote
-    .save()
-    .then((resp) => {
-      res.send(resp);
-    })
-    .catch((err) => {
-      res
-        .status(500)
-        .send({
-          error: err,
-        })
-        .end();
-    });
+  try {
+    const result = await newNote.save(newNote);
+
+    res.status(200).send(result);
+  } catch (error) {
+    console.log('error: ');
+    console.log(error);
+    res.status(403).send(error);
+  }
 }
 
-export function updateNote(req, res) {
+export async function updateNote(req, res) {
   if (!req.user) {
     res.status(400).end();
   } else if (!req.params.repo || !req.params.note_id) {
@@ -78,42 +70,48 @@ export function updateNote(req, res) {
   const note_id = req.params.note_id;
   const note_text = striptags(req.params.note);
 
-  Notes.update({ _id: note_id }, { $set: { text: note_text } }, function (err, result) {
-    if (err) {
-      console.log('Error updating object: ' + err);
-      res.send({ error: 'An error has occurred' });
-    } else {
-      res.send({ success: true });
-    }
-  });
+  try {
+    const result = await Notes.updateOne(
+      {
+        _id: note_id,
+        repo,
+      },
+      {
+        $set: {
+          note_text,
+        },
+      },
+    );
+
+    res.status(200).send(result);
+  } catch (error) {
+    console.log('error: ');
+    console.log(error);
+    res.send(error);
+  }
 }
 
-export function deleteNote(req, res) {
+export async function deleteNote(req, res) {
   if (!req.user) {
     res.status(400).end();
   } else if (!req.params.repo || !req.params.note_id) {
     res.status(403).end();
   }
 
-  const repo = req.params.repo;
-  const note_id = req.params.note_id;
+  const _id = new mongoose.Types.ObjectId(req.params.note_id);
 
-  Notes.destroy({
-    where: {
-      id: note_id,
-    },
-  })
-    .then((result) => {
-      if (result) {
-        res.status(200).send({ id: parseInt(note_id) });
-      }
-    })
-    .catch((err) => {
-      res
-        .status(500)
-        .send({
-          error: err,
-        })
-        .end();
+  try {
+    const result = await Notes.findByIdAndDelete({
+      _id,
     });
+
+    if (result) {
+      res.status(200).send({ id: _id });
+    }
+  } catch (error) {
+    console.log('error: ');
+    console.log(error);
+
+    res.status(403).send(error);
+  }
 }
