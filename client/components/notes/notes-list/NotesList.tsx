@@ -17,7 +17,7 @@ export const NotesList: React.FC<INotesProps> = ({ notes }) => {
 
   const handleRemoveItem = async (note: INote) => {
     if (username && note) {
-      await dispatch(removeNotesAsync({ repo: username, noteId: note.id }));
+      await dispatch(removeNotesAsync({ repo: username, noteId: note._id }));
     }
   };
 
@@ -27,7 +27,7 @@ export const NotesList: React.FC<INotesProps> = ({ notes }) => {
         {Array.isArray(notes) &&
           notes.length >= 1 &&
           notes.map((note) => (
-            <li className="notes-item" key={`${note.id}_${Math.random()}`}>
+            <li className="notes-item" key={`${note._id}}`}>
               <div className="notes-item-text">{note.text}</div>
               <div className="notes-item-btn">
                 <button
