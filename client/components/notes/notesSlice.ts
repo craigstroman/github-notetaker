@@ -41,7 +41,7 @@ export const notesSlice = createSlice({
       .addCase(fetchNotesAsync.fulfilled, (state, action) => {
         const newState = state;
         newState.status = 'loaded';
-        newState.notes = action.payload.notes;
+        newState.notes = [...action.payload];
         return newState;
       })
       .addCase(fetchNotesAsync.rejected, (state) => {
@@ -73,7 +73,8 @@ export const notesSlice = createSlice({
       .addCase(removeNotesAsync.fulfilled, (state, action) => {
         const newState = state;
         newState.status = 'loaded';
-        newState.notes = [...state.notes.filter((note) => note.id !== action.payload)];
+        newState.notes = [...state.notes];
+        newState.notes = [...state.notes.filter((note) => note._id !== action.payload)];
         return newState;
       })
       .addCase(removeNotesAsync.rejected, (state) => {
