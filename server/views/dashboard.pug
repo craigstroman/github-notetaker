@@ -36,8 +36,7 @@ block content
           ul(class="repos-with-notes")
             each val in notes
               li
-                - repoName = val.repo.charAt(0).toUpperCase() + val.repo.slice(1);
-                a(href=`profile/${val.repo}`) #{repoName}
+                a(href=`profile/${val.repo}`) #{val.repo}
 
 
 
