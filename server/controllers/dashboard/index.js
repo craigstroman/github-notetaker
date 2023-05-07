@@ -1,49 +1,43 @@
-import axios from 'axios';
-import Sequelize, { QueryTypes } from 'sequelize';
-import models from '../../models/index';
+import mongoose from 'mongoose';
+import { User } from '../../schemas/user';
+import { Notes } from '../../schemas/notes';
 
 export async function dashboard(req, res) {
-  const User = models.User;
-  let user = req.user;
-  let notes = {};
+  let user = {};
+  let notes = [];
   let error = {};
+  try {
+    const userInfo = req.user;
+    const userId = new mongoose.Types.ObjectId(userInfo._id);
 
-  if (user) {
-    try {
-      notes = await models.sequelize.query('select distinct on (repo) * from notes where user_id = (:id)', {
-        replacements: { id: user.id },
-        type: QueryTypes.SELECT,
-      });
-
-      const result = await models.sequelize.query('select * from users where id = (:id)', {
-        replacements: { id: user.id },
-        type: QueryTypes.SELECT,
-      });
-
-      if (result) {
-        if (Array.isArray(result)) {
-          if (result.length) {
-            user = result[0];
-          }
-        }
-      }
-
-      error = null;
-    } catch (err) {
-      console.log('Error: ', err);
-
-      notes = null;
-      error = err;
-    }
-
-    res.render('dashboard', {
-      title: `${req.app.locals.title} - Dashboard`,
-      content: req.app.locals.description,
-      user,
-      notes,
-      error,
+    user = await User.findById({
+      _id: userId,
     });
+
+    const notesResult = await Notes.aggregate([
+      { $match: { user_id: userId } },
+      { $group: { _id: '$repo', data: { $first: '$$ROOT' } } },
+    ]);
+
+    notesResult.forEach((el) => {
+      if (el.data) {
+        notes.push(el.data);
+      }
+    });
+  } catch (error) {
+    console.log('error: ');
+    console.log(error);
+
+    error = error;
   }
+
+  res.render('dashboard', {
+    title: `${req.app.locals.title} - Dashboard`,
+    content: req.app.locals.description,
+    user,
+    notes,
+    error,
+  });
 }
 
 export function settings(req, res) {
@@ -55,20 +49,21 @@ export function settings(req, res) {
 }
 
 export async function updateUserInfo(req, res) {
-  const User = models.User;
-  const user = req.user;
+  const userInfo = req.user;
+  const userId = new mongoose.Types.ObjectId(userInfo._id);
 
   if (user) {
     const name = req.body.name;
 
     try {
-      const result = await User.update(
+      await User.findOneAndUpdate(
+        { _id: userId },
         {
-          name,
+          $setOnInsert: {
+            name,
+          },
         },
-        {
-          where: { id: user.id },
-        },
+        { upsert: true, new: true, rawResult: true, returnNewDocument: true },
       );
 
       dashboard(req, res);
