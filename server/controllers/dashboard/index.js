@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import { User } from '../../schemas/user';
-import { Notes } from '../../schemas/notes';
+import { User } from '../../models/user';
+import { Notes } from '../../models/notes';
 
 export async function dashboard(req, res) {
   let user = {};

@@ -1,7 +1,7 @@
 import cuid from 'cuid';
 import striptags from 'striptags';
 import mongoose from 'mongoose';
-import { Notes } from '../../schemas/notes';
+import { Notes } from '../../models/notes';
 
 Notes.init();
 

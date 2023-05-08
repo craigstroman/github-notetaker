@@ -1,7 +1,7 @@
 import google from './google/index';
 import facebook from './facebook/index';
 import github from './github/index';
-import { User } from '../schemas/user';
+import { User } from '../models/user';
 
 User.init();
 
