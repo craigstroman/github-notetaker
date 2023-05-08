@@ -1,7 +1,6 @@
 import app from './app';
 import debug from 'debug';
 import { createServer } from 'http';
-import models from './models/index';
 import mongoose from 'mongoose';
 
 require('dotenv').config();
@@ -21,24 +20,22 @@ app.set('port', port);
 
 const ws = createServer(app);
 
-models.sequelize.sync().then(() => {
-  ws.listen(port, () => {
-    console.log(`Server started at http://localhost:${port}`);
+ws.listen(port, () => {
+  console.log(`Server started at http://localhost:${port}`);
 
-    mongoose
-      .connect(`mongodb://${process.env.MONGODB_URL}${process.env.MONGODB_NAME}`)
-      .then(() => {
-        console.log('Connected to mongoose database');
-      })
-      .catch((err) => {
-        console.log('There was a database error: ');
-        console.log(err);
-      });
-  });
-
-  ws.on('error', onError);
-  ws.on('listening', onListening);
+  mongoose
+    .connect(`mongodb://${process.env.MONGODB_URL}${process.env.MONGODB_NAME}`)
+    .then(() => {
+      console.log('Connected to mongoose database');
+    })
+    .catch((err) => {
+      console.log('There was a database error: ');
+      console.log(err);
+    });
 });
+
+ws.on('error', onError);
+ws.on('listening', onListening);
 
 function normalizePort(val) {
   const port = parseInt(val, 10);
