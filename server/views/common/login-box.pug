@@ -1,17 +1,15 @@
 div(class='row')
-  div(class='col-md-offset-3 col-md-6 col-md-offset-3')
-    div(class='panel panel-default text-center')
-      div(class='panel-heading text-left') Login or register to save your notes:
-        div(class='panel-body')
-          div(class='btn-container')
-            a(href='/auth/google' class='btn btn-google')
-              i.fab.fa-google-plus-g.social-icon(aria-hidden='true')
-              | Google
-          div(class='btn-container')
-            a(href='/auth/facebook' class='btn btn-facebook')
-              i.fab.fa-facebook.social-icon(aria-hidden='true')
-              | Facebook
-          div(class='btn-container')
-            a(href='/auth/github' class='btn btn-github')
-              i.fab.fa-github.social-icon(aria-hidden='true')
-              | GitHub
+  div(class='content')
+    div(class='heading') Login or register to save your notes:
+    div(class='btn-container')
+      a(href='/auth/google' class='btn-google')
+        i.fa-brands.fa-google-plus-g(aria-hidden='true')
+        | Google
+    div(class='btn-container')
+      a(href='/auth/facebook' class='btn-facebook')
+        i.fa-brands.fa-facebook(aria-hidden='true')
+        | Facebook
+    div(class='btn-container')
+      a(href='/auth/github' class='btn-github')
+        i.fa-brands.fa-github(aria-hidden='true')
+        | GitHub
