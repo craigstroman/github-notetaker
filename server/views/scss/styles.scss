@@ -1,3 +1,7 @@
+@import '../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '../../../node_modules/@fortawesome/fontawesome-free/scss/regular.scss';
+@import '../../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss';
+@import '../../../node_modules/@fortawesome/fontawesome-free/scss/brands.scss';
 @import './imports/variables';
 @import './imports/mixins';
 
@@ -13,33 +17,39 @@ body {
   padding-top: 1.5rem;
   @import './header';
   @import './dashboard';
-  .btn-container {
-    margin-bottom: 10px;
-    .btn {
-      color: #fff;
-      font-size: 1em;
-      width: 200px;
-      .social-icon {
-        float: left;
-        font-size: 1.5em;
-      }
+  .content {
+    .heading {
+      margin-bottom: 1.5rem;
+      font-weight: bold;
     }
-    .btn-google {
-      background-color: #d34836;
-      &:hover {
-        background-color: darken(#d34836, 10%);
+    .btn-container {
+      margin-bottom: 10px;
+      .btn-google {
+        @include button(#d34836);
+        color: #fff;
+        font-size: 1em;
+        width: 200px;
+        .social-icon {
+          font-size: 1.5em;
+        }
       }
-    }
-    .btn-facebook {
-      background-color: #3b5998;
-      &:hover {
-        background-color: darken(#3b5998, 10%);
+      .btn-facebook {
+        @include button(#3b5998);
+        color: #fff;
+        font-size: 1em;
+        width: 200px;
+        .social-icon {
+          font-size: 1.5em;
+        }
       }
-    }
-    .btn-github {
-      background-color: #444444;
-      &:hover {
-        background-color: darken(#444444, 10%);
+      .btn-github {
+        @include button(#444444);
+        color: #fff;
+        font-size: 1em;
+        width: 200px;
+        .social-icon {
+          font-size: 1.5em;
+        }
       }
     }
   }
