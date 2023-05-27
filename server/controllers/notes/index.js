@@ -62,28 +62,27 @@ export async function saveNote(req, res) {
 export async function updateNote(req, res) {
   if (!req.user) {
     res.status(400).end();
-  } else if (!req.params.repo || !req.params.note_id) {
+  } else if (!req.params.note_id) {
     res.status(403).end();
   }
 
-  const repo = req.params.repo;
   const note_id = req.params.note_id;
   const note_text = striptags(req.params.note);
 
   try {
-    const result = await Notes.updateOne(
+    const result = await Notes.findByIdAndUpdate(
       {
         _id: note_id,
-        repo,
       },
       {
         $set: {
-          note_text,
+          text: note_text,
         },
       },
+      { new: true },
     );
 
-    res.status(200).send(result);
+    res.status(200).json(result);
   } catch (error) {
     console.log('error: ');
     console.log(error);
