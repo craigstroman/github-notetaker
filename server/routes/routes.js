@@ -73,7 +73,7 @@ router.route('/api/notes/:repo').get(loggedIn, getNotes);
 router.route('/api/notes/:repo/:note').post(loggedIn, saveNote);
 
 // Update note
-router.route('/api/notes/:repo/:note_id/:note').put(loggedIn, updateNote);
+router.route('/api/notes/:note_id/:note').put(loggedIn, updateNote);
 
 // Delete a note
 router.route('/api/notes/:repo/:note_id').delete(loggedIn, deleteNote);
