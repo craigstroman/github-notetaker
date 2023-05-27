@@ -1,9 +1,10 @@
-.notes {
+@import '../../../common/CSS/forms.scss';
+
+.notes-list {
   list-style-type: none;
-  margin: 0 auto;
-  -webkit-padding-start: 0;
-  -webkit-margin-before: 0;
-  -webkit-margin-after: 0;
+  margin-top: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
   .notes__item {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -13,11 +14,25 @@
     .notes__item--text {
       display: inline-block;
       text-align: left;
-      width: 90%;
+      width: 80%;
+      input[type='text'] {
+        @extend .input;
+        margin-right: 1rem;
+        width: 90%;
+      }
     }
     .notes__item--btn {
       display: inline-block;
-      width: 10%;
+      width: 20%;
+      .notes-item-update-btn,
+      .notes-item-remove-btn,
+      .notes-item-save-btn,
+      .notes-item-cancel-btn {
+        @extend .icon-button;
+        &:first-child {
+          margin-right: 0.1rem;
+        }
+      }
     }
   }
 }
