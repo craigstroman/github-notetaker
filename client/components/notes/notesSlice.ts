@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-import { notesInitialState, INotesState, IAddNotes, IRemoveNotes } from './notesTypes';
-import { getNotes, addNotes, removeNotes } from './notes.API';
+import { notesInitialState, INotesState, IAddNotes, IRemoveNotes, IUpdateNote } from './notesTypes';
+import { getNotes, addNotes, removeNotes, updateNote } from './notes.API';
 
 export const fetchNotesAsync = createAsyncThunk('notes/get', async (repo: string) => {
   const response = await getNotes(repo);
@@ -17,6 +17,12 @@ export const addNotesAsync = createAsyncThunk('notes/add', async (notes: IAddNot
 
 export const removeNotesAsync = createAsyncThunk('notes/remove', async (notes: IRemoveNotes) => {
   const response = await removeNotes(notes.repo, notes.noteId);
+
+  return response.data;
+});
+
+export const updateNoteAsync = createAsyncThunk('notes/update', async (notes: IUpdateNote) => {
+  const response = await updateNote(notes.noteId, notes.note);
 
   return response.data;
 });
@@ -78,6 +84,35 @@ export const notesSlice = createSlice({
         return newState;
       })
       .addCase(removeNotesAsync.rejected, (state) => {
+        const newState = state;
+        newState.status = 'error';
+        return newState;
+      })
+      .addCase(updateNoteAsync.pending, (state) => {
+        const newState = state;
+        newState.status = 'loading';
+        return newState;
+      })
+      .addCase(updateNoteAsync.fulfilled, (state, action) => {
+        const newState = state;
+        newState.status = 'loaded';
+        newState.notes = newState.notes.map((el) => {
+          if (el._id === action.payload._id) {
+            return {
+              _id: action.payload._id,
+              text: action.payload.text,
+              repo: action.payload.repo,
+              createdAt: action.payload.createdAt,
+              updatedAt: action.payload.updatedAt,
+              user_id: action.payload.user_id,
+            };
+          } else {
+            return el;
+          }
+        });
+        return newState;
+      })
+      .addCase(updateNoteAsync.rejected, (state) => {
         const newState = state;
         newState.status = 'error';
         return newState;

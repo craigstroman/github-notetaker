@@ -22,6 +22,11 @@ export interface IRemoveNotes {
   noteId: string;
 }
 
+export interface IUpdateNote {
+  noteId: string;
+  note: string;
+}
+
 export const notesInitialState: INotesState = {
   notes: [],
   status: 'idle',

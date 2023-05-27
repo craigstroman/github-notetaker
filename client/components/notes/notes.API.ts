@@ -32,3 +32,16 @@ export async function removeNotes(repo: string, noteId: string): Promise<{ data:
 
   return { data: id };
 }
+
+export async function updateNote(noteId: string, note: string): Promise<{ data: INote }> {
+  const url = `${apiUrl}/notes/${noteId}/${note}`;
+
+  const response = await axios.put(url);
+  let result = null;
+
+  if (response.status === 200) {
+    result = response.data;
+  }
+
+  return { data: result };
+}
