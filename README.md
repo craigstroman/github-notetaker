@@ -26,6 +26,8 @@ https://github-notetaker.craigstroman.com/
 
 - Started using TypeScript
 - Upgraded React and switched to using React Hooks
+- Switched to using Redux Toolkit
+- Added the ability to update existing notes
 - Dropped Bootstrap
 - Switched to using grid for CSS layout
 
