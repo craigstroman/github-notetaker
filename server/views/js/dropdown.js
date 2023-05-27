@@ -1,6 +1,5 @@
 (function () {
   var navbarDropdown = document.querySelector('.navbar-dropdown');
-  console.log('navbarDropdown: ', navbarDropdown);
 
   if (navbarDropdown) {
     navbarDropdown.addEventListener('click', function (event) {
