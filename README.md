@@ -30,6 +30,7 @@ https://github-notetaker.craigstroman.com/
 - Added the ability to update existing notes
 - Dropped Bootstrap
 - Switched to using grid for CSS layout
+- Started using Mongo for the database
 
 ###### Version 3.0.0
 
