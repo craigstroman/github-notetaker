@@ -17,7 +17,7 @@ export const SearchGitHub: React.FC = () => {
     <div className="search-container">
       <form className="form-search" role="form" onSubmit={handleSubmit}>
         <input
-          type="text"
+          type="search"
           className="form-search-input"
           placeholder="Enter a username"
           aria-label="Username search field"
