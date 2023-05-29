@@ -11,9 +11,7 @@ const root = createRoot(element as HTMLDivElement);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <Main />
-      </BrowserRouter>
+      <Main />
     </Provider>
   </React.StrictMode>,
 );
