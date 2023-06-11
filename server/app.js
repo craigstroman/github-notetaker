@@ -1,7 +1,6 @@
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import express from 'express';
-import config from 'config';
 import logger from 'morgan';
 import path from 'path';
 import passport from 'passport';
@@ -12,7 +11,6 @@ import auth from './config/auth';
 
 const app = express();
 const nodeEnv = process.env.NODE_ENV;
-const filePath = nodeEnv === 'development' ? '../client' : '../public';
 
 const javascript = nodeEnv === 'development' ? '/static/js/bundle.js' : '/static/js/main.min.js';
 
