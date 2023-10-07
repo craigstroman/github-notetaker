@@ -18,7 +18,7 @@ auth(passport); // pass passport for configuration
 
 if (nodeEnv === 'development') {
   const webpack = require('webpack');
-  const webpackConfig = require('../webpack.config.dev.js');
+  const webpackConfig = require('../webpack.config.dev.ts');
   const webpackCompiler = webpack(webpackConfig);
 
   app.use(
