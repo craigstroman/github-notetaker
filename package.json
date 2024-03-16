@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/craigstroman/github-notetaker.git"
   },
-  "main": "server/app.js",
+  "main": "server/index.js",
   "scripts": {
     "start": "NODE_ENV=production node ./build/index.js",
     "scss": "sass server/views/scss/styles.scss --watch --style=compressed public/css/styles.css",
@@ -72,10 +72,10 @@
     "webpack-hot-middleware": "^2.25.3"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.3.0",
-    "@fortawesome/fontawesome-svg-core": "^6.3.0",
-    "@fortawesome/free-solid-svg-icons": "^6.3.0",
-    "@fortawesome/react-fontawesome": "^0.1.15",
+    "@fortawesome/fontawesome-free": "^6.5.1",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@types/lodash": "^4.14.191",
     "app-module-path": "^2.2.0",
@@ -85,17 +85,20 @@
     "config": "^1.26.2",
     "cookie-parser": "^1.4.3",
     "cross-fetch": "^2.1.0",
-    "express": "^4.15.5",
-    "express-session": "^1.15.6",
+    "express": "^4.18.3",
+    "express-session": "^1.18.0",
     "html-to-text": "^3.3.0",
     "lodash": "^4.17.5",
+    "memorystore": "^1.6.7",
     "mongoose": "^7.0.3",
     "morgan": "^1.8.2",
     "npm": "^6.14.5",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",
     "passport-github": "^1.1.0",
+    "passport-github2": "^0.1.12",
     "passport-google-oauth": "^2.0.0",
+    "pg": "^8.11.3",
     "prop-types": "^15.6.1",
     "pug": "^2.0.0-rc.4",
     "query-string": "^6.0.0",
@@ -109,12 +112,13 @@
     "react-router-redux": "^4.0.8",
     "redux": "^4.2.1",
     "redux-logger": "^3.0.6",
+    "sequelize": "^6.37.1",
     "striptags": "^2.2.1",
     "ts-loader": "^9.4.2",
     "typescript": "^4.9.4",
     "unique-id-mixin": "^1.0.0"
   },
   "engines": {
-    "node": "12.16.3"
+    "node": "18.3.0"
   }
 }
