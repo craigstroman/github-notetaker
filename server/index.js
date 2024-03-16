@@ -1,9 +1,11 @@
-import app from './app';
-import debug from 'debug';
-import { createServer } from 'http';
-import mongoose from 'mongoose';
+const path = require('path');
+const dotenv = require('dotenv');
+const { sequelize } = require('./database.js');
+const { app } = require('./app.js');
 
-require('dotenv').config();
+const __dirname = path.resolve();
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 /**
  * Get PORT from environment and store in Express.
@@ -18,40 +20,24 @@ if (process.env.NODE_ENV === 'development') {
 
 app.set('port', port);
 
-const ws = createServer(app);
+const ws = app;
 
-ws.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`);
+sequelize
+  .sync()
+  .then(() => {
+    console.log(`Databases loaded.`);
 
-  mongoose
-    .connect(`mongodb://${process.env.MONGODB_URL}${process.env.MONGODB_NAME}`)
-    .then(() => {
-      console.log('Connected to mongoose database');
-    })
-    .catch((err) => {
-      console.log('There was a database error: ');
-      console.log(err);
+    ws.listen(port, () => {
+      console.log(`Server started at http://localhost:${port}`);
     });
-});
 
-ws.on('error', onError);
-ws.on('listening', onListening);
-
-function normalizePort(val) {
-  const port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
-
-  if (port >= 0) {
-    // port number
-    return port;
-  }
-
-  return false;
-}
+    ws.on('error', onError);
+    ws.on('listening', onListening);
+  })
+  .catch((err) => {
+    console.log('There was errors: ');
+    console.log(err);
+  });
 
 /**
  * Event listener for HTTP server "error" event.

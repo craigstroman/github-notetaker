@@ -1,6 +1,4 @@
-import passport from 'passport';
-
-export function main(req, res) {
+function main(req, res) {
   res.render('index', {
     title: req.app.locals.title,
     content: req.app.locals.description,
@@ -10,7 +8,7 @@ export function main(req, res) {
   });
 }
 
-export function login(req, res) {
+function login(req, res) {
   const referer = req.headers['referer'];
 
   if (referer.indexOf('/profile/') >= 1) {
@@ -37,7 +35,7 @@ export function login(req, res) {
   });
 }
 
-export function logout(req, res) {
+function logout(req, res) {
   req.logout();
   req.session.destroy();
   res.render('logout', {
@@ -46,7 +44,7 @@ export function logout(req, res) {
   });
 }
 
-export function googleLogin(req, res, next) {
+function googleLogin(req, res, next) {
   const profileCookie = req.cookies['profile'];
 
   if (profileCookie) {
@@ -57,7 +55,7 @@ export function googleLogin(req, res, next) {
   }
 }
 
-export function facebookLogin(req, res, next) {
+function facebookLogin(req, res, next) {
   const profileCookie = req.cookies['profile'];
 
   if (profileCookie) {
@@ -68,7 +66,7 @@ export function facebookLogin(req, res, next) {
   }
 }
 
-export function githubLogin(req, res, next) {
+function githubLogin(req, res, next) {
   const profileCookie = req.cookies['profile'];
 
   if (profileCookie) {
@@ -79,8 +77,18 @@ export function githubLogin(req, res, next) {
   }
 }
 
-export function sessionStatus(req, res, next) {
+function sessionStatus(req, res, next) {
   res.send({
     user: req.user,
   });
 }
+
+module.exports = {
+  main,
+  login,
+  logout,
+  googleLogin,
+  facebookLogin,
+  githubLogin,
+  sessionStatus,
+};

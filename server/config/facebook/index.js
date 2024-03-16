@@ -1,8 +1,12 @@
+const path = require('path');
+const dotenv = require('dotenv');
 const FacebookStrategy = require('passport-facebook').Strategy;
 
-require('dotenv').config();
+const __dirname = path.resolve();
 
-export default function (User, passport) {
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+const facebook = function (User, passport) {
   passport.use(
     new FacebookStrategy(
       {
@@ -17,20 +21,19 @@ export default function (User, passport) {
           try {
             const name = `${profile.name.givenName} ${profile.name.familyName}`;
 
-            const user = await User.findOneAndUpdate(
-              { profile_id: profile.id },
+            const user = await User.update(
               {
-                $setOnInsert: {
-                  profile_id: profile.id,
-                  token,
-                  refreshToken,
-                  name,
-                  email: (profile.emails[0].value || '').toLowerCase(),
-                  profile_picture: profile.photos[0].value,
-                  provider: 'Facebook',
-                },
+                profile_id: profile.id,
+                token,
+                refreshToken,
+                name,
+                email: (profile.emails[0].value || '').toLowerCase(),
+                profile_picture: profile.photos[0].value,
+                provider: 'Facebook',
               },
-              { upsert: true, new: true, rawResult: true, returnNewDocument: true },
+              {
+                where: { profile_id: profile.id },
+              },
             );
 
             const err = null;
@@ -49,4 +52,6 @@ export default function (User, passport) {
       },
     ),
   );
-}
+};
+
+module.exports.facebook = facebook;

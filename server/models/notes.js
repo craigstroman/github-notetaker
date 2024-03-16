@@ -1,23 +1,19 @@
-import mongoose from 'mongoose';
+const DataTypes = require('sequelize');
+const { sequelize } = require('../database.js');
 
-const NotesSchema = new mongoose.Schema(
-  {
-    text: {
-      type: String,
-      required: true,
-    },
-    repo: {
-      type: String,
-      required: true,
-    },
-    user_id: {
-      type: mongoose.Schema.ObjectId,
-      required: true,
-    },
+const Notes = sequelize.define('notes', {
+  text: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
-  {
-    timestamps: true,
+  repo: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
-);
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+});
 
-export const Notes = mongoose.model('Notes', NotesSchema);
+module.exports = Notes;

@@ -1,22 +1,25 @@
-import google from './google/index';
-import facebook from './facebook/index';
-import github from './github/index';
-import { User } from '../models/user';
+const { google } = require('./google/index.js');
+const { facebook } = require('./facebook/index.js');
+const { github } = require('./github/index.js');
+const Users = require('../models/user.js');
 
-User.init();
-
-export default function auth(passport) {
-  passport.serializeUser(function (user, done) {
-    done(null, user);
+function auth(passport) {
+  passport.serializeUser(function (Users, done) {
+    done(null, Users);
   });
 
-  passport.deserializeUser(function (user, done) {
-    done(null, user);
+  passport.deserializeUser(function (Users, done) {
+    done(null, Users);
   });
 
-  google(User, passport);
+  // TODO: work on making auth work for Facebook, then Google. Since GitHub auth works, without saving refreshToken.
+  // TODO: Work on making settings page work
 
-  facebook(User, passport);
+  google(Users, passport);
 
-  github(User, passport);
+  facebook(Users, passport);
+
+  github(Users, passport);
 }
+
+module.exports.auth = auth;

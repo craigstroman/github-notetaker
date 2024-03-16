@@ -1,8 +1,12 @@
+const path = require('path');
+const dotenv = require('dotenv');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-require('dotenv').config();
+const __dirname = path.resolve();
 
-export default function (User, passport) {
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+const google = function (Users, passport) {
   passport.use(
     new GoogleStrategy(
       {
@@ -12,22 +16,22 @@ export default function (User, passport) {
         passReqToCallback: false,
       },
       function (token, refreshToken, profile, done) {
+        console.log('Users: ', Users);
         process.nextTick(async function () {
           try {
-            const user = await User.findOneAndUpdate(
-              { profile_id: profile.id },
+            const user = await Users.update(
               {
-                $setOnInsert: {
-                  profile_id: profile.id,
-                  token,
-                  refreshToken,
-                  email: (profile.emails[0].value || '').toLowerCase(),
-                  name: profile.displayName,
-                  profile_picture: profile.photos[0].value,
-                  provider: 'Google',
-                },
+                profile_id: profile.id,
+                token,
+                refreshToken,
+                email: (profile.emails[0].value || '').toLowerCase(),
+                name: profile.displayName,
+                profile_picture: profile.photos[0].value,
+                provider: 'Google',
               },
-              { upsert: true, new: true, rawResult: true, returnNewDocument: true },
+              {
+                where: { profile_id: profile.id },
+              },
             );
 
             const err = null;
@@ -46,4 +50,6 @@ export default function (User, passport) {
       },
     ),
   );
-}
+};
+
+module.exports.google = google;

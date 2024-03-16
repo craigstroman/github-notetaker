@@ -1,11 +1,11 @@
-import cuid from 'cuid';
-import striptags from 'striptags';
-import mongoose from 'mongoose';
-import { Notes } from '../../models/notes';
+const striptags = require('striptags');
+const { QueryTypes } = require('sequelize');
+const Notes = require('../../models/notes.js');
+const models = require('../../database.js');
+const { model } = require('mongoose');
 
-Notes.init();
-
-export async function getNotes(req, res) {
+async function getNotes(req, res) {
+  console.log('models: ', models);
   if (!req.user) {
     return res.status(403).end();
   } else if (!req.params.repo) {
@@ -14,15 +14,22 @@ export async function getNotes(req, res) {
 
   const repo = req.params.repo;
   const user = req.user;
-  const userId = new mongoose.Types.ObjectId(user._id);
+  const userId = user.id;
+
+  console.log('repo: ', repo);
+  console.log('user: ', user);
+  console.log('userId: ', userId);
 
   try {
-    const result = await Notes.find({
-      user_id: userId,
-      repo,
+    const result = await models.sequelize.query('select * from notes where user_id = ? and repo = ?', {
+      replacements: [userId, repo],
+      type: QueryTypes.SELECT,
+      raw: true,
     });
 
-    res.status(200).send(result);
+    console.log('notes: ', result);
+
+    res.status(200).send(result[0]);
   } catch (error) {
     console.log('error: ');
     console.log(error);
@@ -31,7 +38,7 @@ export async function getNotes(req, res) {
   }
 }
 
-export async function saveNote(req, res) {
+async function saveNote(req, res) {
   if (!req.user) {
     res.status(400).end();
   } else if (!req.params.repo || !req.params.note) {
@@ -40,7 +47,7 @@ export async function saveNote(req, res) {
 
   const note = striptags(req.params.note);
   const repo = req.params.repo;
-  const userId = new mongoose.Types.ObjectId(req.user._id);
+  const userId = req.user.id;
 
   const newNote = new Notes({
     text: note,
@@ -59,7 +66,7 @@ export async function saveNote(req, res) {
   }
 }
 
-export async function updateNote(req, res) {
+async function updateNote(req, res) {
   if (!req.user) {
     res.status(400).end();
   } else if (!req.params.note_id) {
@@ -90,7 +97,7 @@ export async function updateNote(req, res) {
   }
 }
 
-export async function deleteNote(req, res) {
+async function deleteNote(req, res) {
   if (!req.user) {
     res.status(400).end();
   } else if (!req.params.repo || !req.params.note_id) {
@@ -114,3 +121,10 @@ export async function deleteNote(req, res) {
     res.status(403).send(error);
   }
 }
+
+module.exports = {
+  getNotes,
+  saveNote,
+  updateNote,
+  deleteNote,
+};

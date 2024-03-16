@@ -1,16 +1,21 @@
-import axios from 'axios';
-const GitHubStrategy = require('passport-github').Strategy;
+const path = require('path');
+const dotenv = require('dotenv');
+const axios = require('axios');
+const GitHubStrategy = require('passport-github2').Strategy;
 
-require('dotenv').config();
+const __dirname = path.resolve();
 
-export default function (User, passport) {
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+const github = function (Users, passport) {
   passport.use(
     new GitHubStrategy(
       {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: process.env.GITHUB_CALLBACK_URL,
-        passReqToCallback: false,
+        scope: 'read:org,repo',
+        state: 'authen',
       },
       function (token, refreshToken, profile, done) {
         process.nextTick(async function () {
@@ -28,13 +33,13 @@ export default function (User, passport) {
               profileAvatar = '';
             }
 
-            const result = await getEmail(token);
+            const emailResult = await getEmail(token);
 
-            if (result) {
-              if (result.hasOwnProperty('data')) {
-                if (Array.isArray(result.data)) {
-                  if (result.data.length) {
-                    email = result.data[0].email;
+            if (emailResult) {
+              if (emailResult.hasOwnProperty('data')) {
+                if (Array.isArray(emailResult.data)) {
+                  if (emailResult.data.length) {
+                    email = emailResult.data[0].email;
                   }
                 }
               }
@@ -42,28 +47,25 @@ export default function (User, passport) {
               email = '';
             }
 
-            const user = await User.findOneAndUpdate(
-              { profile_id: profile.id },
-              {
-                $setOnInsert: {
-                  profile_id: profile.id,
-                  token,
-                  refreshToken,
-                  name: profile.displayName,
-                  email,
-                  profile_picture: profileAvatar,
-                  provider: 'Github',
-                },
+            const [user, created] = await Users.findOrCreate({
+              where: { profile_id: profile.id },
+              defaults: {
+                profile_id: profile.id,
+                token: token,
+                refreshToken: '',
+                email: email,
+                name: profile.displayName,
+                profile_picture: profileAvatar,
+                provider: 'GitHub',
               },
-              { upsert: true, new: true, rawResult: true, returnNewDocument: true },
-            );
+            });
 
-            console.log('user', user);
+            console.log('created: ', created);
 
-            const err = null;
-
-            if (user && user.value) {
-              return done(err, user.value);
+            if (!created && user.dataValues) {
+              return done('', user.dataValues);
+            } else if (created && user.dataValues) {
+              return done('', user.dataValues);
             }
           } catch (err) {
             console.log('error: ', err);
@@ -76,7 +78,7 @@ export default function (User, passport) {
       },
     ),
   );
-}
+};
 
 const getEmail = (token) => {
   const options = {
@@ -102,3 +104,5 @@ const getEmail = (token) => {
     return 0;
   }
 };
+
+module.exports.github = github;

@@ -1,29 +1,17 @@
-import mongoose from 'mongoose';
-import { User } from '../../models/user';
-import { Notes } from '../../models/notes';
+const Users = require('../../models/user.js');
+const Notes = require('../../models/notes.js');
 
-export async function dashboard(req, res) {
+async function dashboard(req, res) {
   let user = {};
   let notes = [];
   let error = {};
   try {
     const userInfo = req.user;
-    const userId = new mongoose.Types.ObjectId(userInfo._id);
+    const userId = userInfo.id;
 
-    user = await User.findById({
-      _id: userId,
-    });
+    user = await Users.findOne({ where: { id: userId } });
 
-    const notesResult = await Notes.aggregate([
-      { $match: { user_id: userId } },
-      { $group: { _id: '$repo', data: { $first: '$$ROOT' } } },
-    ]);
-
-    notesResult.forEach((el) => {
-      if (el.data) {
-        notes.push(el.data);
-      }
-    });
+    // TODO: Add repos with notes
   } catch (error) {
     console.log('error: ');
     console.log(error);
@@ -40,7 +28,7 @@ export async function dashboard(req, res) {
   });
 }
 
-export function settings(req, res) {
+function settings(req, res) {
   res.render('settings', {
     title: `${req.app.locals.title} - Settings`,
     content: req.app.locals.description,
@@ -48,7 +36,7 @@ export function settings(req, res) {
   });
 }
 
-export async function updateUserInfo(req, res) {
+async function updateUserInfo(req, res) {
   const userInfo = req.user;
   const userId = new mongoose.Types.ObjectId(userInfo._id);
 
@@ -56,14 +44,15 @@ export async function updateUserInfo(req, res) {
     const name = req.body.name;
 
     try {
-      await User.findOneAndUpdate(
-        { _id: userId },
+      await User.update(
         {
-          $setOnInsert: {
-            name,
+          name,
+        },
+        {
+          where: {
+            _id: userId,
           },
         },
-        { upsert: true, new: true, rawResult: true, returnNewDocument: true },
       );
 
       dashboard(req, res);
@@ -75,3 +64,9 @@ export async function updateUserInfo(req, res) {
     dashboard(req, res);
   }
 }
+
+module.exports = {
+  dashboard,
+  settings,
+  updateUserInfo,
+};

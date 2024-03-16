@@ -20,7 +20,7 @@ block content
         label(for="provider")
           | Provider:
         div(class="user-info")
-          - user.provider = user.provider.charAt(0).toUpperCase() + user.provider.slice(1);
+          - user.provider = user.provider;
           | #{user.provider}
       div(class="form-row")
         button(type="submit" class="btn btn-primary") Submit

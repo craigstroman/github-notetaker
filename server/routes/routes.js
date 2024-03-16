@@ -1,6 +1,6 @@
-import { Router } from 'express';
-import passport from 'passport';
-import {
+const express = require('express');
+const passport = require('passport');
+const {
   facebookLogin,
   googleLogin,
   githubLogin,
@@ -8,13 +8,13 @@ import {
   logout,
   main,
   sessionStatus,
-} from '../controllers/main/index';
-import { dashboard, settings, updateUserInfo } from '../controllers/dashboard/index';
-import { deleteNote, findReposWithNotes, getNotes, saveNote, updateNote } from '../controllers/notes/index';
-import { getProfile, getRepos } from '../controllers/github/index';
-import { loggedIn } from '../util/index';
+} = require('../controllers/main/index.js');
+const { dashboard, settings, updateUserInfo } = require('../controllers/dashboard/index.js');
+const { deleteNote, getNotes, saveNote, updateNote } = require('../controllers/notes/index.js');
+const { getProfile, getRepos } = require('../controllers/github/index.js');
+const { loggedIn } = require('../util/index.js');
 
-const router = new Router();
+const router = express.Router();
 
 router.route('/').get(main);
 
@@ -78,4 +78,4 @@ router.route('/api/notes/:note_id/:note').put(loggedIn, updateNote);
 // Delete a note
 router.route('/api/notes/:repo/:note_id').delete(loggedIn, deleteNote);
 
-export default router;
+module.exports.routes = router;

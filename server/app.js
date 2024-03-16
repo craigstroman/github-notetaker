@@ -1,13 +1,19 @@
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import express from 'express';
-import logger from 'morgan';
-import path from 'path';
-import passport from 'passport';
-import session from 'express-session';
-import { addPath } from 'app-module-path';
-import routes from './routes/routes';
-import auth from './config/auth';
+const path = require('path');
+const { addPath } = require('app-module-path');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const express = require('express');
+const logger = require('morgan');
+const passport = require('passport');
+const session = require('express-session');
+const dotenv = require('dotenv');
+
+const { routes } = require('./routes/routes.js');
+const { auth } = require('./config/auth.js');
+
+const __dirname = path.resolve();
+
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 const app = express();
 const nodeEnv = process.env.NODE_ENV;
@@ -18,13 +24,13 @@ auth(passport); // pass passport for configuration
 
 if (nodeEnv === 'development') {
   const webpack = require('webpack');
-  const webpackConfig = require('../webpack.config.dev.ts');
-  const webpackCompiler = webpack(webpackConfig);
+  const webPackConfig = require('../webpack.config.dev.js');
+  const webpackCompiler = webpack(webPackConfig);
 
   app.use(
     require('webpack-dev-middleware')(webpackCompiler, {
       // noInfo: true,
-      publicPath: webpackConfig.output.publicPath,
+      publicPath: webPackConfig.output.publicPath,
     }),
   );
 
@@ -37,7 +43,7 @@ if (nodeEnv === 'development') {
 }
 
 // view engine setup
-app.set('views', path.join(__dirname, './views'));
+app.set('views', path.join(__dirname, 'server/views'));
 app.set('view engine', 'pug');
 
 app.locals.javascript = javascript;
@@ -52,10 +58,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/static', express.static('public'));
 addPath(__dirname);
 
-app.use(session({ secret: 'anything1213321123' }));
+app.use((err, req, res, next) => {
+  log.error(err);
+  log.error(err.stack);
+  return res.status(err.statusCode || 500).send(err.message);
+});
+
+app.set('trust proxy', 1);
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+  }),
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(routes);
 
-export default app;
+module.exports.app = app;
