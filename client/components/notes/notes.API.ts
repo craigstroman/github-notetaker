@@ -20,7 +20,7 @@ export async function addNotes(repo: string, note: string): Promise<{ data: INot
   return { data: result.data };
 }
 
-export async function removeNotes(repo: string, noteId: string): Promise<{ data: string }> {
+export async function removeNotes(repo: string, noteId: number): Promise<{ data: string }> {
   const url = `${apiUrl}/notes/${repo}/${noteId}`;
 
   const result = await axios.delete(url);
@@ -33,7 +33,7 @@ export async function removeNotes(repo: string, noteId: string): Promise<{ data:
   return { data: id };
 }
 
-export async function updateNote(noteId: string, note: string): Promise<{ data: INote }> {
+export async function updateNote(noteId: number, note: string): Promise<{ data: INote }> {
   const url = `${apiUrl}/notes/${noteId}/${note}`;
 
   const response = await axios.put(url);

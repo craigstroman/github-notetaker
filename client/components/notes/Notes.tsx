@@ -9,19 +9,19 @@ import './Notes.scss';
 
 export const Notes: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { username } = useParams<{ username: string }>();
+  const { repo } = useParams<{ repo: string }>();
   const profileState = useAppSelector(selectUserProfileState);
   const notesList = useAppSelector(selectNotesState);
 
-  const handleGetNotes = async (username: string) => {
-    await dispatch(fetchNotesAsync(username));
+  const handleGetNotes = async (repo: string) => {
+    await dispatch(fetchNotesAsync(repo));
   };
 
   useEffect(() => {
-    if (username) {
-      handleGetNotes(username);
+    if (repo) {
+      handleGetNotes(repo);
     }
-  }, [username]);
+  }, [repo]);
 
   return (
     <div className="notes-container">

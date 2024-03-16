@@ -14,46 +14,46 @@ interface INotesProps {
 export const NotesList: React.FC<INotesProps> = ({ notes }) => {
   const dispatch = useAppDispatch();
   const { username } = useParams<{ username: string }>();
-  const [editNoteId, setEditNoteId] = useState<string>('');
+  const [editNoteId, setEditNoteId] = useState<number>(0);
   const [editNoteValue, setEditNoteValue] = useState<string>('');
 
   const handleUpdateItem = (note: INote) => {
-    if (editNoteId !== '') {
-      setEditNoteId('');
+    if (editNoteId !== 0) {
+      setEditNoteId(0);
     } else {
-      setEditNoteId(note._id);
+      setEditNoteId(note.id);
     }
   };
 
   const handleSaveItem = async (note: INote) => {
     if (editNoteId && username) {
       await dispatch(updateNoteAsync({ noteId: editNoteId, note: editNoteValue }));
-      setEditNoteId('');
+      setEditNoteId(0);
       setEditNoteValue('');
     }
   };
 
   const handleNoteChange = (e: any) => {
     if (e.keyCode === 27) {
-      setEditNoteId('');
+      setEditNoteId(0);
     }
 
     setEditNoteValue(e.target.value);
   };
 
   const handleCancelItem = () => {
-    setEditNoteId('');
+    setEditNoteId(0);
     setEditNoteValue('');
   };
 
   const handleRemoveItem = async (note: INote) => {
     if (username && note) {
-      await dispatch(removeNotesAsync({ repo: username, noteId: note._id }));
+      await dispatch(removeNotesAsync({ repo: username, noteId: note.id }));
     }
   };
 
   useEffect(() => {
-    if (editNoteId === '') {
+    if (editNoteId === 0) {
       setEditNoteValue('');
     }
   }, [editNoteId]);
@@ -64,9 +64,9 @@ export const NotesList: React.FC<INotesProps> = ({ notes }) => {
         {Array.isArray(notes) &&
           notes.length >= 1 &&
           notes.map((note) => (
-            <li className="notes__item" key={`${note._id}}`}>
+            <li className="notes__item" key={`${note.id}}`}>
               <div className="notes__item--text">
-                {editNoteId === note._id && (
+                {editNoteId === note.id && (
                   <input
                     type="text"
                     name="note"
@@ -75,10 +75,10 @@ export const NotesList: React.FC<INotesProps> = ({ notes }) => {
                     value={editNoteValue || note.text}
                   />
                 )}
-                {editNoteId !== note._id && note.text}
+                {editNoteId !== note.id && note.text}
               </div>
               <div className="notes__item--btn">
-                {editNoteId === note._id && (
+                {editNoteId === note.id && (
                   <React.Fragment>
                     <button
                       type="button"
@@ -98,7 +98,7 @@ export const NotesList: React.FC<INotesProps> = ({ notes }) => {
                     </button>
                   </React.Fragment>
                 )}
-                {editNoteId !== note._id && (
+                {editNoteId !== note.id && (
                   <React.Fragment>
                     <button
                       type="button"

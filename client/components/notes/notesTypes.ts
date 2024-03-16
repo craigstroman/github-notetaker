@@ -1,10 +1,10 @@
 export interface INote {
-  _id: string;
+  id: number;
   text: string;
   repo: string;
   createdAt: string;
   updatedAt: string;
-  user_id: string;
+  user_id: number;
 }
 
 export interface INotesState {
@@ -19,11 +19,11 @@ export interface IAddNotes {
 
 export interface IRemoveNotes {
   repo: string;
-  noteId: string;
+  noteId: number;
 }
 
 export interface IUpdateNote {
-  noteId: string;
+  noteId: number;
   note: string;
 }
 

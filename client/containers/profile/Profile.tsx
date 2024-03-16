@@ -13,10 +13,10 @@ import './Profile.scss';
 
 const Profile: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { username } = useParams<{ username: string }>();
-  const getData = async (username: string) => {
-    await dispatch(getProfileAsync(username));
-    await dispatch(getReposAsync(username));
+  const { repo } = useParams<{ repo: string }>();
+  const getData = async (repo: string) => {
+    await dispatch(getProfileAsync(repo));
+    await dispatch(getReposAsync(repo));
   };
   const userProfileState = useAppSelector(selectUserProfileState);
   const userReposState = useAppSelector(selectUserReposState);
@@ -25,11 +25,11 @@ const Profile: React.FC = () => {
   const [showNotFoundScreen, setShowNotFoundScreen] = useState<boolean>(false);
 
   useEffect(() => {
-    if (username) {
-      getData(username);
+    if (repo) {
+      getData(repo);
       dispatch(getSessionStatusAsync());
     }
-  }, [username]);
+  }, [repo]);
 
   useEffect(() => {
     if (userProfileState.status === 'loading' || userReposState.status === 'loading') {

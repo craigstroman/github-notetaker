@@ -11,7 +11,7 @@ const Main: React.FC = () => {
       <BrowserRouter>
         <div className="search-bar">
           <Routes>
-            {['/', '/profile/:username'].map((path) => (
+            {['/', '/profile/:repo'].map((path) => (
               <Route key={path} path={path} element={<SearchGitHub />} />
             ))}
           </Routes>
@@ -19,7 +19,7 @@ const Main: React.FC = () => {
         <div className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/profile/:username" element={<Profile />} />
+            <Route path="/profile/:repo" element={<Profile />} />
           </Routes>
         </div>
       </BrowserRouter>
