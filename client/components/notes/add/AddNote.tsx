@@ -6,15 +6,15 @@ import './AddNote.scss';
 
 export const AddNote: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { username } = useParams<{ username: string }>();
+  const { repo } = useParams<{ repo: string }>();
   const [note, setNote] = useState<string>('');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formInput = document.getElementsByClassName('form-note-input')[0] as HTMLInputElement;
 
-    if (username) {
-      await dispatch(addNotesAsync({ repo: username, note }));
+    if (repo) {
+      await dispatch(addNotesAsync({ repo, note }));
       setNote('');
       formInput.value = '';
     }

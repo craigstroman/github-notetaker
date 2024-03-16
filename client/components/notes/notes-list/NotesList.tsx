@@ -13,7 +13,7 @@ interface INotesProps {
 
 export const NotesList: React.FC<INotesProps> = ({ notes }) => {
   const dispatch = useAppDispatch();
-  const { username } = useParams<{ username: string }>();
+  const { repo } = useParams<{ repo: string }>();
   const [editNoteId, setEditNoteId] = useState<number>(0);
   const [editNoteValue, setEditNoteValue] = useState<string>('');
 
@@ -26,7 +26,7 @@ export const NotesList: React.FC<INotesProps> = ({ notes }) => {
   };
 
   const handleSaveItem = async (note: INote) => {
-    if (editNoteId && username) {
+    if (editNoteId && repo) {
       await dispatch(updateNoteAsync({ noteId: editNoteId, note: editNoteValue }));
       setEditNoteId(0);
       setEditNoteValue('');
@@ -47,8 +47,8 @@ export const NotesList: React.FC<INotesProps> = ({ notes }) => {
   };
 
   const handleRemoveItem = async (note: INote) => {
-    if (username && note) {
-      await dispatch(removeNotesAsync({ repo: username, noteId: note.id }));
+    if (repo && note) {
+      await dispatch(removeNotesAsync({ repo, noteId: note.id }));
     }
   };
 
