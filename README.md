@@ -22,6 +22,10 @@ https://github-notetaker.craigstroman.com/
 
 ## Version History
 
+###### Version 4.0.1
+
+- Switched to PostgreSQL
+
 ###### Version 4.0.0
 
 - Started using TypeScript
