@@ -17,7 +17,7 @@ const github = function (Users, passport) {
         scope: 'read:org,repo',
         state: 'authen',
       },
-      function (token, refreshToken, profile, done) {
+      function (token, profile, done) {
         process.nextTick(async function () {
           try {
             let profileAvatar = null;
@@ -59,8 +59,6 @@ const github = function (Users, passport) {
                 provider: 'GitHub',
               },
             });
-
-            console.log('created: ', created);
 
             if (!created && user.dataValues) {
               return done('', user.dataValues);

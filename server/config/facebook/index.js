@@ -6,7 +6,7 @@ const __dirname = path.resolve();
 
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-const facebook = function (User, passport) {
+const facebook = function (Users, passport) {
   passport.use(
     new FacebookStrategy(
       {
@@ -21,26 +21,25 @@ const facebook = function (User, passport) {
           try {
             const name = `${profile.name.givenName} ${profile.name.familyName}`;
 
-            const user = await User.update(
-              {
+            const [user, created] = await Users.findOrCreate({
+              where: { profile_id: profile.id },
+              defaults: {
                 profile_id: profile.id,
                 token,
-                refreshToken,
-                name,
+                refreshToken: '',
                 email: (profile.emails[0].value || '').toLowerCase(),
-                profile_picture: profile.photos[0].value,
+                name,
+                profile_picture: profile.photos[0].value || '',
                 provider: 'Facebook',
               },
-              {
-                where: { profile_id: profile.id },
-              },
-            );
+            });
 
-            const err = null;
-
-            if (user && user.value) {
-              return done(err, user.value);
+            if (!created && user.dataValues) {
+              return done('', user.dataValues);
+            } else if (created && user.dataValues) {
+              return done('', user.dataValues);
             }
+            return 0;
           } catch (err) {
             console.log('error: ', err);
 
