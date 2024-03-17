@@ -2,10 +2,8 @@ const striptags = require('striptags');
 const { QueryTypes } = require('sequelize');
 const Notes = require('../../models/notes.js');
 const models = require('../../database.js');
-const { model } = require('mongoose');
 
 async function getNotes(req, res) {
-  console.log('models: ', models);
   if (!req.user) {
     return res.status(403).end();
   } else if (!req.params.repo) {
@@ -16,10 +14,6 @@ async function getNotes(req, res) {
   const user = req.user;
   const userId = user.id;
 
-  console.log('repo: ', repo);
-  console.log('user: ', user);
-  console.log('userId: ', userId);
-
   try {
     const result = await models.sequelize.query('select * from notes where user_id = ? and repo = ?', {
       replacements: [userId, repo],
@@ -27,9 +21,7 @@ async function getNotes(req, res) {
       raw: true,
     });
 
-    console.log('notes: ', result);
-
-    res.status(200).send(result[0]);
+    res.status(200).send(result);
   } catch (error) {
     console.log('error: ');
     console.log(error);
@@ -77,19 +69,20 @@ async function updateNote(req, res) {
   const note_text = striptags(req.params.note);
 
   try {
-    const result = await Notes.findByIdAndUpdate(
-      {
-        _id: note_id,
-      },
-      {
-        $set: {
-          text: note_text,
-        },
-      },
-      { new: true },
-    );
+    await models.sequelize.query('update notes set text = ?  where id = ?', {
+      replacements: [note_text, note_id],
+      type: QueryTypes.UPDATE,
+      raw: true,
+      returning: true,
+    });
 
-    res.status(200).json(result);
+    const result = await models.sequelize.query('select * from notes where id = ?', {
+      replacements: [note_id],
+      type: QueryTypes.SELECT,
+      raw: true,
+    });
+
+    res.status(200).json(result[0]);
   } catch (error) {
     console.log('error: ');
     console.log(error);
@@ -98,21 +91,24 @@ async function updateNote(req, res) {
 }
 
 async function deleteNote(req, res) {
+  console.log('req.params: ', req.params);
   if (!req.user) {
     res.status(400).end();
   } else if (!req.params.repo || !req.params.note_id) {
     res.status(403).end();
   }
 
-  const _id = new mongoose.Types.ObjectId(req.params.note_id);
+  const id = req.params.note_id;
 
   try {
-    const result = await Notes.findByIdAndDelete({
-      _id,
+    const result = await models.sequelize.query('delete  from notes where id = ?', {
+      replacements: [id],
+      type: QueryTypes.DELETE,
+      raw: true,
     });
 
     if (result) {
-      res.status(200).send({ id: _id });
+      res.status(200).send({ id: id });
     }
   } catch (error) {
     console.log('error: ');
