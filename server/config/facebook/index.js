@@ -26,7 +26,6 @@ const facebook = function (Users, passport) {
               defaults: {
                 profile_id: profile.id,
                 token,
-                refreshToken: '',
                 email: (profile.emails[0].value || '').toLowerCase(),
                 name,
                 profile_picture: profile.photos[0].value || '',
