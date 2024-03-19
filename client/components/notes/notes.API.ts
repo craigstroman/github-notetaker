@@ -37,6 +37,7 @@ export async function updateNote(noteId: number, note: string): Promise<{ data: 
   const url = `${apiUrl}/notes/${noteId}/${note}`;
 
   const response = await axios.put(url);
+
   let result = null;
 
   if (response.status === 200) {
