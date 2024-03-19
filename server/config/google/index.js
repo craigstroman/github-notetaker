@@ -22,7 +22,6 @@ const google = function (Users, passport) {
               defaults: {
                 profile_id: profile.id,
                 token: accessToken,
-                refreshToken: '',
                 email: (profile.emails[0].value || '').toLowerCase(),
                 name: profile.displayName,
                 profile_picture: profile.photos[0].value || '',
