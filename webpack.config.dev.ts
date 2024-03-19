@@ -51,7 +51,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            configFile: './client/.eslintrc.js',
+            configFile: './client/.eslintrc.cjs',
           },
         },
       },

@@ -17,5 +17,8 @@
     "jsx": "react-jsx"
   },
   "include": ["client"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "esm": true // «———— enabling ESM for ts-node
+  }
 }

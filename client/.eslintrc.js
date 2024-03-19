@@ -6,7 +6,10 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2020,
+    ecmaFeatures: {
+      jsx: true,
+      modules: true,
+    },
   },
   ecmaFeatures: { jsx: true },
   extends: ['airbnb', 'prettier'],
