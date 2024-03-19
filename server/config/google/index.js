@@ -13,9 +13,8 @@ const google = function (Users, passport) {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: process.env.GOOGLE_CALLBACK_URL,
-        passReqToCallback: true,
       },
-      function (request, accessToken, refreshToken, profile, done) {
+      function (accessToken, refreshToken, profile, done) {
         process.nextTick(async function () {
           try {
             const [user, created] = await Users.findOrCreate({

@@ -12,9 +12,6 @@ function auth(passport) {
     done(null, Users);
   });
 
-  // TODO: work on making auth work for Facebook, then Google. Since GitHub auth works, without saving refreshToken.
-  // TODO: Work on making settings page work
-
   google(Users, passport);
 
   facebook(Users, passport);

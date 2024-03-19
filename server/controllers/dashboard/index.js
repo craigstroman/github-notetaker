@@ -1,5 +1,6 @@
+const { QueryTypes } = require('sequelize');
+const models = require('../../database.js');
 const Users = require('../../models/user.js');
-const Notes = require('../../models/notes.js');
 
 async function dashboard(req, res) {
   let user = {};
@@ -11,7 +12,11 @@ async function dashboard(req, res) {
 
     user = await Users.findOne({ where: { id: userId } });
 
-    // TODO: Add repos with notes
+    notes = await models.sequelize.query('select * from notes where user_id = ? and text is not null', {
+      replacements: [userId],
+      type: QueryTypes.SELECT,
+      raw: true,
+    });
   } catch (error) {
     console.log('error: ');
     console.log(error);

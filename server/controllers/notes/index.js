@@ -1,5 +1,5 @@
-const striptags = require('striptags');
 const { QueryTypes } = require('sequelize');
+const striptags = require('striptags');
 const Notes = require('../../models/notes.js');
 const models = require('../../database.js');
 
