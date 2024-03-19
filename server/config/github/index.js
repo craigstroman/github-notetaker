@@ -17,7 +17,7 @@ const github = function (Users, passport) {
         scope: 'read:org,repo',
         state: 'authen',
       },
-      function (token, profile, done) {
+      function (accessToken, refreshToken, profile, done) {
         process.nextTick(async function () {
           try {
             let profileAvatar = null;
@@ -33,7 +33,7 @@ const github = function (Users, passport) {
               profileAvatar = '';
             }
 
-            const emailResult = await getEmail(token);
+            const emailResult = await getEmail(accessToken);
 
             if (emailResult) {
               if (emailResult.hasOwnProperty('data')) {
@@ -51,8 +51,7 @@ const github = function (Users, passport) {
               where: { profile_id: profile.id },
               defaults: {
                 profile_id: profile.id,
-                token: token,
-                refreshToken: '',
+                token: accessToken,
                 email: email,
                 name: profile.displayName,
                 profile_picture: profileAvatar,
