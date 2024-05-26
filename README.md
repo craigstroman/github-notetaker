@@ -4,7 +4,7 @@ A basic React app that allows you to look up Github profiles and add Notes to th
 
 ## Live Demo
 
-https://github-notetaker.craigstroman.com/
+https://githubnotetaker.craigstroman.com/
 
 ## Instructions for running locally:
 
