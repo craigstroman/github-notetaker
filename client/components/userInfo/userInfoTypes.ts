@@ -1,5 +1,5 @@
 export interface IUser {
-  createdAt: string;
+  created_at: string;
   email: string;
   id: number;
   name: string;
@@ -7,7 +7,7 @@ export interface IUser {
   profile_picture: string;
   provider: string;
   token: string;
-  updatedAt: string;
+  updated_at: string;
 }
 
 export interface UserInfoState {
