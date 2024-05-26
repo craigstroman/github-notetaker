@@ -1,6 +1,6 @@
 # Github Note Taker
 
-A basic React app that allows you to look up Github profiles and add Notes to those profiles. A Mongo DB is used for storing a users notes. Based on https://egghead.io/lessons/react-building-a-react-js-app-notetaker-introduction.
+A basic React app that allows you to look up Github profiles and add Notes to those profiles. A PostgreSQL database is used for storing a users notes. Based on https://egghead.io/lessons/react-building-a-react-js-app-notetaker-introduction.
 
 ## Live Demo
 
