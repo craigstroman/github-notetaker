@@ -56,6 +56,8 @@ const github = function (Users, passport) {
                 name: profile.displayName,
                 profile_picture: profileAvatar,
                 provider: 'GitHub',
+                created_at: Date.now(),
+                updated_at: Date.now(),
               },
             });
 

@@ -91,7 +91,6 @@ async function updateNote(req, res) {
 }
 
 async function deleteNote(req, res) {
-  console.log('req.params: ', req.params);
   if (!req.user) {
     res.status(400).end();
   } else if (!req.params.repo || !req.params.note_id) {

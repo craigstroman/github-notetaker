@@ -26,6 +26,8 @@ const google = function (Users, passport) {
                 name: profile.displayName,
                 profile_picture: profile.photos[0].value || '',
                 provider: 'Google',
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
               },
             });
 
@@ -35,6 +37,7 @@ const google = function (Users, passport) {
               return done('', user.dataValues);
             }
           } catch (err) {
+            console.log('This is where the error is coming from.');
             console.log('error: ', err);
 
             const user = null;

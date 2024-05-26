@@ -2,8 +2,6 @@ const path = require('path');
 const dotenv = require('dotenv');
 const Sequelize = require('sequelize');
 
-const __dirname = path.resolve();
-
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_USER_PASSWORD, {
@@ -12,11 +10,15 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
   logging: function (str) {
     console.log(str);
   },
+  define: {
+    timestamps: true,
+    underscored: true,
+  },
 });
 
 const models = {
-  User: require(__dirname, './server/models/User.js'),
-  Notes: require(__dirname, './server/models/Notes.js'),
+  User: require(__dirname, './models/User.js'),
+  Notes: require(__dirname, './models/Notes.js'),
 };
 
 Object.keys(models).forEach((modelName) => {

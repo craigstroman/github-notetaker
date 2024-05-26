@@ -15,7 +15,7 @@ let port = 0;
 if (process.env.NODE_ENV === 'development') {
   port = 3000;
 } else if (process.env.NODE_ENV === 'production') {
-  port = 49153;
+  port = 42222;
 }
 
 app.set('port', port);

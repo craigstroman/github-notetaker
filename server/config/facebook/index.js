@@ -30,6 +30,8 @@ const facebook = function (Users, passport) {
                 name,
                 profile_picture: profile.photos[0].value || '',
                 provider: 'Facebook',
+                created_at: Date.now(),
+                updated_at: Date.now(),
               },
             });
 
