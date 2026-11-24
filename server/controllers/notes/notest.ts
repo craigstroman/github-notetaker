@@ -1,9 +1,7 @@
-const { QueryTypes } = require('sequelize');
-const striptags = require('striptags');
-const Notes = require('../../models/notes.js');
-const models = require('../../database.js');
+import { Request, Response } from 'express';
+import striptags from 'striptags';
 
-export const getNotes = async (req, res) => {
+export const getNotes = async (req: Request, res: Response) => {
   if (!req.user) {
     return res.status(403).end();
   } else if (!req.params.repo) {
@@ -30,7 +28,7 @@ export const getNotes = async (req, res) => {
   }
 };
 
-export const saveNote = async (req, res) => {
+export const saveNote = async (req: Request, res: Response) => {
   if (!req.user) {
     res.status(400).end();
   } else if (!req.params.repo || !req.params.note) {
@@ -58,7 +56,7 @@ export const saveNote = async (req, res) => {
   }
 };
 
-export const updateNote = async (req, res) => {
+export const updateNote = async (req: Request, res: Response) => {
   if (!req.user) {
     res.status(400).end();
   } else if (!req.params.note_id) {
@@ -90,7 +88,7 @@ export const updateNote = async (req, res) => {
   }
 };
 
-export const deleteNote = async (req, res) => {
+export const deleteNote = async (req: Request, res: Response) => {
   if (!req.user) {
     res.status(400).end();
   } else if (!req.params.repo || !req.params.note_id) {

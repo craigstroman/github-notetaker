@@ -1,4 +1,6 @@
-export const main = (req, res) => {
+import { Request, Response } from 'express';
+
+export const main = (req: Request, res: Response) => {
   res.render('index', {
     title: req.app.locals.title,
     content: req.app.locals.description,
@@ -8,7 +10,7 @@ export const main = (req, res) => {
   });
 };
 
-export const login = (req, res) => {
+export const login = (req: Request, res: Response) => {
   const referer = req.headers['referer'];
 
   if (referer.indexOf('/profile/') >= 1) {
@@ -35,7 +37,7 @@ export const login = (req, res) => {
   });
 };
 
-export const logout = (req, res) => {
+export const logout = (req: Request, res: Response) => {
   req.logout();
   req.session.destroy();
   res.render('logout', {
@@ -44,7 +46,7 @@ export const logout = (req, res) => {
   });
 };
 
-export const googleLogin = (req, res, next) => {
+export const googleLogin = (req: Request, res: Response) => {
   const profileCookie = req.cookies['profile'];
 
   if (profileCookie) {
@@ -55,7 +57,7 @@ export const googleLogin = (req, res, next) => {
   }
 };
 
-export const facebookLogin = (req, res, next) => {
+export const facebookLogin = (req: Request, res: Response) => {
   const profileCookie = req.cookies['profile'];
 
   if (profileCookie) {
@@ -66,7 +68,7 @@ export const facebookLogin = (req, res, next) => {
   }
 };
 
-export const githubLogin = (req, res, next) => {
+export const githubLogin = (req: Request, res: Response) => {
   const profileCookie = req.cookies['profile'];
 
   if (profileCookie) {
@@ -77,7 +79,7 @@ export const githubLogin = (req, res, next) => {
   }
 };
 
-export const sessionStatus = (req, res, next) => {
+export const sessionStatus = (req: Request, res: Response) => {
   res.send({
     user: req.user,
   });

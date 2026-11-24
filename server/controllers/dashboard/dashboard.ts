@@ -1,4 +1,6 @@
-export const dashboard = async (req, res) => {
+import {Request, Response} from 'express'
+
+export const dashboard = async (req: Request, res: Response) => {
   let user = {};
   let notes = [];
   let error = {};
@@ -29,7 +31,7 @@ export const dashboard = async (req, res) => {
   });
 }
 
-export const settings = (req, res) => {
+export const settings = (req: Request, res: Response) => {
   res.render('settings', {
     title: `${req.app.locals.title} - Settings`,
     content: req.app.locals.description,
@@ -37,7 +39,7 @@ export const settings = (req, res) => {
   });
 }
 
-export const updateUserInfo = async (req, res) {
+export const updateUserInfo = async (req: Request, res: Response) {
   const userInfo = req.user;
   const userId = new mongoose.Types.ObjectId(userInfo._id);
 

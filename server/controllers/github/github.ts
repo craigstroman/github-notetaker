@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import path from 'path';
 import axios from 'axios';
 import dotenv from 'dotenv';
@@ -16,7 +17,7 @@ const headers = {
   },
 };
 
-export const getProfile = async (req, res) => {
+export const getProfile = async (req: Request, res: Response) => {
   const username = req.params.username;
 
   try {
@@ -35,7 +36,7 @@ export const getProfile = async (req, res) => {
   }
 };
 
-export const getRepos = async (req, res) => {
+export const getRepos = async (req: Request, res: Response) => {
   const username = req.params.username;
 
   const url = `https://api.github.com/users/${username}/repos?page=1&per_page=100`;
